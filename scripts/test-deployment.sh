@@ -7,9 +7,9 @@ x=""
 count=0
 while [ "$x" == "" ]
 do
-    if [ "$count" == "20" ]
+    if [ "$count" == "100" ]
     then
-        echo "Giving up after 20 attempts to connect!"
+        echo "Giving up after 100 attempts to connect!"
         exit 1
     fi
     x=`netcat -N -w 1 localhost 1651 < /dev/null`
