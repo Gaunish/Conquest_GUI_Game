@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 public class ServerTest {
   @Test
   public void test_factorial() {
-    Server s = new Server();
+    Server s = new Server(1651);
     assertEquals(6, s.factorial(3));
   }
 
