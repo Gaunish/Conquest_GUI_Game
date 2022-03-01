@@ -28,10 +28,10 @@ public class Server {
         clientSocket.close();
       }
     } catch (IOException e){
-      System.out.println("IO failed");
+      System.out.println("IO failed"+e.getMessage());
+      System.exit(1);
     }
 
-    
     // clientSocket = serverSocket.accept();
     //     out = new PrintWriter(clientSocket.getOutputStream(), true);
     //     in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
