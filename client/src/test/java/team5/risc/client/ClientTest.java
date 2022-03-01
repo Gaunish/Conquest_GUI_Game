@@ -1,4 +1,4 @@
-package edu.duke.ece651.mp.client;
+package team5.risc.client;
 
 import static org.junit.jupiter.api.Assertions.*;
 

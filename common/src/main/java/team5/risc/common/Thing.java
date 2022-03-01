@@ -1,4 +1,4 @@
-package edu.duke.ece651.mp.common;
+package team5.risc.common;
 
 public class Thing {
   private String name;
