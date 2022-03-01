@@ -1,4 +1,4 @@
-<!-- ECE 651: CI/CD Intro: Factoring Server  -->
+ECE 651: CI/CD Intro: Factoring Server 
 ======================================
 
 The code in this project is for a server which reads
