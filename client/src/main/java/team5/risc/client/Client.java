@@ -49,8 +49,7 @@ public class Client{
     InputStream is = client.getInputStream();
     ObjectInputStream inputStream = new ObjectInputStream(is);
     Map map = (Map) inputStream.readObject();
-    System.out.println("LLLLL "+map.num_players);
-
+    System.out.println("LLLLL "+map.getAreasName());
     //close(client);
   }
 }

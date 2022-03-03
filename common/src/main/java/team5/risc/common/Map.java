@@ -11,7 +11,7 @@ public class Map implements Serializable {
   public Map(int num_area) {
     this.areas = new ArrayList<AreaNode>();
     for (int i = 0; i < num_area; i++) {
-      this.areas.add(new AreaNode("area1"));
+      this.areas.add(new AreaNode("area"+i));
     }
   }
 

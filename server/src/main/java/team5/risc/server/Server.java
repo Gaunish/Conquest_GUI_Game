@@ -69,7 +69,7 @@ public class Server {
    */
   public void run(int num_player) throws IOException{
     //Accept phase
-    Map map = new Map(100, 3);
+    Map map = new Map(3);
     for (int i = 0; i < num_player; ++i) {
       Socket clientSocket = serverSocket.accept();
       System.out.println("client " + i + " accepted");
