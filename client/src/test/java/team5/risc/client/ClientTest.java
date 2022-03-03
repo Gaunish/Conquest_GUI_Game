@@ -8,7 +8,6 @@ public class ClientTest {
   @Test
   public void test_sum() {
     Client c = new Client();
-    assertEquals(10, c.sum(4));
   }
 
 }
