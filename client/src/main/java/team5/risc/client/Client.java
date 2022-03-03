@@ -28,18 +28,8 @@ import java.io.PrintWriter;
 
 
 public class Client{
-  public int sum(int n){
-    int ans = 0;
-    while (n > 0){
-      ans = ans + n;
-      n--;
-    }
-    return ans;
-  }
-  public static void main(String[] args) throws UnknownHostException, IOException, ClassNotFoundException {
-    Thing t = new Thing("client");
-    System.out.println(t);
-    
+ 
+  public static void main(String[] args) throws UnknownHostException, IOException, ClassNotFoundException { 
     Socket client = new Socket("127.0.0.1", 1651);
     System.out.println(client.getRemoteSocketAddress());
     OutputStream outToServer = client.getOutputStream();
@@ -51,7 +41,6 @@ public class Client{
     Map map = (Map) inputStream.readObject();
     System.out.println("LLLLL "+map.num_players);
 
-    //close(client);
   }
 }
 
