@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 public class AreaNodeTest {
   @Test
   public void test_getName() {
-    AreaNode a= new AreaNode("a");
+    AreaNode a = new AreaNode("a");
     assertEquals("a", a.getName());
   }
 
