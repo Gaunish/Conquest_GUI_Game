@@ -1,64 +1,25 @@
 package team5.risc.server;
 
 import team5.risc.common.Thing;
+import team5.risc.common.Map;
+// import team5.risc.common.Player;
 import java.net.*;
 import java.io.*;
+import java.nio.*;
 
-// public class Server {
-//   private ServerSocket serverSocket;
-//   private Socket clientSocket;
-//   PrintWriter out;
-//   int listen_port;
-//   public int factorial(int x) {
-//     int ans = 1;
-//     while (x > 0) {
-//       ans = ans * x;
-//       x --;
-//     }
-//     return ans;
-//   }
-
-//   public void startServer() {
-//     try{
-//       serverSocket = new ServerSocket(listen_port);
-//       while (true) {
-//         clientSocket = serverSocket.accept();
-//         out = new PrintWriter(clientSocket.getOutputStream(), true);
-//         out.println("Hello this is server");
-//         clientSocket.close();
-//       }
-//     } catch (IOException e){
-//       System.out.println("IO failed"+e.getMessage());
-//       System.exit(1);
-//     }
-
-//     // clientSocket = serverSocket.accept();
-//     //     out = new PrintWriter(clientSocket.getOutputStream(), true);
-//     //     in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-//     //     String greeting = in.readLine();
-//     //         if ("hello server".equals(greeting)) {
-//     //             out.println("hello client");
-//     //         }
-//     //         else {
-//     //             out.println("unrecognised greeting");
-//     //         }
-//   }
-
-//   public Server(int port) {
-//     listen_port = port;
-//   }
-//   public static void main(String[] args) {
-//     Thing t = new Thing("server");
-//     Server server = new Server(1651);
-//     server.startServer();
-//     System.out.println(t);
-//   }
-// }
-
+import java.nio.ByteBuffer;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.Selector;
+import java.nio.channels.ServerSocketChannel;
+import java.nio.channels.SocketChannel;
 
 import java.net.ServerSocket;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
@@ -77,9 +38,13 @@ import java.net.SocketException;
  *
  */
 public class Server {
-  ServerSocket sock;
-  ThreadPoolExecutor threadPool;
-  Factorer factorer;
+  ServerSocket serverSocket;
+  // ThreadPoolExecutor threadPool;
+  // Factorer factorer;
+  HashSet<Socket> clientSocketSet;
+  // private Selector selector;
+  // ServerSocketChannel serverSocketChannel;
+  int listen_port;
   /**
    * This constructts a FactorServer with the specified
    * Factorer and ServerSocket.
@@ -89,26 +54,11 @@ public class Server {
    * @throws SocketException if thrown by attempting to set the listen
    * timeout of the passed in ServerSocket.
    */
-  public Server(Factorer factorer, ServerSocket sock)
-      throws SocketException {
-    this.sock = sock;
-    this.factorer = factorer;
-    BlockingQueue<Runnable> workQueue = new LinkedBlockingQueue<Runnable>(32);
-    threadPool = new ThreadPoolExecutor(2, 16, 5, TimeUnit.SECONDS, workQueue);
-    sock.setSoTimeout(1000);
-  }
-  /**
-   * This is a helper method to accept a socket from the ServerSocket
-   * or return null if it timesout.
-   */
-  private Socket acceptOrNull() {
-    try {
-      return sock.accept();
-    } catch (IOException ioe) {
-      // In real code, we would want to be more discriminating here.
-      // Was this a timeout, or some other problem?
-      return null;
-    }
+  public Server(int listen_port)
+      throws SocketException, IOException {
+    this.listen_port = listen_port;
+    this.serverSocket = new ServerSocket(listen_port);
+    this.clientSocketSet = new HashSet<>();
   }
   /**
    * This method is the main loop of the FactorServer.
@@ -117,34 +67,23 @@ public class Server {
    * runs until the current thread is interrupted
    * (by some other thread).
    */
-  public void run() {
-    while (!Thread.currentThread().isInterrupted()) {
-      final Socket s = acceptOrNull();
-      if (s == null) {
-        continue;
-      }
-      // This will enqueue the request until
-      // a thread in the pool is available, then
-      // execute that request on the available thread.
-      threadPool.execute(new Runnable() {
-        @Override
-        public void run() {
-          try {
-            try {
-              FactorIO fio =
-                  new FactorIO(new NumberInputStreamReader(s.getInputStream()),
-                               new PrintWriter(s.getOutputStream()), factorer);
-              fio.handleRequest();
-            } finally {
-              s.close();
-            }
-          } catch (IOException ioe) {
-            // in something real, we would want to handle
-            // this better... but for this, there isn't much we can or
-            // really want to do.
-          }
-        }
-      });
+  public void run(int num_player) throws IOException{
+    //Accept phase
+    Map map = new Map(100, 3);
+    for (int i = 0; i < num_player; ++i) {
+      Socket clientSocket = serverSocket.accept();
+      System.out.println("client " + i + " accepted");
+      System.out.println(clientSocket);
+      clientSocketSet.add(clientSocket);
+    }
+    System.out.println("All client finished, begin to read data");
+
+    for (Socket sock: clientSocketSet) {
+      ObjectOutputStream outputStream = 
+        new ObjectOutputStream(sock.getOutputStream());
+      
+      outputStream.writeObject(map);
+      System.out.println("Send map to client");
     }
   }
   /**
@@ -157,9 +96,8 @@ public class Server {
    * to the port being unavailable(.
    */
   public static void main(String[] args) throws IOException {
-    Server fs =
-        new Server(new PrimeFactors(), new ServerSocket(1651));
-    fs.run();
+    Server fs = new Server(1651);
+    fs.run(1);
   }
 }
 
