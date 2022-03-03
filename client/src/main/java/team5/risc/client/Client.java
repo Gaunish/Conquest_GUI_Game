@@ -26,7 +26,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.io.PrintWriter;
 
 public class Client {
-  
+
   public static void main(String[] args) throws UnknownHostException, IOException, ClassNotFoundException {
     Socket client = new Socket("127.0.0.1", 1651);
     System.out.println(client.getRemoteSocketAddress());
@@ -37,7 +37,9 @@ public class Client {
     InputStream is = client.getInputStream();
     ObjectInputStream inputStream = new ObjectInputStream(is);
     Map map = (Map) inputStream.readObject();
-    map.displayMap();
 
+    System.out.println("LLLLL " + map.getAreasName());
+    // close(client);
+    map.displayMap();
   }
 }
