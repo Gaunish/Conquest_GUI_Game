@@ -1,6 +1,5 @@
 package team5.risc.server;
 
-import team5.risc.common.Thing;
 import team5.risc.common.Map;
 // import team5.risc.common.Player;
 import java.net.*;
