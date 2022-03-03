@@ -45,6 +45,7 @@ public class Server {
   // private Selector selector;
   // ServerSocketChannel serverSocketChannel;
   int listen_port;
+
   /**
    * This constructts a FactorServer with the specified
    * Factorer and ServerSocket.
@@ -60,6 +61,7 @@ public class Server {
     this.serverSocket = new ServerSocket(listen_port);
     this.clientSocketSet = new HashSet<>();
   }
+
   /**
    * This method is the main loop of the FactorServer.
    * It accepts requests, and then queues them for
@@ -86,6 +88,7 @@ public class Server {
       System.out.println("Send map to client");
     }
   }
+
   /**
    * This main method runs the factor server, listening on port 1651.
    * Specifically, it creates an instance and calls run.
