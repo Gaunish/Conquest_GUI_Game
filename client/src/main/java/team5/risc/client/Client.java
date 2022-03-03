@@ -41,7 +41,7 @@ public class Client{
     System.out.println(t);
     
     Socket client = new Socket("127.0.0.1", 1651);
-    System.out.println("远程主机地址：" + client.getRemoteSocketAddress());
+    System.out.println(client.getRemoteSocketAddress());
     OutputStream outToServer = client.getOutputStream();
     DataOutputStream out = new DataOutputStream(outToServer);
 
@@ -50,6 +50,8 @@ public class Client{
     ObjectInputStream inputStream = new ObjectInputStream(is);
     Map map = (Map) inputStream.readObject();
     System.out.println("LLLLL "+map.num_players);
+
+    //close(client);
   }
 }
 
