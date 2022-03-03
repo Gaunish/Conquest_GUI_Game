@@ -3,7 +3,6 @@
  */
 package team5.risc.client;
 
-import team5.risc.common.Thing;
 import team5.risc.common.Map;
 
 import java.net.*;
@@ -27,7 +26,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.io.PrintWriter;
 
 public class Client {
-
+  
   public static void main(String[] args) throws UnknownHostException, IOException, ClassNotFoundException {
     Socket client = new Socket("127.0.0.1", 1651);
     System.out.println(client.getRemoteSocketAddress());
@@ -38,7 +37,7 @@ public class Client {
     InputStream is = client.getInputStream();
     ObjectInputStream inputStream = new ObjectInputStream(is);
     Map map = (Map) inputStream.readObject();
-    System.out.println("LLLLL " + map.num_players);
+    map.displayMap();
 
   }
 }
