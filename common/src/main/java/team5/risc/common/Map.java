@@ -22,7 +22,7 @@ public class Map implements Serializable {
       areas_name.add(areas.get(i).getName());
     }
     return areas_name;
-
+  }
   //Displays map
   //currently coupled to system.out
   public void displayMap() {
