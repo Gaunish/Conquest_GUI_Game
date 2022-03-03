@@ -37,8 +37,8 @@ public class Client{
     return ans;
   }
   public static void main(String[] args) throws UnknownHostException, IOException, ClassNotFoundException {
-    //Thing t = new Thing("client");
-    //System.out.println(t);
+    Thing t = new Thing("client");
+    System.out.println(t);
     
     Socket client = new Socket("127.0.0.1", 1651);
     System.out.println(client.getRemoteSocketAddress());
@@ -51,7 +51,7 @@ public class Client{
     Map map = (Map) inputStream.readObject();
     System.out.println("LLLLL "+map.num_players);
 
-    close(client);
+    //close(client);
   }
 }
 
