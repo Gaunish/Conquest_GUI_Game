@@ -7,14 +7,14 @@ import org.junit.jupiter.api.Test;
 public class AreaNodeTest {
   @Test
   public void test_getName() {
-    AreaNode a = new AreaNode("a");
+    AreaNode a = new AreaNode("a", -1);
     assertEquals("a", a.getName());
     assertEquals(-1, a.getOwnerId());
   }
 
   @Test
   public void test_defender() {
-    AreaNode a = new AreaNode("a");
+    AreaNode a = new AreaNode("a", -1);
     Army d = new IntArmy(1, 5);
     a.setDefender(d);
     assertEquals(1, a.getOwnerId());
@@ -22,7 +22,7 @@ public class AreaNodeTest {
 
   @Test
   public void test_enemy() {
-    AreaNode a = new AreaNode("a");
+    AreaNode a = new AreaNode("a", -1);
     Army d = new IntArmy(0, 5);
     Army e1 = new IntArmy(1, 5);
     Army e2 = new IntArmy(1, 5);
@@ -43,9 +43,9 @@ public class AreaNodeTest {
 
   @Test
   public void test_neighbors() {
-    AreaNode a = new AreaNode("a");
-    AreaNode b = new AreaNode("b");
-    AreaNode c = new AreaNode("c");
+    AreaNode a = new AreaNode("a", -1);
+    AreaNode b = new AreaNode("b", -1);
+    AreaNode c = new AreaNode("c", -1);
     a.addNeighbor(b);
     a.addNeighbor(c);
     a.addNeighbor(b);

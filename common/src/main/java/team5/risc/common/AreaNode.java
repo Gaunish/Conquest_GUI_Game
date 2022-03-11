@@ -3,8 +3,10 @@ package team5.risc.common;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.io.Serializable;
 
-public class AreaNode {
+public class AreaNode implements Serializable{
+
   private String name;
   private Army defender;
   private ArrayList<Army> enemies;
@@ -13,6 +15,13 @@ public class AreaNode {
   public AreaNode(String name) {
     this.name = name;
     this.defender = new IntArmy(-1, 0); // owner_id -1 means this area has no owner
+    this.enemies = new ArrayList<Army>();
+    this.neighbors = new LinkedHashSet<AreaNode>();
+  }
+  
+  public AreaNode(String name, int id) {
+    this.name = name;
+    this.defender = new IntArmy(id, 0); // owner_id -1 means this area has no owner
     this.enemies = new ArrayList<Army>();
     this.neighbors = new LinkedHashSet<AreaNode>();
   }
@@ -35,7 +44,6 @@ public class AreaNode {
       Army cur_enemy = it.next();
       if (cur_enemy.getOwnerId() == to_add.getOwnerId()) {
         cur_enemy.mergeArmy(to_add);
-        ;
         return;
       }
     }

@@ -36,10 +36,21 @@ public class Client {
     out.writeBytes("Hello from " + client.getLocalSocketAddress());
     InputStream is = client.getInputStream();
     ObjectInputStream inputStream = new ObjectInputStream(is);
+    DataInputStream dataStream = new DataInputStream(is);
+    
     Map map = (Map) inputStream.readObject();
+    int id = (int) dataStream.readInt();
 
-    System.out.println("LLLLL " + map.getAreasName());
-    // close(client);
-    map.displayMap();
+    inputStream.close();
+    dataStream.close();
+    out.close();
+    outToServer.close();
+    is.close();
+    client.close();
+
+    System.out.println("id :" + id + "\n");
+    System.out.println(map.getAreasName());
+    System.out.println(map.getRegions());
+    
   }
 }

@@ -1,6 +1,6 @@
 package team5.risc.common;
 
-public interface Army {
+public interface Army{
   public int getOwnerId();
 
   public int getUnitNum();
