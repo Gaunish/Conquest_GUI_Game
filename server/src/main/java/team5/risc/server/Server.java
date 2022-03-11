@@ -70,7 +70,7 @@ public class Server {
    */
   public void run(int num_player) throws IOException{
     //Accept phase
-    Map map = new Map(2);
+    Map map = new Map(2 * num_player, num_player);
     for (int i = 0; i < num_player; ++i) {
       Socket clientSocket = serverSocket.accept();
       System.out.println("client " + i + " accepted");
@@ -79,12 +79,17 @@ public class Server {
     }
     System.out.println("All client finished, begin to read data");
 
+    int id = 0;
     for (Socket sock: clientSocketSet) {
       ObjectOutputStream outputStream = 
         new ObjectOutputStream(sock.getOutputStream());
+      DataOutputStream dataStream = 
+      new DataOutputStream(sock.getOutputStream());
       
       outputStream.writeObject(map);
+      dataStream.writeInt(id);
       System.out.println("Send map to client");
+      id++;
     }
   }
 
@@ -99,7 +104,7 @@ public class Server {
    */
   public static void main(String[] args) throws IOException {
     Server fs = new Server(1651);
-    fs.run(1);
+    fs.run(3);
   }
 }
 
