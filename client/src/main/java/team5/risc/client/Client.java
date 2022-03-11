@@ -38,8 +38,6 @@ public class Client {
     ObjectInputStream inputStream = new ObjectInputStream(is);
     Map map = (Map) inputStream.readObject();
 
-    System.out.println("LLLLL " + map.getAreasName());
-    // close(client);
-    map.displayMap();
+    System.out.println("LLLLL "+ map.getAreasName());
   }
 }

@@ -23,10 +23,4 @@ public class Map implements Serializable {
     }
     return areas_name;
   }
-  //Displays map
-  //currently coupled to system.out
-  public void displayMap() {
-    System.out.println("Hello World");
-
-  }
 }
