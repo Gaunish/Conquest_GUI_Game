@@ -12,6 +12,13 @@ public class AreaNode implements Serializable{
   private ArrayList<Army> enemies;
   private LinkedHashSet<AreaNode> neighbors;
 
+  public AreaNode(String name) {
+    this.name = name;
+    this.defender = new IntArmy(-1, 0); // owner_id -1 means this area has no owner
+    this.enemies = new ArrayList<Army>();
+    this.neighbors = new LinkedHashSet<AreaNode>();
+  }
+  
   public AreaNode(String name, int id) {
     this.name = name;
     this.defender = new IntArmy(id, 0); // owner_id -1 means this area has no owner

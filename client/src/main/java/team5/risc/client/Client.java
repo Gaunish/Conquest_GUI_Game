@@ -41,6 +41,13 @@ public class Client {
     Map map = (Map) inputStream.readObject();
     int id = (int) dataStream.readInt();
 
+    inputStream.close();
+    dataStream.close();
+    out.close();
+    outToServer.close();
+    is.close();
+    client.close();
+
     System.out.println("id :" + id + "\n");
     System.out.println(map.getAreasName());
     System.out.println(map.getRegions());

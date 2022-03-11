@@ -90,6 +90,13 @@ public class Server {
       dataStream.writeInt(id);
       System.out.println("Send map to client");
       id++;
+
+      outputStream.close();
+      dataStream.close();
+    }
+
+    for(Socket c : clientSocketSet){
+      c.close();
     }
   }
 
