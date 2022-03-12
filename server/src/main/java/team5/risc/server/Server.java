@@ -96,11 +96,12 @@ public class Server {
         new ObjectOutputStream(sock.getOutputStream());
       DataOutputStream dataStream = 
       new DataOutputStream(sock.getOutputStream());
-      DataInputStream InputStream = 
-      new DataInputStream(sock.getInputStream());
+      ObjectInputStream inputStream = 
+      new ObjectInputStream(sock.getInputStream());
       
       outputStream.writeObject(map);
-      dataStream.writeInt(id);
+      outputStream.flush();
+      /*      dataStream.writeInt(id);
       System.out.println("Send map to client");    
   
       //send prompt
@@ -112,16 +113,22 @@ public class Server {
 
       //send region in text form
       outputStream.writeObject(txt_region);
-  
+      */
       //ask for input for each player
-      for(String area : txt_region){
-        System.out.println("id : " + id + " Area: " + area);
+      //for(String area : txt_region){
+        /*System.out.println("id : " + id + " Area: " + area);
         strInfo.placeStr(area);
         dataStream.writeUTF(strInfo.place_unit);
-
-        int no = (int) InputStream.readInt();
-        System.out.println("Recieved " + no + " for " + area + " by Player" + id); 
+        */
+        System.out.println("Server test");
+        try{
+        map = (Map) inputStream.readObject();
         }
+        catch(Exception e){
+          System.out.println(e);
+        }
+        System.out.println("Recieved " + map.getAreasName() + " for  + area +  by Player" + id);
+        //}
       
       id++;
 
@@ -146,7 +153,7 @@ public class Server {
    */
   public static void main(String[] args) throws IOException {
     Server fs = new Server(1651);
-    fs.run(3);
+    fs.run(1);
   }
 }
 

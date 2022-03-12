@@ -34,6 +34,8 @@ public class Client {
     System.out.println(client.getRemoteSocketAddress());
     OutputStream outToServer = client.getOutputStream();
     DataOutputStream out = new DataOutputStream(outToServer);
+    ObjectOutputStream out_obj = new ObjectOutputStream(outToServer);
+
 
     out.writeBytes("Hello from " + client.getLocalSocketAddress());
     out.flush();
@@ -43,7 +45,7 @@ public class Client {
     DataInputStream dataStream = new DataInputStream(is);
             
     Map map = (Map) inputStream.readObject();
-    int id = (int) dataStream.readInt();
+    /* int id = (int) dataStream.readInt();
     System.out.println("id :" + id + "\n");
 
     String str = dataStream.readUTF();
@@ -52,16 +54,16 @@ public class Client {
     ArrayList<String> regions = (ArrayList<String>) inputStream.readObject();
     System.out.print(str);
     System.out.println("You have been assigned region : " + regions);
-   
+    */
     //read input
     Scanner in = new Scanner(System.in);
     
     //Send output for each area
-    for(int i = 0; i < regions.size(); i++){
+    /*  for(int i = 0; i < regions.size(); i++){
       str = dataStream.readUTF();
       System.out.print(str);
 
-      int no = 0;
+      //String no = "hi";
       /*try{
         no = in.nextInt();
       }
@@ -73,9 +75,11 @@ public class Client {
           System.out.println("Invalid input");
         }
         }*/
-      out.writeInt(no);
-      out.flush();
-    }
+      System.out.println("no");
+      out_obj.writeObject(map);
+      System.out.println("Client test");
+      out_obj.flush();
+      //}
     
     inputStream.close();
     dataStream.close();
