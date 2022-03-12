@@ -1,6 +1,6 @@
 package team5.risc.server;
 
-import team5.risc.common.Map;
+import team5.risc.common.*;
 // import team5.risc.common.Player;
 import java.net.*;
 import java.io.*;
@@ -11,6 +11,7 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
+import java.util.ArrayList;
 
 import java.net.ServerSocket;
 import java.io.IOException;
@@ -93,6 +94,54 @@ public class Server {
 
       outputStream.close();
       dataStream.close();
+    }
+
+    //get initial placement
+    id = 0;
+    //initial units assigned by server
+    int total_units = 5;
+    //prompt to send to clients
+    String inform_unit = "You have been assigned 5 units by server.\n";
+    //list of region of areas assigned to each player
+    ArrayList<Region> regions = map.getInitRegions();
+      
+    for(Socket sock: clientSocketSet){
+      ObjectOutputStream outputStream = 
+        new ObjectOutputStream(sock.getOutputStream());
+      DataOutputStream dataStream = 
+      new DataOutputStream(sock.getOutputStream());
+      DataInputStream InputStream = 
+      new DataInputStream(sock.getInputStream());
+      PrintWriter StringStream = new PrintWriter(sock.getOutputStream(), true);
+
+      //send prompt
+      StringStream.println(inform_unit);
+      StringStream.close();
+
+      /*//get region in text form for player
+      Region region = regions.get(id);
+      ArrayList<String> txt_region = region.getAreasName();
+
+      //send region in text form
+      //outputStream.writeObject(txt_region);
+      dataStream.writeInt(txt_region.size());
+
+      //ask for input for each player
+      for(String area : txt_region){
+        StringStream = new PrintWriter(sock.getOutputStream(), true);
+        String prompt = "How many units do you want to place in " + area + "?\n";
+        StringStream.println(prompt);
+        StringStream.close();
+
+        //int no = (int) InputStream.readInt();
+        //System.out.println("Recieved " + no + " for " + area + " by Player" + id); 
+        }*/
+      
+      id++;
+      outputStream.close();
+      dataStream.close();
+      InputStream.close();
+      //StringStream.close();
     }
 
     for(Socket c : clientSocketSet){

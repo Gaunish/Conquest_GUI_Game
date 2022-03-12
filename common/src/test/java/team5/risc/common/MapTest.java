@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class MapTest {
   @Test
   public void test_Map() {
-    Map m = new Map(2, 1);
+    Map m = new Map(2);
     assertEquals("area0", m.getAreasName().get(0));
     assertEquals("area1", m.getAreasName().get(1));
 
@@ -18,10 +18,10 @@ public class MapTest {
 
     Map m1 = new Map(4, 2);
     ArrayList<AreaNode> areas1 = m1.getAreas();
-    assertEquals(-1, areas1.get(0).getOwnerId());
-    assertEquals(-1, areas1.get(1).getOwnerId());
-    assertEquals(-1, areas1.get(2).getOwnerId());
-    assertEquals(-1, areas1.get(3).getOwnerId());
+    assertEquals(0, areas1.get(0).getOwnerId());
+    assertEquals(1, areas1.get(1).getOwnerId());
+    assertEquals(0, areas1.get(2).getOwnerId());
+    assertEquals(1, areas1.get(3).getOwnerId());
   }
 
   @Test
