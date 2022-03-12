@@ -3,7 +3,7 @@
  */
 package team5.risc.client;
 
-import team5.risc.common.Map;
+import team5.risc.common.*;
 
 import java.net.*;
 import java.io.*;
@@ -41,29 +41,28 @@ public class Client {
     InputStream is = client.getInputStream();
     ObjectInputStream inputStream = new ObjectInputStream(is);
     DataInputStream dataStream = new DataInputStream(is);
-    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(client.getInputStream()));
-           
-    
+            
     Map map = (Map) inputStream.readObject();
     int id = (int) dataStream.readInt();
     System.out.println("id :" + id + "\n");
 
-    String unit_assigned = bufferedReader.readLine();
+    String str = dataStream.readUTF();
+
     //int size = (int) dataStream.readInt();
-    //ArrayList<String> regions = (ArrayList<String>) inputStream.readObject();
-    System.out.println(unit_assigned);
-    //System.out.println(regions);
+    ArrayList<String> regions = (ArrayList<String>) inputStream.readObject();
+    System.out.print(str);
+    System.out.println("You have been assigned region : " + regions);
    
     //read input
     Scanner in = new Scanner(System.in);
-    /*
+    
     //Send output for each area
-    for(int i = 0; i < size; i++){
-      String prompt = bufferedReader.readLine();
-      System.out.println(prompt);
+    for(int i = 0; i < regions.size(); i++){
+      str = dataStream.readUTF();
+      System.out.print(str);
 
-      /*int no = 0;
-      try{
+      int no = 0;
+      /*try{
         no = in.nextInt();
       }
       catch(Exception e){
@@ -73,10 +72,10 @@ public class Client {
         if(no < 0){
           System.out.println("Invalid input");
         }
-      }
+        }*/
       out.writeInt(no);
       out.flush();
-    }*/
+    }
     
     inputStream.close();
     dataStream.close();
@@ -84,10 +83,6 @@ public class Client {
     outToServer.close();
     is.close();
     client.close();
-    bufferedReader.close();
-
-    // System.out.println("id :" + id + "\n");
-    //System.out.println(map.getAreasName());
 
     //display map
     Display txt = new TextDisplay();

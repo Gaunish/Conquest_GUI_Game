@@ -81,67 +81,53 @@ public class Server {
     System.out.println("All client finished, begin to read data");
 
     int id = 0;
-    for (Socket sock: clientSocketSet) {
-      ObjectOutputStream outputStream = 
-        new ObjectOutputStream(sock.getOutputStream());
-      DataOutputStream dataStream = 
-      new DataOutputStream(sock.getOutputStream());
-      
-      outputStream.writeObject(map);
-      dataStream.writeInt(id);
-      System.out.println("Send map to client");
-      id++;
-
-      outputStream.close();
-      dataStream.close();
-    }
-
-    //get initial placement
-    id = 0;
     //initial units assigned by server
     int total_units = 5;
-    //prompt to send to clients
-    String inform_unit = "You have been assigned 5 units by server.\n";
+    
+    //class to send strings to clients
+    MetaInfo strInfo = new MetaInfo();
+    strInfo.unitStr(total_units);
+    
     //list of region of areas assigned to each player
     ArrayList<Region> regions = map.getInitRegions();
-      
-    for(Socket sock: clientSocketSet){
+  
+    for (Socket sock: clientSocketSet) {
       ObjectOutputStream outputStream = 
         new ObjectOutputStream(sock.getOutputStream());
       DataOutputStream dataStream = 
       new DataOutputStream(sock.getOutputStream());
       DataInputStream InputStream = 
       new DataInputStream(sock.getInputStream());
-      PrintWriter StringStream = new PrintWriter(sock.getOutputStream(), true);
-
+      
+      outputStream.writeObject(map);
+      dataStream.writeInt(id);
+      System.out.println("Send map to client");    
+  
       //send prompt
-      StringStream.println(inform_unit);
-      StringStream.close();
+      dataStream.writeUTF(strInfo.inform_unit);
 
-      /*//get region in text form for player
+      //get region in text form for player
       Region region = regions.get(id);
       ArrayList<String> txt_region = region.getAreasName();
 
       //send region in text form
-      //outputStream.writeObject(txt_region);
-      dataStream.writeInt(txt_region.size());
-
+      outputStream.writeObject(txt_region);
+  
       //ask for input for each player
       for(String area : txt_region){
-        StringStream = new PrintWriter(sock.getOutputStream(), true);
-        String prompt = "How many units do you want to place in " + area + "?\n";
-        StringStream.println(prompt);
-        StringStream.close();
+        System.out.println("id : " + id + " Area: " + area);
+        strInfo.placeStr(area);
+        dataStream.writeUTF(strInfo.place_unit);
 
-        //int no = (int) InputStream.readInt();
-        //System.out.println("Recieved " + no + " for " + area + " by Player" + id); 
-        }*/
+        int no = (int) InputStream.readInt();
+        System.out.println("Recieved " + no + " for " + area + " by Player" + id); 
+        }
       
       id++;
-      outputStream.close();
-      dataStream.close();
+
       InputStream.close();
-      //StringStream.close();
+      dataStream.close();
+      outputStream.close(); 
     }
 
     for(Socket c : clientSocketSet){
