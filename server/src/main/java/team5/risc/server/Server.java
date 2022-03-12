@@ -78,7 +78,7 @@ public class Server {
       System.out.println(clientSocket);
       clientSocketSet.add(clientSocket);
     }
-    System.out.println("All client finished, begin to read data");
+    System.out.println("All client finished, begin to read data "+clientSocketSet.size());
 
     int id = 0;
     //initial units assigned by server
@@ -90,50 +90,32 @@ public class Server {
     
     //list of region of areas assigned to each player
     ArrayList<Region> regions = map.getInitRegions();
-  
+    
+
+
     for (Socket sock: clientSocketSet) {
+
       ObjectOutputStream outputStream = 
         new ObjectOutputStream(sock.getOutputStream());
-      DataOutputStream dataStream = 
-      new DataOutputStream(sock.getOutputStream());
       ObjectInputStream inputStream = 
-      new ObjectInputStream(sock.getInputStream());
-      
+        new ObjectInputStream(sock.getInputStream());
+
       outputStream.writeObject(map);
       outputStream.flush();
-      /*      dataStream.writeInt(id);
-      System.out.println("Send map to client");    
-  
-      //send prompt
-      dataStream.writeUTF(strInfo.inform_unit);
 
-      //get region in text form for player
-      Region region = regions.get(id);
-      ArrayList<String> txt_region = region.getAreasName();
-
-      //send region in text form
-      outputStream.writeObject(txt_region);
-      */
-      //ask for input for each player
-      //for(String area : txt_region){
-        /*System.out.println("id : " + id + " Area: " + area);
-        strInfo.placeStr(area);
-        dataStream.writeUTF(strInfo.place_unit);
-        */
-        System.out.println("Server test");
-        try{
+      System.out.println("Server test");
+      try{
         map = (Map) inputStream.readObject();
-        }
-        catch(Exception e){
+      }
+      catch(Exception e){
           System.out.println(e);
-        }
-        System.out.println("Recieved " + map.getAreasName() + " for  + area +  by Player" + id);
-        //}
+      }
+      System.out.println("Client->Server Map:"+map);
+      System.out.println("Recieved " + map.getAreasName() + " for  + area +  by Player" + id);
       
       id++;
 
-      InputStream.close();
-      dataStream.close();
+      inputStream.close();
       outputStream.close(); 
     }
 

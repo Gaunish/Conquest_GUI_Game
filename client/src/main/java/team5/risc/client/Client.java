@@ -32,60 +32,21 @@ public class Client {
   public static void main(String[] args) throws UnknownHostException, IOException, ClassNotFoundException {
     Socket client = new Socket("127.0.0.1", 1651);
     System.out.println(client.getRemoteSocketAddress());
-    OutputStream outToServer = client.getOutputStream();
-    DataOutputStream out = new DataOutputStream(outToServer);
-    ObjectOutputStream out_obj = new ObjectOutputStream(outToServer);
-
-
-    out.writeBytes("Hello from " + client.getLocalSocketAddress());
-    out.flush();
     
-    InputStream is = client.getInputStream();
-    ObjectInputStream inputStream = new ObjectInputStream(is);
-    DataInputStream dataStream = new DataInputStream(is);
+    ObjectOutputStream objectOutputStream = new ObjectOutputStream(client.getOutputStream());
+    ObjectInputStream objectInputStream = new ObjectInputStream(client.getInputStream());
+    
             
-    Map map = (Map) inputStream.readObject();
-    /* int id = (int) dataStream.readInt();
-    System.out.println("id :" + id + "\n");
-
-    String str = dataStream.readUTF();
-
-    //int size = (int) dataStream.readInt();
-    ArrayList<String> regions = (ArrayList<String>) inputStream.readObject();
-    System.out.print(str);
-    System.out.println("You have been assigned region : " + regions);
-    */
-    //read input
-    Scanner in = new Scanner(System.in);
+    Map map = (Map) objectInputStream.readObject();
+    System.out.println("Server->Client Map:"+map);
     
-    //Send output for each area
-    /*  for(int i = 0; i < regions.size(); i++){
-      str = dataStream.readUTF();
-      System.out.print(str);
-
-      //String no = "hi";
-      /*try{
-        no = in.nextInt();
-      }
-      catch(Exception e){
-        System.out.println("Invalid input");
-      }
-      finally{
-        if(no < 0){
-          System.out.println("Invalid input");
-        }
-        }*/
-      System.out.println("no");
-      out_obj.writeObject(map);
-      System.out.println("Client test");
-      out_obj.flush();
-      //}
+    objectOutputStream.writeObject(map);
     
-    inputStream.close();
-    dataStream.close();
-    out.close();
-    outToServer.close();
-    is.close();
+    objectOutputStream.flush();
+
+    
+    objectInputStream.close();
+    objectOutputStream.close();
     client.close();
 
     //display map
