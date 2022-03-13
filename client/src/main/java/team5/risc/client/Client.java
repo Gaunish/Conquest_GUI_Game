@@ -32,15 +32,13 @@ public class Client {
   public static void main(String[] args) throws UnknownHostException, IOException, ClassNotFoundException {
     Socket client = new Socket("127.0.0.1", 1651);
     System.out.println(client.getRemoteSocketAddress());
-    OutputStream outToServer = client.getOutputStream();
-    DataOutputStream out = new DataOutputStream(outToServer);
+    DataOutputStream out = new DataOutputStream(client.getOutputStream());
 
     out.writeBytes("Hello from " + client.getLocalSocketAddress());
     out.flush();
     
-    InputStream is = client.getInputStream();
-    ObjectInputStream inputStream = new ObjectInputStream(is);
-    DataInputStream dataStream = new DataInputStream(is);
+    ObjectInputStream inputStream = new ObjectInputStream(client.getInputStream());
+    DataInputStream dataStream = new DataInputStream(client.getInputStream());
             
     Map map = (Map) inputStream.readObject();
     int id = (int) dataStream.readInt();
@@ -77,11 +75,9 @@ public class Client {
       out.flush();
     }
     
-    inputStream.close();
     dataStream.close();
+    inputStream.close();
     out.close();
-    outToServer.close();
-    is.close();
     client.close();
 
     //display map
