@@ -36,6 +36,10 @@ public class Client {
     ObjectOutputStream objectOutputStream = new ObjectOutputStream(client.getOutputStream());
     ObjectInputStream objectInputStream = new ObjectInputStream(client.getInputStream());
     
+    DataOutputStream dataOutputStream = 
+      new DataOutputStream(client.getOutputStream());
+    DataInputStream dataInputStream = 
+      new DataInputStream(client.getInputStream());
             
     Map map = (Map) objectInputStream.readObject();
     System.out.println("Server->Client Map:"+map);
@@ -44,7 +48,10 @@ public class Client {
     
     objectOutputStream.flush();
 
-    
+    Integer i = dataInputStream.readInt();
+    System.out.println("Server->Client integer:"+i);
+    dataOutputStream.writeUTF("hello");
+
     objectInputStream.close();
     objectOutputStream.close();
     client.close();

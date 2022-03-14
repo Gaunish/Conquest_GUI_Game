@@ -100,6 +100,11 @@ public class Server {
       ObjectInputStream inputStream = 
         new ObjectInputStream(sock.getInputStream());
 
+      DataOutputStream dataOutputStream = 
+        new DataOutputStream(sock.getOutputStream());
+      DataInputStream dataInputStream = 
+        new DataInputStream(sock.getInputStream());
+
       outputStream.writeObject(map);
       outputStream.flush();
 
@@ -110,8 +115,12 @@ public class Server {
       catch(Exception e){
           System.out.println(e);
       }
-      System.out.println("Client->Server Map:"+map);
+
+      dataOutputStream.writeInt(100);
+      String response_str = dataInputStream.readUTF();
+      
       System.out.println("Recieved " + map.getAreasName() + " for  + area +  by Player" + id);
+      System.out.println("Client->Server Map:"+response_str);
       
       id++;
 
@@ -135,7 +144,7 @@ public class Server {
    */
   public static void main(String[] args) throws IOException {
     Server fs = new Server(1651);
-    fs.run(1);
+    fs.run(2);
   }
 }
 
