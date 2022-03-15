@@ -160,7 +160,7 @@ public class Server {
    */
   public static void main(String[] args) throws IOException {
     Server fs = new Server(1651);
-    fs.run(1);
+    fs.run(3);
   }
 }
 

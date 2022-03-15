@@ -30,7 +30,7 @@ import java.util.ArrayList;
 public class Client {
 
   public static void main(String[] args) throws UnknownHostException, IOException, ClassNotFoundException {
-    BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+    Scanner in = new Scanner(System.in);
     Socket client = new Socket("127.0.0.1", 1651);
     System.out.println(client.getRemoteSocketAddress());
 
@@ -58,26 +58,27 @@ public class Client {
     //Send output for each area
     for(int i = 0; i < regions.size(); i++){
       str = dataInputStream.readUTF();
-      System.out.print(str);
 
       int no = 0;
-      //while(no < 0){
-      //try{
-      String x = in.readLine();
-      System.out.println("X = " + x);
-        //no = Integer.parseInt(line);
-        //}
-        /*catch(Exception e){
-        System.out.println("Invalid input - ex " + no);
-        continue;
-      }
-      finally{
-        if(no < 0){
-          System.out.println("Invalid input");
+      while(true){
+        try{
+          System.out.print(str);
+          String line = in.nextLine();
+          no = Integer.parseInt(line);
+          System.out.println("Line : " + no);
+          break;
+         }
+        catch(Exception e){
+          System.out.println("Invalid input - exception ");
           continue;
         }
-        }*/
-      //}
+        finally{
+          if(no < 0){
+            System.out.println("Invalid input");
+            continue;
+          }
+        }
+      }
       dataOutputStream.writeInt(no);
       dataOutputStream.flush();
     }
