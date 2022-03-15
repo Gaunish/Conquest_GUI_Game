@@ -30,59 +30,68 @@ import java.util.ArrayList;
 public class Client {
 
   public static void main(String[] args) throws UnknownHostException, IOException, ClassNotFoundException {
+    BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
     Socket client = new Socket("127.0.0.1", 1651);
     System.out.println(client.getRemoteSocketAddress());
-    DataOutputStream out = new DataOutputStream(client.getOutputStream());
 
-    out.writeBytes("Hello from " + client.getLocalSocketAddress());
-    out.flush();
-    
-    ObjectInputStream inputStream = new ObjectInputStream(client.getInputStream());
-    DataInputStream dataStream = new DataInputStream(client.getInputStream());
+    ObjectOutputStream objectOutputStream = new ObjectOutputStream(client.getOutputStream());
+    ObjectInputStream objectInputStream = new ObjectInputStream(client.getInputStream());
+
+    DataOutputStream dataOutputStream = new DataOutputStream(client.getOutputStream());
+    DataInputStream dataInputStream = new DataInputStream(client.getInputStream());
             
-    Map map = (Map) inputStream.readObject();
-    int id = (int) dataStream.readInt();
+    Map map = (Map) objectInputStream.readObject();
+    int id = (int) dataInputStream.readInt();
     System.out.println("id :" + id + "\n");
 
-    String str = dataStream.readUTF();
+    String str = dataInputStream.readUTF();
 
     //int size = (int) dataStream.readInt();
-    ArrayList<String> regions = (ArrayList<String>) inputStream.readObject();
+    ArrayList<String> regions = (ArrayList<String>) objectInputStream.readObject();
     System.out.print(str);
     System.out.println("You have been assigned region : " + regions);
    
     //read input
-    Scanner in = new Scanner(System.in);
+    //Scanner in = new Scanner(System.in);
+    //in.useDelimiter(System.lineSeparator());
     
     //Send output for each area
     for(int i = 0; i < regions.size(); i++){
-      str = dataStream.readUTF();
+      str = dataInputStream.readUTF();
       System.out.print(str);
 
       int no = 0;
-      /*try{
-        no = in.nextInt();
-      }
-      catch(Exception e){
-        System.out.println("Invalid input");
+      //while(no < 0){
+      //try{
+      String x = in.readLine();
+      System.out.println("X = " + x);
+        //no = Integer.parseInt(line);
+        //}
+        /*catch(Exception e){
+        System.out.println("Invalid input - ex " + no);
+        continue;
       }
       finally{
         if(no < 0){
           System.out.println("Invalid input");
+          continue;
         }
         }*/
-      out.writeInt(no);
-      out.flush();
+      //}
+      dataOutputStream.writeInt(no);
+      dataOutputStream.flush();
     }
     
-    dataStream.close();
-    inputStream.close();
-    out.close();
+    objectInputStream.close();
+    objectOutputStream.close();
+    dataInputStream.close();
+    dataOutputStream.close();
     client.close();
-
+  
     //display map
     Display txt = new TextDisplay();
     txt.display(map, System.out);
-    
+
+    in.close();
   }
 }

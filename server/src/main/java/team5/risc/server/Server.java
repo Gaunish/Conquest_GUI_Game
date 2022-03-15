@@ -91,55 +91,55 @@ public class Server {
     //list of region of areas assigned to each player
     ArrayList<Region> regions = map.getInitRegions();
   
-    for (Socket sock: clientSocketSet) {
-      ObjectOutputStream outputStream = 
-        new ObjectOutputStream(sock.getOutputStream());
-      DataOutputStream dataStream = 
-      new DataOutputStream(sock.getOutputStream());
-      DataInputStream InputStream = 
-      new DataInputStream(sock.getInputStream());
+    for (Socket client: clientSocketSet) {
       
-      outputStream.writeObject(map);
-      outputStream.flush();
+    ObjectOutputStream objectOutputStream = new ObjectOutputStream(client.getOutputStream());
+    ObjectInputStream objectInputStream = new ObjectInputStream(client.getInputStream());
+
+    DataOutputStream dataOutputStream = new DataOutputStream(client.getOutputStream());
+    DataInputStream dataInputStream = new DataInputStream(client.getInputStream());
+
+      objectOutputStream.writeObject(map);
+      objectOutputStream.flush();
       
-      dataStream.writeInt(id);
-      dataStream.flush();
+      dataOutputStream.writeInt(id);
+      dataOutputStream.flush();
       System.out.println("Send map to client");    
   
       //send prompt
-      dataStream.writeUTF(strInfo.inform_unit);
-      dataStream.flush();
+      dataOutputStream.writeUTF(strInfo.inform_unit);
+      dataOutputStream.flush();
 
       //get region in text form for player
       Region region = regions.get(id);
       ArrayList<String> txt_region = region.getAreasName();
 
       //send region in text form
-      outputStream.writeObject(txt_region);
-      outputStream.flush();
+      objectOutputStream.writeObject(txt_region);
+      objectOutputStream.flush();
   
       //ask for input for each player
       for(String area : txt_region){
         System.out.println("id : " + id + " Area: " + area);
         strInfo.placeStr(area);
-        dataStream.writeUTF(strInfo.place_unit);
-        dataStream.flush();
+        dataOutputStream.writeUTF(strInfo.place_unit);
+        dataOutputStream.flush();
 
         int no = -1;
         try{
-          no = (int) InputStream.readInt();
+          no = (int) dataInputStream.readInt();
         }
         catch(Exception e){
           System.out.println(e);
         }
         System.out.println("Recieved " + no + " for " + area + " by Player" + id); 
-        }
+      }
       
       id++;
-
-      InputStream.close();
-      dataStream.close();
-      outputStream.close(); 
+      objectInputStream.close();
+      objectOutputStream.close();
+      dataInputStream.close();
+      dataOutputStream.close();
     }
 
     for(Socket c : clientSocketSet){
@@ -160,7 +160,7 @@ public class Server {
    */
   public static void main(String[] args) throws IOException {
     Server fs = new Server(1651);
-    fs.run(3);
+    fs.run(1);
   }
 }
 
