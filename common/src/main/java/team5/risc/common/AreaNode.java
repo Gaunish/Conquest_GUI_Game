@@ -110,4 +110,8 @@ public class AreaNode implements Serializable {
     }
     return neighbors_name;
   }
+
+  public LinkedHashSet<AreaNode> getNeighbors() {
+    return neighbors;
+  }
 }

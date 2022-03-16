@@ -112,12 +112,13 @@ public class Server {
 
       //get region in text form for player
       Region region = regions.get(id);
+      region.set_owner_id(id);
       ArrayList<String> txt_region = region.getAreasName();
 
       //send region in text form
       objectOutputStream.writeObject(txt_region);
       objectOutputStream.flush();
-  
+
       //ask for input for each player
       for(String area : txt_region){
         System.out.println("id : " + id + " Area: " + area);

@@ -90,6 +90,7 @@ public class Client {
     client.close();
   
     //display map
+    // System.out.print(map.getInitRegions());
     Display txt = new TextDisplay();
     txt.display(map, System.out);
 
