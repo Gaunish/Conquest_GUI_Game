@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.io.Serializable;
 
-public class AreaNode implements Serializable{
+public class AreaNode implements Serializable {
 
   private String name;
   private Army defender;
@@ -18,7 +18,7 @@ public class AreaNode implements Serializable{
     this.enemies = new ArrayList<Army>();
     this.neighbors = new LinkedHashSet<AreaNode>();
   }
-  
+
   public AreaNode(String name, int id) {
     this.name = name;
     this.defender = new IntArmy(id, id * 2); // owner_id -1 means this area has no owner
@@ -34,12 +34,20 @@ public class AreaNode implements Serializable{
     return defender.getOwnerId();
   }
 
-  public int getUnitNo(){
+  public int getDefenderUnit() {
     return defender.getUnitNum();
   }
 
   public void setDefender(Army new_defender) {
     defender = new_defender;
+  }
+
+  public void reduceDefender(int reduce_num) {
+    defender.removeUnit(reduce_num);
+  }
+
+  public void increaseDefender(int increase_num) {
+    defender.addUnit(increase_num);
   }
 
   public void addEnemy(Army to_add) {
