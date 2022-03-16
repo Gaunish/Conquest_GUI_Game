@@ -1,6 +1,6 @@
 package team5.risc.server;
 
-import team5.risc.common.Map;
+import team5.risc.common.*;
 // import team5.risc.common.Player;
 import java.net.*;
 import java.io.*;
@@ -11,6 +11,7 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
+import java.util.ArrayList;
 
 import java.net.ServerSocket;
 import java.io.IOException;
@@ -80,24 +81,72 @@ public class Server {
     System.out.println("All client finished, begin to read data");
 
     int id = 0;
-    for (Socket sock: clientSocketSet) {
-      ObjectOutputStream outputStream = 
-        new ObjectOutputStream(sock.getOutputStream());
-      DataOutputStream dataStream = 
-      new DataOutputStream(sock.getOutputStream());
+    //initial units assigned by server
+    int total_units = 5;
+    
+    //class to send strings to clients
+    MetaInfo strInfo = new MetaInfo();
+    strInfo.unitStr(total_units);
+    
+    //list of region of areas assigned to each player
+    ArrayList<Region> regions = map.getInitRegions();
+  
+    for (Socket client: clientSocketSet) {
       
-      outputStream.writeObject(map);
-      dataStream.writeInt(id);
-      System.out.println("Send map to client");
-      id++;
+    ObjectOutputStream objectOutputStream = new ObjectOutputStream(client.getOutputStream());
+    ObjectInputStream objectInputStream = new ObjectInputStream(client.getInputStream());
 
-      outputStream.close();
-      dataStream.close();
+    DataOutputStream dataOutputStream = new DataOutputStream(client.getOutputStream());
+    DataInputStream dataInputStream = new DataInputStream(client.getInputStream());
+
+      objectOutputStream.writeObject(map);
+      objectOutputStream.flush();
+      
+      dataOutputStream.writeInt(id);
+      dataOutputStream.flush();
+      System.out.println("Send map to client");    
+  
+      //send prompt
+      dataOutputStream.writeUTF(strInfo.inform_unit);
+      dataOutputStream.flush();
+
+      //get region in text form for player
+      Region region = regions.get(id);
+      ArrayList<String> txt_region = region.getAreasName();
+
+      //send region in text form
+      objectOutputStream.writeObject(txt_region);
+      objectOutputStream.flush();
+  
+      //ask for input for each player
+      for(String area : txt_region){
+        System.out.println("id : " + id + " Area: " + area);
+        strInfo.placeStr(area);
+        dataOutputStream.writeUTF(strInfo.place_unit);
+        dataOutputStream.flush();
+
+        int no = -1;
+        try{
+          no = (int) dataInputStream.readInt();
+        }
+        catch(Exception e){
+          System.out.println(e);
+        }
+        System.out.println("Recieved " + no + " for " + area + " by Player" + id); 
+      }
+      
+      id++;
+      objectInputStream.close();
+      objectOutputStream.close();
+      dataInputStream.close();
+      dataOutputStream.close();
     }
 
     for(Socket c : clientSocketSet){
       c.close();
     }
+
+    serverSocket.close();
   }
 
   /**

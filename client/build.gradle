@@ -6,6 +6,10 @@ plugins {
     id 'edu.duke.ece651.mp.java-application-conventions'
 }
 
+run{
+    standardInput = System.in
+}
+
 dependencies {
     implementation 'org.apache.commons:commons-text'
     implementation project(':common')
@@ -38,4 +42,8 @@ clover{
         xml=true
         html = true
     }
+}
+
+run{
+    standardInput = System.in
 }
