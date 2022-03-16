@@ -15,6 +15,7 @@ import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -41,6 +42,21 @@ public class Client {
     Map map = (Map) inputStream.readObject();
     int id = (int) dataStream.readInt();
 
+    //Display adjaceny information
+    ArrayList<String> areas = map.getAreaString(id);
+    ArrayList<ArrayList<String>> neighbors = map.getNeighbors(id);
+    for(int i = 0; i < areas.size(); i++){
+      System.out.println(areas.get(i) + "(next to: ");
+      ArrayList<String> currentNeighbors = neighbors.get(i);
+      for(int j = 0; j < currentNeighbors.size(); j++){
+        System.out.print(currentNeighbors.get(j));
+        if(j != currentNeighbors.size() - 1){
+          System.out.print(", ");
+        }
+      }
+      System.out.print(" )");
+    }
+    
     inputStream.close();
     dataStream.close();
     out.close();
@@ -54,3 +70,20 @@ public class Client {
     
   }
 }
+
+
+  // public void displayAdjacentInformation(Map map, int id){
+  //   ArrayList<String> areas = map.getAreas(id);
+  //   ArrayList<ArrayList<String>> neighbors = map.getNeighbors(id);
+  //   for(int i = 0; i < areas.size(); i++){
+  //     System.out.println(areas.get(i) + "(next to: ");
+  //     ArrayList<String> currentNeighbors = neighbors.get(i);
+  //     for(int j = 0; j < currentNeighbors.size(); j++){
+  //       System.out.print(currentNeighbors.get(j));
+  //       if(j != currentNeighbors.size() - 1){
+  //         System.out.print(", ");
+  //       }
+  //     }
+  //     System.out.print(" )");
+  //   }
+  // }
