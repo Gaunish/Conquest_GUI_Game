@@ -3,8 +3,9 @@ package team5.risc.common;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.io.Serializable;
 
-public class Region {
+public class Region implements Serializable{
   private int owner_id;
   private LinkedHashSet<AreaNode> areas;
 

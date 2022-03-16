@@ -3,7 +3,7 @@
  */
 package team5.risc.client;
 
-import team5.risc.common.Map;
+import team5.risc.common.*;
 
 import java.net.*;
 import java.io.*;
@@ -24,33 +24,75 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.io.PrintWriter;
+import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Client {
 
   public static void main(String[] args) throws UnknownHostException, IOException, ClassNotFoundException {
+    Scanner in = new Scanner(System.in);
     Socket client = new Socket("127.0.0.1", 1651);
     System.out.println(client.getRemoteSocketAddress());
-    OutputStream outToServer = client.getOutputStream();
-    DataOutputStream out = new DataOutputStream(outToServer);
 
-    out.writeBytes("Hello from " + client.getLocalSocketAddress());
-    InputStream is = client.getInputStream();
-    ObjectInputStream inputStream = new ObjectInputStream(is);
-    DataInputStream dataStream = new DataInputStream(is);
-    
-    Map map = (Map) inputStream.readObject();
-    int id = (int) dataStream.readInt();
+    ObjectOutputStream objectOutputStream = new ObjectOutputStream(client.getOutputStream());
+    ObjectInputStream objectInputStream = new ObjectInputStream(client.getInputStream());
 
-    inputStream.close();
-    dataStream.close();
-    out.close();
-    outToServer.close();
-    is.close();
-    client.close();
-
+    DataOutputStream dataOutputStream = new DataOutputStream(client.getOutputStream());
+    DataInputStream dataInputStream = new DataInputStream(client.getInputStream());
+            
+    Map map = (Map) objectInputStream.readObject();
+    int id = (int) dataInputStream.readInt();
     System.out.println("id :" + id + "\n");
-    System.out.println(map.getAreasName());
-    System.out.println(map.getRegions());
+
+    String str = dataInputStream.readUTF();
+
+    //int size = (int) dataStream.readInt();
+    ArrayList<String> regions = (ArrayList<String>) objectInputStream.readObject();
+    System.out.print(str);
+    System.out.println("You have been assigned region : " + regions);
+   
+    //read input
+    //Scanner in = new Scanner(System.in);
+    //in.useDelimiter(System.lineSeparator());
     
+    //Send output for each area
+    for(int i = 0; i < regions.size(); i++){
+      str = dataInputStream.readUTF();
+
+      int no = 0;
+      while(true){
+        try{
+          System.out.print(str);
+          String line = in.nextLine();
+          no = Integer.parseInt(line);
+          System.out.println("Line : " + no);
+          break;
+         }
+        catch(Exception e){
+          System.out.println("Invalid input - exception ");
+          continue;
+        }
+        finally{
+          if(no < 0){
+            System.out.println("Invalid input");
+            continue;
+          }
+        }
+      }
+      dataOutputStream.writeInt(no);
+      dataOutputStream.flush();
+    }
+    
+    objectInputStream.close();
+    objectOutputStream.close();
+    dataInputStream.close();
+    dataOutputStream.close();
+    client.close();
+  
+    //display map
+    Display txt = new TextDisplay();
+    txt.display(map, System.out);
+
+    in.close();
   }
 }
