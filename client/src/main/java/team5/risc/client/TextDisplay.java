@@ -17,7 +17,7 @@ public class TextDisplay implements Display {
     for (int i = 0; i < areas.size(); i++) {
       AreaNode area = areas.get(i);
       if(area.getOwnerId() == id){
-        out += area.getUnitNo() + " units in " + area.getName() + "\n";
+        out += area.getDefenderUnit() + " units in " + area.getName() + "\n";
       }
     }
     return out;

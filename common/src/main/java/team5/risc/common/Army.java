@@ -9,4 +9,5 @@ public interface Army{
 
   public void removeUnit(int num_to_remove) throws RuntimeException;
   public void addUnit(int num_to_add);
+  public Army deepCopy();
 }

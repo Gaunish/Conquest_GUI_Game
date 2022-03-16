@@ -71,12 +71,27 @@ public class AreaNode implements Serializable {
       }
     }
   }
-  /*
-   * public void removeEnemy(Army to_remove){ enemies.remove(to_remove); }
-   */
+
+  public void removeEnemy(Army to_remove) {
+    enemies.remove(to_remove);
+  }
 
   public Boolean noEnemyLeft() {
     return enemies.size() == 0;
+  }
+
+  public AreaNode deepCopy() {
+    AreaNode new_node = new AreaNode(name);
+    Army new_defender = defender.deepCopy();
+    new_node.setDefender(new_defender);
+    Iterator<Army> it = enemies.iterator();
+    while (it.hasNext()) {
+      Army cur_enemy = it.next();
+      Army new_enemy = cur_enemy.deepCopy();
+      new_node.addEnemy(new_enemy);
+    }
+    // can't add neighbor info here, neighbor info will be add in Map
+    return new_node;
   }
 
   public String toString() {
