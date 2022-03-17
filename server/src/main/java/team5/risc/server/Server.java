@@ -68,10 +68,12 @@ public class Server {
    * work in a thread pool.  Note that this method
    * runs until the current thread is interrupted
    * (by some other thread).
+   * @throws ClassNotFoundException
    */
-  public void run(int num_player) throws IOException{
+  public void run(int num_player) throws IOException, ClassNotFoundException{
     //Accept phase
-    Map map = new Map(2 * num_player, num_player);
+    // Map map = new Map(2 * num_player, num_player);
+    Map map = new Map();
     for (int i = 0; i < num_player; ++i) {
       Socket clientSocket = serverSocket.accept();
       System.out.println("client " + i + " accepted");
@@ -90,17 +92,26 @@ public class Server {
     
     //list of region of areas assigned to each player
     ArrayList<Region> regions = map.getInitRegions();
-  
+    
+    ArrayList<ObjectOutputStream> objectOutputStreamList = new ArrayList<>();
+    ArrayList<ObjectInputStream> objectInputStreamList = new ArrayList<>();
+    ArrayList<DataOutputStream> dataOutputStreamList = new ArrayList<>();
+    ArrayList<DataInputStream> dataInputStreamList = new ArrayList<>();
+
     for (Socket client: clientSocketSet) {
       
-    ObjectOutputStream objectOutputStream = new ObjectOutputStream(client.getOutputStream());
-    ObjectInputStream objectInputStream = new ObjectInputStream(client.getInputStream());
+      ObjectOutputStream objectOutputStream = new ObjectOutputStream(client.getOutputStream());
+      objectOutputStreamList.add(objectOutputStream);
 
-    DataOutputStream dataOutputStream = new DataOutputStream(client.getOutputStream());
-    DataInputStream dataInputStream = new DataInputStream(client.getInputStream());
+      ObjectInputStream objectInputStream = new ObjectInputStream(client.getInputStream());
+      objectInputStreamList.add(objectInputStream);
 
-      objectOutputStream.writeObject(map);
-      objectOutputStream.flush();
+      DataOutputStream dataOutputStream = new DataOutputStream(client.getOutputStream());
+      dataOutputStreamList.add(dataOutputStream);
+
+      DataInputStream dataInputStream = new DataInputStream(client.getInputStream());
+      dataInputStreamList.add(dataInputStream);
+
       
       dataOutputStream.writeInt(id);
       dataOutputStream.flush();
@@ -129,18 +140,73 @@ public class Server {
         int no = -1;
         try{
           no = (int) dataInputStream.readInt();
+          AreaNode node = map.getAreaNodeByName(area);
+          System.out.println("no:" + no);
+          region.set_init_unit(node, no);
         }
         catch(Exception e){
           System.out.println(e);
         }
-        System.out.println("Recieved " + no + " for " + area + " by Player" + id); 
+        System.out.println("Recieved " + no + " for " + area + " by Player " + id); 
       }
       
       id++;
-      objectInputStream.close();
-      objectOutputStream.close();
-      dataInputStream.close();
-      dataOutputStream.close();
+      objectInputStreamList.add(objectInputStream);
+      objectOutputStreamList.add(objectOutputStream);
+      dataInputStreamList.add(dataInputStream);
+      dataOutputStreamList.add(dataOutputStream);
+    }
+
+    //The phase of action
+
+    /// Validation
+    ActionValidator actionValidator = new ActionValidator();
+    for (int index = 0; index < num_player; index++) {
+      ObjectInputStream objIstream = objectInputStreamList.get(index);
+      ObjectOutputStream objOstream = objectOutputStreamList.get(index);
+      DataInputStream dataItream = dataInputStreamList.get(index);
+      DataOutputStream dataOtream = dataOutputStreamList.get(index);
+      // objOstream.writeObject(map);
+      // objOstream.flush();
+
+      System.out.println("AAAA");
+      while (true) {
+        //Receive Actions
+        MoveAction moveAction = (MoveAction) objIstream.readObject();
+        System.out.println("BBB:"+moveAction.source+moveAction.destination);
+        if (moveAction.is_terminated) {
+          System.out.println("Player "+ id + "finished, go to the next player");
+          dataOtream.writeUTF("correct");
+          break;
+        }
+        System.out.println("Move action from Player " + moveAction.player_id);
+        String res = actionValidator.isValid(moveAction, map);
+        if (res != null) {
+          dataOtream.writeUTF(res);
+        } else {
+          dataOtream.writeUTF("correct");
+        }
+      }
+    }
+    
+
+
+    /// Take action
+    
+
+
+
+    for (DataInputStream stream: dataInputStreamList) {
+      stream.close();
+    }
+    for (DataOutputStream stream: dataOutputStreamList) {
+      stream.close();
+    }
+    for (ObjectInputStream stream: objectInputStreamList) {
+      stream.close();
+    }
+    for (ObjectOutputStream stream: objectOutputStreamList) {
+      stream.close();
     }
 
     for(Socket c : clientSocketSet){
@@ -158,10 +224,11 @@ public class Server {
    * @param args is the command line arguments.  These are currently ignored.
    * @throws IOException if creation of the ServerSocket fails  (likely due
    * to the port being unavailable(.
+   * @throws ClassNotFoundException
    */
-  public static void main(String[] args) throws IOException {
+  public static void main(String[] args) throws IOException, ClassNotFoundException {
     Server fs = new Server(1651);
-    fs.run(3);
+    fs.run(1);
   }
 }
 

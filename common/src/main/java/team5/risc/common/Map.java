@@ -2,17 +2,22 @@ package team5.risc.common;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Map implements Serializable {
   private static final long serialVersionUID = 1L;
   private ArrayList<AreaNode> areas;
+  // private HashMap<String, AreaNode> name2areas;
   private int num_player;
   private ArrayList<Region> regions;
 
   public Map(int num_area) {
     this.areas = new ArrayList<AreaNode>();
+    // this.name2areas = new HashMap<>();
     for (int i = 0; i < num_area; i++) {
-      this.areas.add(new AreaNode("area" + i));
+      AreaNode areaNode = new AreaNode("area" + i);
+      this.areas.add(areaNode);
+      // this.name2areas.put("area" + i, areaNode);
     }
 
     // this.regions = new ArrayList<Region>();
@@ -21,8 +26,11 @@ public class Map implements Serializable {
 
   public Map(int num_area, int num_player) {
     this.areas = new ArrayList<AreaNode>();
+    // this.name2areas = new HashMap<>();
     for (int i = 0; i < num_area; i++) {
-      this.areas.add(new AreaNode("area" + i, i % num_player));
+      AreaNode areaNode = new AreaNode("area" + i, i % num_player);
+      this.areas.add(areaNode);
+      // this.name2areas.put("area" + i, areaNode);
     }
     this.num_player = num_player;
     this.regions = new ArrayList<Region>();
@@ -31,14 +39,27 @@ public class Map implements Serializable {
 
   public Map() {
     this.areas = new ArrayList<AreaNode>();
+    // this.name2areas = new HashMap<>();
     int num_area = 9;
     for (int i = 0; i < num_area; i++) {
-      this.areas.add(new AreaNode("area" + i));
+      AreaNode areaNode = new AreaNode("area" + i);
+      this.areas.add(areaNode);
+      // this.name2areas.put("area" + i, areaNode);
     }
     generateExampleMap();
     this.num_player = 3;
     this.regions = new ArrayList<Region>();
     generateInitRegions();
+  }
+
+  public AreaNode getAreaNodeByName(String name) {
+    for (AreaNode area: areas) {
+      if (area.getName().equals(name)) {
+        return area;
+      }
+    }
+    return null;
+    // return this.name2areas.get(name);
   }
 
   public ArrayList<String> getAreasName() {

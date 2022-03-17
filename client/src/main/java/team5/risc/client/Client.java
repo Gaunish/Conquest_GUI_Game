@@ -29,6 +29,10 @@ import java.util.ArrayList;
 
 public class Client {
 
+  // MoveAction getActionFromSTDIN() {
+
+  // }
+
   public static void main(String[] args) throws UnknownHostException, IOException, ClassNotFoundException {
     Scanner in = new Scanner(System.in);
     Socket client = new Socket("127.0.0.1", 1651);
@@ -39,8 +43,7 @@ public class Client {
 
     DataOutputStream dataOutputStream = new DataOutputStream(client.getOutputStream());
     DataInputStream dataInputStream = new DataInputStream(client.getInputStream());
-            
-    Map map = (Map) objectInputStream.readObject();
+    
     int id = (int) dataInputStream.readInt();
     System.out.println("id :" + id + "\n");
 
@@ -83,6 +86,20 @@ public class Client {
       dataOutputStream.flush();
     }
     
+    ArrayList<MoveAction> moveActionList = new ArrayList<>();
+    moveActionList.add(
+      new MoveAction(id, "area0", "area3", 3, false));
+    moveActionList.add(
+      new MoveAction(id, "area0", "area6", 3, false));
+    moveActionList.add(new 
+      MoveAction(id, null,null, -1,true));
+
+    for (MoveAction action: moveActionList) {
+      objectOutputStream.writeObject(action);
+      String response = dataInputStream.readUTF();
+      System.out.println(response);
+    }
+
     objectInputStream.close();
     objectOutputStream.close();
     dataInputStream.close();
@@ -92,7 +109,7 @@ public class Client {
     //display map
     // System.out.print(map.getInitRegions());
     Display txt = new TextDisplay();
-    txt.display(map, System.out);
+    // txt.display(map, System.out);
 
     in.close();
   }

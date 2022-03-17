@@ -3,21 +3,23 @@ import java.util.HashSet;
 
 public class ActionValidator {
   public String isValid(MoveAction a, Map map) {
-    
-    if (a.player_id != a.source.getOwnerId()) {
-      return "Player " + a.player_id + " has no access to " + a.source.getName() + ", which is owned by Player "
-          + a.source.getOwnerId();
+    AreaNode sourceNode = map.getAreaNodeByName(a.source);
+    AreaNode destinationNode = map.getAreaNodeByName(a.destination);
+
+    if (a.player_id != sourceNode.getOwnerId()) {
+      return "Player " + a.player_id + " has no access to " + sourceNode.getName() + ", which is owned by Player "
+          + sourceNode.getOwnerId();
     }
-    if (a.source.getOwnerId() != a.destination.getOwnerId()) {
-      return a.destination.getName() + " belongs to Player" + a.destination.getOwnerId();
+    if (sourceNode.getOwnerId() != destinationNode.getOwnerId()) {
+      return destinationNode.getName() + " belongs to Player" + destinationNode.getOwnerId();
     }
-    if (a.source.getDefenderUnit() < a.num_unit) {
-      return a.source.getName() + "doesn't have enough unit to move";
+    if (sourceNode.getDefenderUnit() < a.num_unit) {
+      return sourceNode.getName() + "doesn't have enough unit to move";
     }
 
     //Check reachability
-    Boolean reachable = checkReachable(a.source, a.destination, a.player_id);
-    if (reachable!= null) return "Unreachale";
+    Boolean reachable = checkReachable(sourceNode, destinationNode, a.player_id);
+    if (!reachable) return "Unreachale";
 
     return null;
   }

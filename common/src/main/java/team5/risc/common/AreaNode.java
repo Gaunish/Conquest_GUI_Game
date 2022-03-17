@@ -19,6 +19,19 @@ public class AreaNode implements Serializable {
     this.neighbors = new LinkedHashSet<AreaNode>();
   }
 
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == null) return false;
+    AreaNode other = (AreaNode) obj;
+    return other.name.equals(this.name);
+  }
+
+  @Override
+  public int hashCode(){
+    if (name == null) return -1;
+    return name.hashCode();
+  }
+
   public AreaNode(String name, int id) {
     this.name = name;
     this.defender = new IntArmy(id, id * 2); // owner_id -1 means this area has no owner
