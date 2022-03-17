@@ -18,31 +18,29 @@ public class Server {
   int listen_port;
 
   /**
-   * This constructts a FactorServer with the specified
-   * Factorer and ServerSocket.
-   * @param factorer The factorer to use to factor numbers that are read over
-   * the socket.
-   * @param sock The server socket to listen on
-   * @throws SocketException if thrown by attempting to set the listen
-   * timeout of the passed in ServerSocket.
+   * This constructts a FactorServer with the specified Factorer and ServerSocket.
+   * 
+   * @param factorer The factorer to use to factor numbers that are read over the
+   *                 socket.
+   * @param sock     The server socket to listen on
+   * @throws SocketException if thrown by attempting to set the listen timeout of
+   *                         the passed in ServerSocket.
    */
-  public Server(int listen_port)
-      throws SocketException, IOException {
+  public Server(int listen_port) throws SocketException, IOException {
     this.listen_port = listen_port;
     this.serverSocket = new ServerSocket(listen_port);
     this.clientSocketSet = new ArrayList<>();
   }
 
   /**
-   * This method is the main loop of the FactorServer.
-   * It accepts requests, and then queues them for
-   * work in a thread pool.  Note that this method
-   * runs until the current thread is interrupted
-   * (by some other thread).
+   * This method is the main loop of the FactorServer. It accepts requests, and
+   * then queues them for work in a thread pool. Note that this method runs until
+   * the current thread is interrupted (by some other thread).
+   * 
    * @throws ClassNotFoundException
    */
-  public void run(int num_player) throws IOException, ClassNotFoundException{
-    //Accept phase
+  public void run(int num_player) throws IOException, ClassNotFoundException {
+    // Accept phase
     // Map map = new Map(2 * num_player, num_player);
     Map map = new Map();
     for (int i = 0; i < num_player; ++i) {
@@ -54,28 +52,28 @@ public class Server {
     System.out.println("All client finished, begin to read data");
 
     int id = 0;
-    //initial units assigned by server
+    // initial units assigned by server
     int total_units = 5;
-    
-    //class to send strings to clients
+
+    // class to send strings to clients
     MetaInfo strInfo = new MetaInfo();
     strInfo.unitStr(total_units);
-    
-    //list of region of areas assigned to each player
+
+    // list of region of areas assigned to each player
     ArrayList<Region> regions = map.getInitRegions();
-    
+
     ArrayList<ObjectOutputStream> objectOutputStreamList = new ArrayList<>();
     ArrayList<ObjectInputStream> objectInputStreamList = new ArrayList<>();
     ArrayList<DataOutputStream> dataOutputStreamList = new ArrayList<>();
     ArrayList<DataInputStream> dataInputStreamList = new ArrayList<>();
 
-    for (Socket client: clientSocketSet) {
+    for (Socket client : clientSocketSet) {
       objectOutputStreamList.add(new ObjectOutputStream(client.getOutputStream()));
       objectInputStreamList.add(new ObjectInputStream(client.getInputStream()));
       dataOutputStreamList.add(new DataOutputStream(client.getOutputStream()));
       dataInputStreamList.add(new DataInputStream(client.getInputStream()));
     }
-    
+
     for (int index = 0; index < num_player; index++) {
       ObjectInputStream objectInputStream = objectInputStreamList.get(index);
       ObjectOutputStream objectOutputStream = objectOutputStreamList.get(index);
@@ -84,59 +82,59 @@ public class Server {
 
       dataOutputStream.writeInt(id);
       dataOutputStream.flush();
-  
-      //send prompt
+
+      // send prompt
       dataOutputStream.writeUTF(strInfo.inform_unit);
       dataOutputStream.flush();
 
-      //get region in text form for player
+      // get region in text form for player
       Region region = regions.get(id);
       region.set_owner_id(id);
       ArrayList<String> txt_region = region.getAreasName();
 
-      //send region in text form
+      // send region in text form
       objectOutputStream.writeObject(txt_region);
       objectOutputStream.flush();
 
-      //ask for input for each player
-      for(String area : txt_region){
+      // ask for input for each player
+      for (String area : txt_region) {
         System.out.println("id : " + id + " Area: " + area);
         strInfo.placeStr(area);
         dataOutputStream.writeUTF(strInfo.place_unit);
         dataOutputStream.flush();
 
         int no = -1;
-        try{
+        try {
           no = (int) dataInputStream.readInt();
           AreaNode node = map.getAreaNodeByName(area);
           System.out.println("no:" + no);
           region.set_init_unit(node, no);
-        }
-        catch(Exception e){
+        } catch (Exception e) {
           System.out.println(e);
         }
-        System.out.println("Recieved " + no + " for " + area + " by Player " + id); 
+        System.out.println("Recieved " + no + " for " + area + " by Player " + id);
       }
-      
+
       id++;
     }
 
-    //The phase of action
+    // The phase of action
 
-    /// Validation
+    /// Validation and execute Move Action
     ActionValidator actionValidator = new ActionValidator();
+    ActionExecutor actionExecutor = new ActionExecutor();
     for (int index = 0; index < num_player; index++) {
       ObjectInputStream objIstream = objectInputStreamList.get(index);
       ObjectOutputStream objOstream = objectOutputStreamList.get(index);
       DataInputStream dataItream = dataInputStreamList.get(index);
       DataOutputStream dataOtream = dataOutputStreamList.get(index);
-      
+
       while (true) {
-        //Receive Actions
-        System.out.println("Try to fetch move action from player "+index);
+        // Receive Actions
+        System.out.println("Try to fetch move action from player " + index);
         MoveAction moveAction = (MoveAction) objIstream.readObject();
         if (moveAction.is_terminated) {
-          System.out.println("Player "+ index + " finished, go to the next player");
+          System.out.println("Player " + index + " finished, go to the next player");
           dataOtream.writeUTF("correct and done");
           break;
         }
@@ -146,31 +144,27 @@ public class Server {
           dataOtream.writeUTF(res);
         } else {
           dataOtream.writeUTF("correct");
+          actionExecutor.execute(moveAction, map);
         }
       }
     }
-    
 
+    /// Take action (execute Attack Action, then combat)
 
-    /// Take action
-    
-
-
-
-    for (DataInputStream stream: dataInputStreamList) {
+    for (DataInputStream stream : dataInputStreamList) {
       stream.close();
     }
-    for (DataOutputStream stream: dataOutputStreamList) {
+    for (DataOutputStream stream : dataOutputStreamList) {
       stream.close();
     }
-    for (ObjectInputStream stream: objectInputStreamList) {
+    for (ObjectInputStream stream : objectInputStreamList) {
       stream.close();
     }
-    for (ObjectOutputStream stream: objectOutputStreamList) {
+    for (ObjectOutputStream stream : objectOutputStreamList) {
       stream.close();
     }
 
-    for(Socket c : clientSocketSet){
+    for (Socket c : clientSocketSet) {
       c.close();
     }
 
@@ -179,12 +173,12 @@ public class Server {
 
   /**
    * This main method runs the factor server, listening on port 1651.
-   * Specifically, it creates an instance and calls run.
-   * When done from the command line, this program runs until
-   * externally killed.
-   * @param args is the command line arguments.  These are currently ignored.
-   * @throws IOException if creation of the ServerSocket fails  (likely due
-   * to the port being unavailable(.
+   * Specifically, it creates an instance and calls run. When done from the
+   * command line, this program runs until externally killed.
+   * 
+   * @param args is the command line arguments. These are currently ignored.
+   * @throws IOException            if creation of the ServerSocket fails (likely
+   *                                due to the port being unavailable(.
    * @throws ClassNotFoundException
    */
   public static void main(String[] args) throws IOException, ClassNotFoundException {
@@ -192,16 +186,3 @@ public class Server {
     fs.run(3);
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
