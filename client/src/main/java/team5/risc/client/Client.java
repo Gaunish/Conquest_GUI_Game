@@ -29,6 +29,10 @@ import java.util.ArrayList;
 
 public class Client {
 
+  // MoveAction getActionFromSTDIN() {
+
+  // }
+
   public static void main(String[] args) throws UnknownHostException, IOException, ClassNotFoundException {
     Scanner in = new Scanner(System.in);
     Socket client = new Socket("127.0.0.1", 1651);
@@ -39,8 +43,7 @@ public class Client {
 
     DataOutputStream dataOutputStream = new DataOutputStream(client.getOutputStream());
     DataInputStream dataInputStream = new DataInputStream(client.getInputStream());
-            
-    Map map = (Map) objectInputStream.readObject();
+    
     int id = (int) dataInputStream.readInt();
     System.out.println("id :" + id + "\n");
 
@@ -78,26 +81,43 @@ public class Client {
     */
 
     //Arbitrary number, get 3 Action inputs
-    for(int i = 0; i < 3; i++){
+    ArrayList<MoveAction> moveActionList = new ArrayList<>();
+    while(true){
       String action = user_in.getAction(name);
 
       //check if input (M)ove
       if(action.equals("M")){
-        MoveAction m = user_in.getMove();
-        System.out.println("Recieved move " + m.getStr());
+        MoveAction m = user_in.getMove(id);
+        System.out.println("Recieved move "+m.source+" "+m.destination);
+        objectOutputStream.writeObject(m);
+        String response = dataInputStream.readUTF();
+        System.out.println(response);
+      } else if (action.equals("D")){
+        //End message
+        System.out.println("Write Done message 1");
+        objectOutputStream.writeObject(new 
+          MoveAction(id, null,null, -1, true));
+          System.out.println("Write Done message 2");
+        String response = dataInputStream.readUTF();
+        System.out.println(response);
+        break;
       }
     }
     
-    objectInputStream.close();
-    objectOutputStream.close();
-    dataInputStream.close();
-    dataOutputStream.close();
-    client.close();
-  
-    //display map
-    Display txt_map = new TextDisplayMap(System.out);
-    txt_map.display(map);
+    //Finished Phase
+    while(true) {
 
-    in.close();
+    }
+    // objectInputStream.close();
+    // objectOutputStream.close();
+    // dataInputStream.close();
+    // dataOutputStream.close();
+    // client.close();
+  
+    // //display map
+    // Display txt_map = new TextDisplayMap(System.out);
+    // // txt_map.display(map);
+
+    // in.close();
   }
 }

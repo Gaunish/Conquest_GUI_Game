@@ -6,7 +6,6 @@ public class IntArmy implements Army, Serializable {
   private int owner_id;
   private int unit_num;
 
-  
   public IntArmy(int owner_id, int unit_num) {
     this.owner_id = owner_id; // owner_id -1 means this area has no owner
     this.unit_num = unit_num;
@@ -38,6 +37,10 @@ public class IntArmy implements Army, Serializable {
       throw new UnsupportedOperationException("Armies don't have the same owner. Merge request is refused.");
     }
     unit_num += to_merge.getUnitNum();
+  }
+
+  public Army deepCopy() {
+    return new IntArmy(owner_id, unit_num);
   }
 
   public String toString() {

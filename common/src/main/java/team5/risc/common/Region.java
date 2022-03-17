@@ -20,7 +20,7 @@ public class Region implements Serializable{
 
   public void set_init_unit(AreaNode the_area, int unit_num) throws RuntimeException {
     if (areas.contains(the_area)) {
-      the_area.setDefender(new IntArmy(owner_id, unit_num));
+      the_area.setDefender(new IntArmy(this.owner_id, unit_num));
     } else {
       throw new UnsupportedOperationException("The area doesn't belong to this onwer");
     }

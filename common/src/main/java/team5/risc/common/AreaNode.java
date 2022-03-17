@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.io.Serializable;
 
-public class AreaNode implements Serializable{
+public class AreaNode implements Serializable {
 
   private String name;
   private Army defender;
@@ -18,7 +18,20 @@ public class AreaNode implements Serializable{
     this.enemies = new ArrayList<Army>();
     this.neighbors = new LinkedHashSet<AreaNode>();
   }
-  
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == null) return false;
+    AreaNode other = (AreaNode) obj;
+    return other.name.equals(this.name);
+  }
+
+  @Override
+  public int hashCode(){
+    if (name == null) return -1;
+    return name.hashCode();
+  }
+
   public AreaNode(String name, int id) {
     this.name = name;
     this.defender = new IntArmy(id, id * 2); // owner_id -1 means this area has no owner
@@ -34,12 +47,20 @@ public class AreaNode implements Serializable{
     return defender.getOwnerId();
   }
 
-  public int getUnitNo(){
+  public int getDefenderUnit() {
     return defender.getUnitNum();
   }
 
   public void setDefender(Army new_defender) {
     defender = new_defender;
+  }
+
+  public void reduceDefender(int reduce_num) {
+    defender.removeUnit(reduce_num);
+  }
+
+  public void increaseDefender(int increase_num) {
+    defender.addUnit(increase_num);
   }
 
   public void addEnemy(Army to_add) {
@@ -63,12 +84,27 @@ public class AreaNode implements Serializable{
       }
     }
   }
-  /*
-   * public void removeEnemy(Army to_remove){ enemies.remove(to_remove); }
-   */
+
+  public void removeEnemy(Army to_remove) {
+    enemies.remove(to_remove);
+  }
 
   public Boolean noEnemyLeft() {
     return enemies.size() == 0;
+  }
+
+  public AreaNode deepCopy() {
+    AreaNode new_node = new AreaNode(name);
+    Army new_defender = defender.deepCopy();
+    new_node.setDefender(new_defender);
+    Iterator<Army> it = enemies.iterator();
+    while (it.hasNext()) {
+      Army cur_enemy = it.next();
+      Army new_enemy = cur_enemy.deepCopy();
+      new_node.addEnemy(new_enemy);
+    }
+    // can't add neighbor info here, neighbor info will be add in Map
+    return new_node;
   }
 
   public String toString() {
@@ -86,5 +122,9 @@ public class AreaNode implements Serializable{
       neighbors_name.add(it.next().getName());
     }
     return neighbors_name;
+  }
+
+  public LinkedHashSet<AreaNode> getNeighbors() {
+    return neighbors;
   }
 }

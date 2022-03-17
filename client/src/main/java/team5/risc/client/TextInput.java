@@ -60,7 +60,7 @@ public class TextInput implements Input{
 
         //Get input
         user_in = in.nextLine();
-
+        out.print("input is:"+user_in);
         if(!user_in.equals("M") && !user_in.equals("A") && !user_in.equals("D")){
           error_msg("Invalid Input");
           continue;
@@ -76,7 +76,7 @@ public class TextInput implements Input{
     return user_in;
   }
 
-  public MoveAction getMove(){
+  public MoveAction getMove(int id){
     String prompt = "Enter the source, destination, no of players\n";
     MoveAction move;
     //Be in while loop till valid input
@@ -103,7 +103,7 @@ public class TextInput implements Input{
           continue;
         }
         
-        move = new MoveAction(values[0], values[1], no);
+        move = new MoveAction(id, values[0], values[1], no, false);
         break;
       }
       catch(Exception e){
