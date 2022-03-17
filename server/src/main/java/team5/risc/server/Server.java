@@ -4,46 +4,17 @@ import team5.risc.common.*;
 // import team5.risc.common.Player;
 import java.net.*;
 import java.io.*;
-import java.nio.*;
 
-import java.nio.ByteBuffer;
-import java.nio.channels.SelectionKey;
-import java.nio.channels.Selector;
-import java.nio.channels.ServerSocketChannel;
-import java.nio.channels.SocketChannel;
 import java.util.ArrayList;
 
 import java.net.ServerSocket;
 import java.io.IOException;
 import java.net.Socket;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.io.PrintWriter;
-import java.net.SocketTimeoutException;
 import java.net.SocketException;
 
-/**
- * This class does the actual network service of
- * the factor server.   An instance of this
- * class holds a ServerSocket and a Factorer
- * and the run method listens on that socket
- * accepts requests, and sends them to
- * the given Factorer for factoring.
- *
- */
 public class Server {
   ServerSocket serverSocket;
-  // ThreadPoolExecutor threadPool;
-  // Factorer factorer;
-  HashSet<Socket> clientSocketSet;
-  // private Selector selector;
-  // ServerSocketChannel serverSocketChannel;
+  ArrayList<Socket> clientSocketSet;
   int listen_port;
 
   /**
@@ -59,7 +30,7 @@ public class Server {
       throws SocketException, IOException {
     this.listen_port = listen_port;
     this.serverSocket = new ServerSocket(listen_port);
-    this.clientSocketSet = new HashSet<>();
+    this.clientSocketSet = new ArrayList<>();
   }
 
   /**
@@ -99,23 +70,20 @@ public class Server {
     ArrayList<DataInputStream> dataInputStreamList = new ArrayList<>();
 
     for (Socket client: clientSocketSet) {
-      
-      ObjectOutputStream objectOutputStream = new ObjectOutputStream(client.getOutputStream());
-      objectOutputStreamList.add(objectOutputStream);
+      objectOutputStreamList.add(new ObjectOutputStream(client.getOutputStream()));
+      objectInputStreamList.add(new ObjectInputStream(client.getInputStream()));
+      dataOutputStreamList.add(new DataOutputStream(client.getOutputStream()));
+      dataInputStreamList.add(new DataInputStream(client.getInputStream()));
+    }
+    
+    for (int index = 0; index < num_player; index++) {
+      ObjectInputStream objectInputStream = objectInputStreamList.get(index);
+      ObjectOutputStream objectOutputStream = objectOutputStreamList.get(index);
+      DataInputStream dataInputStream = dataInputStreamList.get(index);
+      DataOutputStream dataOutputStream = dataOutputStreamList.get(index);
 
-      ObjectInputStream objectInputStream = new ObjectInputStream(client.getInputStream());
-      objectInputStreamList.add(objectInputStream);
-
-      DataOutputStream dataOutputStream = new DataOutputStream(client.getOutputStream());
-      dataOutputStreamList.add(dataOutputStream);
-
-      DataInputStream dataInputStream = new DataInputStream(client.getInputStream());
-      dataInputStreamList.add(dataInputStream);
-
-      
       dataOutputStream.writeInt(id);
       dataOutputStream.flush();
-      System.out.println("Send map to client");    
   
       //send prompt
       dataOutputStream.writeUTF(strInfo.inform_unit);
@@ -151,10 +119,6 @@ public class Server {
       }
       
       id++;
-      objectInputStreamList.add(objectInputStream);
-      objectOutputStreamList.add(objectOutputStream);
-      dataInputStreamList.add(dataInputStream);
-      dataOutputStreamList.add(dataOutputStream);
     }
 
     //The phase of action
@@ -166,17 +130,14 @@ public class Server {
       ObjectOutputStream objOstream = objectOutputStreamList.get(index);
       DataInputStream dataItream = dataInputStreamList.get(index);
       DataOutputStream dataOtream = dataOutputStreamList.get(index);
-      // objOstream.writeObject(map);
-      // objOstream.flush();
-
-      System.out.println("AAAA");
+      
       while (true) {
         //Receive Actions
+        System.out.println("Try to fetch move action from player "+index);
         MoveAction moveAction = (MoveAction) objIstream.readObject();
-        System.out.println("BBB:"+moveAction.source+moveAction.destination);
         if (moveAction.is_terminated) {
-          System.out.println("Player "+ id + "finished, go to the next player");
-          dataOtream.writeUTF("correct");
+          System.out.println("Player "+ index + " finished, go to the next player");
+          dataOtream.writeUTF("correct and done");
           break;
         }
         System.out.println("Move action from Player " + moveAction.player_id);
@@ -228,7 +189,7 @@ public class Server {
    */
   public static void main(String[] args) throws IOException, ClassNotFoundException {
     Server fs = new Server(1651);
-    fs.run(1);
+    fs.run(3);
   }
 }
 

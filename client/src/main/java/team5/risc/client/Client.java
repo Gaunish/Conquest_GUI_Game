@@ -82,7 +82,7 @@ public class Client {
 
     //Arbitrary number, get 3 Action inputs
     ArrayList<MoveAction> moveActionList = new ArrayList<>();
-    for(int i = 0; i < 3; i++){
+    while(true){
       String action = user_in.getAction(name);
 
       //check if input (M)ove
@@ -92,38 +92,32 @@ public class Client {
         objectOutputStream.writeObject(m);
         String response = dataInputStream.readUTF();
         System.out.println(response);
+      } else if (action.equals("D")){
+        //End message
+        System.out.println("Write Done message 1");
+        objectOutputStream.writeObject(new 
+          MoveAction(id, null,null, -1, true));
+          System.out.println("Write Done message 2");
+        String response = dataInputStream.readUTF();
+        System.out.println(response);
+        break;
       }
     }
     
     //Finished Phase
-    objectOutputStream.writeObject(new 
-       MoveAction(id, null,null, -1, true));
-    String response = dataInputStream.readUTF();
-    System.out.println(response);
-    
-    // moveActionList.add(
-    //   new MoveAction(id, "area0", "area3", 3, false));
-    // moveActionList.add(
-    //   new MoveAction(id, "area0", "area6", 3, false));
-    // moveActionList.add(new 
-    //   MoveAction(id, null,null, -1, true));
+    while(true) {
 
-    // for (MoveAction action: moveActionList) {
-    //   objectOutputStream.writeObject(action);
-    //   String response = dataInputStream.readUTF();
-    //   System.out.println(response);
-    // }
-
-    objectInputStream.close();
-    objectOutputStream.close();
-    dataInputStream.close();
-    dataOutputStream.close();
-    client.close();
+    }
+    // objectInputStream.close();
+    // objectOutputStream.close();
+    // dataInputStream.close();
+    // dataOutputStream.close();
+    // client.close();
   
-    //display map
-    Display txt_map = new TextDisplayMap(System.out);
-    // txt_map.display(map);
+    // //display map
+    // Display txt_map = new TextDisplayMap(System.out);
+    // // txt_map.display(map);
 
-    in.close();
+    // in.close();
   }
 }
