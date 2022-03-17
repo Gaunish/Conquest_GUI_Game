@@ -9,5 +9,12 @@ public class ActionExecutor {
   }
 
   public void execute(AttackAction a, Map map) {
+    AreaNode sourceNode = map.getAreaNodeByName(a.source);
+    AreaNode destinationNode = map.getAreaNodeByName(a.destination);
+    // skip if no enough unit
+    if (sourceNode.getDefenderUnit() >= a.num_unit) {
+      sourceNode.reduceDefender(a.num_unit);
+      destinationNode.addEnemy(new IntArmy(a.player_id, a.num_unit));
+    }
   }
 }
