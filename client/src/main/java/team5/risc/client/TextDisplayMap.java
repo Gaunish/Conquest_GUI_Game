@@ -4,9 +4,15 @@ import team5.risc.common.*;
 import java.io.PrintStream;
 import java.util.ArrayList;
 
-public class TextDisplay implements Display {
+public class TextDisplayMap implements Display {
+  private PrintStream out;
+
+  public TextDisplayMap(PrintStream output){
+    this.out = output;
+  }
+
   //Display map 
-  public void display(Map m, PrintStream out){
+  public void display(Map m){
     String display_str = getRegions(m);
     out.println(display_str);
   }

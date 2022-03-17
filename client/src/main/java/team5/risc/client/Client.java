@@ -47,58 +47,72 @@ public class Client {
     int id = (int) dataInputStream.readInt();
     System.out.println("id :" + id + "\n");
 
-    String str = dataInputStream.readUTF();
+    String no_assigned = dataInputStream.readUTF();
 
     //int size = (int) dataStream.readInt();
     ArrayList<String> regions = (ArrayList<String>) objectInputStream.readObject();
-    System.out.print(str);
+    System.out.print(no_assigned);
     System.out.println("You have been assigned region : " + regions);
    
     //read input
-    //Scanner in = new Scanner(System.in);
-    //in.useDelimiter(System.lineSeparator());
-    
+    Input user_in = new TextInput(System.in, System.out);
+    String name = "Player " + id;
+
+    /*
+    ----------------------------------------------------------------------------
+      PLACEMENT PHASE
+    ----------------------------------------------------------------------------
+    */
     //Send output for each area
     for(int i = 0; i < regions.size(); i++){
-      str = dataInputStream.readUTF();
+      String area = dataInputStream.readUTF();
 
-      int no = 0;
-      while(true){
-        try{
-          System.out.print(str);
-          String line = in.nextLine();
-          no = Integer.parseInt(line);
-          System.out.println("Line : " + no);
-          break;
-         }
-        catch(Exception e){
-          System.out.println("Invalid input - exception ");
-          continue;
-        }
-        finally{
-          if(no < 0){
-            System.out.println("Invalid input");
-            continue;
-          }
-        }
-      }
+      int no = user_in.getPlacement(area);
+  
+      //send int
       dataOutputStream.writeInt(no);
       dataOutputStream.flush();
     }
-    
-    ArrayList<MoveAction> moveActionList = new ArrayList<>();
-    moveActionList.add(
-      new MoveAction(id, "area0", "area3", 3, false));
-    moveActionList.add(
-      new MoveAction(id, "area0", "area6", 3, false));
-    moveActionList.add(new 
-      MoveAction(id, null,null, -1,true));
 
-    for (MoveAction action: moveActionList) {
-      objectOutputStream.writeObject(action);
-      String response = dataInputStream.readUTF();
-      System.out.println(response);
+    /*
+    ----------------------------------------------------------------------------
+      MOVE PHASE
+    ----------------------------------------------------------------------------
+    */
+
+    //Arbitrary number, get 3 Action inputs
+    ArrayList<MoveAction> moveActionList = new ArrayList<>();
+    for(int i = 0; i < 3; i++){
+      String action = user_in.getAction(name);
+
+      //check if input (M)ove
+      if(action.equals("M")){
+        MoveAction m = user_in.getMove(id);
+        System.out.println("Recieved move "+m.source+" "+m.destination);
+        objectOutputStream.writeObject(m);
+        String response = dataInputStream.readUTF();
+        System.out.println(response);
+      }
     }
+    
+    //Finished Phase
+    objectOutputStream.writeObject(new 
+       MoveAction(id, null,null, -1, true));
+    String response = dataInputStream.readUTF();
+    System.out.println(response);
+    
+    // moveActionList.add(
+    //   new MoveAction(id, "area0", "area3", 3, false));
+    // moveActionList.add(
+    //   new MoveAction(id, "area0", "area6", 3, false));
+    // moveActionList.add(new 
+    //   MoveAction(id, null,null, -1, true));
+
+    // for (MoveAction action: moveActionList) {
+    //   objectOutputStream.writeObject(action);
+    //   String response = dataInputStream.readUTF();
+    //   System.out.println(response);
+    // }
 
     objectInputStream.close();
     objectOutputStream.close();
@@ -107,9 +121,8 @@ public class Client {
     client.close();
   
     //display map
-    // System.out.print(map.getInitRegions());
-    Display txt = new TextDisplay();
-    // txt.display(map, System.out);
+    Display txt_map = new TextDisplayMap(System.out);
+    // txt_map.display(map);
 
     in.close();
   }
