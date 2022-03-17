@@ -1,4 +1,5 @@
 package team5.risc.common;
+
 import java.util.HashSet;
 
 public class ActionValidator {
@@ -17,14 +18,33 @@ public class ActionValidator {
       return sourceNode.getName() + "doesn't have enough unit to move";
     }
 
-    //Check reachability
+    // Check reachability
     Boolean reachable = checkReachable(sourceNode, destinationNode, a.player_id);
-    if (!reachable) return "Unreachale";
-
+    if (!reachable) {
+      return "Unreachale";
+    }
     return null;
   }
 
   public String isValid(AttackAction a, Map map) {
+    AreaNode sourceNode = map.getAreaNodeByName(a.source);
+    AreaNode destinationNode = map.getAreaNodeByName(a.destination);
+
+    if (a.player_id != sourceNode.getOwnerId()) {
+      return "Player " + a.player_id + " has no access to " + sourceNode.getName() + ", which is owned by Player "
+          + sourceNode.getOwnerId();
+    }
+
+    if (sourceNode.getOwnerId() == destinationNode.getOwnerId()) {
+      return destinationNode.getName() + " also belongs to Player" + destinationNode.getOwnerId()
+          + ", please attack other players' areas";
+    }
+
+    // Check reachability
+    Boolean reachable = sourceNode.getNeighbors().contains(destinationNode);
+    if (!reachable) {
+      return "Unreachable";
+    }
     return null;
   }
 
@@ -34,14 +54,17 @@ public class ActionValidator {
   }
 
   public Boolean dfs(AreaNode src, AreaNode dest, int player_id, HashSet<String> visited) {
-    if (visited.contains(src.getName())) return false;
+    if (visited.contains(src.getName()))
+      return false;
     visited.add(src.getName());
 
-    if (src.getName().equals(dest.getName())) return true;
+    if (src.getName().equals(dest.getName()))
+      return true;
     for (AreaNode node : src.getNeighbors()) {
       if (node.getOwnerId() == player_id) {
         Boolean flag = dfs(node, dest, player_id, visited);
-        if (flag == true) return true;
+        if (flag == true)
+          return true;
       }
     }
     return false;
