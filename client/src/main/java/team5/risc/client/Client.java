@@ -92,12 +92,21 @@ public class Client {
         objectOutputStream.writeObject(m);
         String response = dataInputStream.readUTF();
         System.out.println(response);
-      } else if (action.equals("D")){
+      } 
+
+      // check if input (A)ttack
+      else if(action.equals("A")){
+        AttackAction m = user_in.getAttack(id);
+        System.out.println("Recieved attack " + m.source + " " + m.destination);
+      }
+      
+      //Check if input (D)one
+      else if (action.equals("D")){
         //End message
         System.out.println("Write Done message 1");
         objectOutputStream.writeObject(new 
           MoveAction(id, null,null, -1, true));
-          System.out.println("Write Done message 2");
+        System.out.println("Write Done message 2");
         String response = dataInputStream.readUTF();
         System.out.println(response);
         break;

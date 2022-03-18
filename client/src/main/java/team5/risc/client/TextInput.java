@@ -78,41 +78,62 @@ public class TextInput implements Input{
 
   public MoveAction getMove(int id){
     String prompt = "Enter the source, destination, no of players\n";
-    MoveAction move;
-    //Be in while loop till valid input
-    while(true){
-      try{
-        //print prompt
+
+    String[] values = getValues(prompt);
+    int no_unit = Integer.parseInt(values[2]);
+
+    MoveAction move = new MoveAction(id, values[0], values[1], no_unit, false);
+    
+    return move;
+  }
+
+  public AttackAction getAttack(int id){
+    String prompt = "Enter the source, destination, no of players\n";
+    
+    String[] values = getValues(prompt);
+    int no_unit = Integer.parseInt(values[2]);
+
+    AttackAction attack = new AttackAction(id, values[0], values[1], no_unit);
+    
+    return attack;
+  }
+  
+  private String[] getValues(String prompt){
+    String[] values;
+ 
+    // Be in while loop till valid input
+    while (true) {
+      try {
+        // print prompt
         out.print(prompt);
 
-        //Get input
+        // Get input
         String user_in = in.nextLine();
-        String[] values = user_in.split(" ");
+        values = user_in.split(" ");
 
-        //Invalid input 1
-        if(values.length != 3){
+        // Invalid input 1
+        if (values.length != 3) {
           error_msg("Invalid no of args");
           continue;
         }
-        
+
         int no = Integer.parseInt(values[2]);
 
-        //Invalid input 2
-        if(no <= 0){
+        // Invalid input 2
+        if (no <= 0) {
           error_msg("Negative no of input");
           continue;
         }
-        
-        move = new MoveAction(id, values[0], values[1], no, false);
+
         break;
-      }
-      catch(Exception e){
+
+      } catch (Exception e) {
         error_msg("Invalid input");
         continue;
       }
     }
 
-    return move;
+    return values; 
   }
 
 }

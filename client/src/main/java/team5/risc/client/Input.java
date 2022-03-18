@@ -6,4 +6,5 @@ public interface Input {
   public String getAction(String name);
   public int getPlacement(String area);
   public MoveAction getMove(int id);
+  public AttackAction getAttack(int id);
 }

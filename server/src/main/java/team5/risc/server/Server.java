@@ -183,6 +183,6 @@ public class Server {
    */
   public static void main(String[] args) throws IOException, ClassNotFoundException {
     Server fs = new Server(1651);
-    fs.run(3);
+    fs.run(1);
   }
 }
