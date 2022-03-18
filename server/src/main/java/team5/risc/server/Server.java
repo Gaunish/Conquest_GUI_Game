@@ -7,6 +7,9 @@ import java.io.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+
+import javax.swing.ToolTipManager;
+
 import java.net.ServerSocket;
 import java.io.IOException;
 import java.net.Socket;
@@ -54,7 +57,7 @@ public class Server {
 
     int id = 0;
     // initial units assigned by server
-    int total_units = 5;
+    int total_units = 50;
 
     // class to send strings to clients
     MetaInfo strInfo = new MetaInfo();
@@ -104,12 +107,17 @@ public class Server {
         dataOutputStream.writeUTF(strInfo.place_unit);
         dataOutputStream.flush();
 
+        int assignedUnit = 0;
         int no = -1;
         try {
           no = (int) dataInputStream.readInt();
           AreaNode node = map.getAreaNodeByName(area);
           System.out.println("no:" + no);
           region.set_init_unit(node, no);
+          assignedUnit += no;
+          if (assignedUnit > total_units) {
+            System.out.println("Placement Invalid, but now we ignore it");
+          }
         } catch (Exception e) {
           System.out.println(e);
         }
@@ -118,6 +126,8 @@ public class Server {
 
       id++;
     }
+
+    System.out.println("Placement Phase has done");
 
     /*
      * ACTION PHASE
