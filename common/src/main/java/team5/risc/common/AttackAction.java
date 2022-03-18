@@ -5,6 +5,6 @@ public class AttackAction extends SimpleAction {
                       String src,
                       String dst,
                       int unit) {
-        super(player_id, src, dst, unit, false);
+        super(player_id, src, dst, unit);
     }
 }

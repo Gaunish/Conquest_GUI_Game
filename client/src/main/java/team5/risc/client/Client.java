@@ -70,11 +70,21 @@ public class Client {
     for(int i = 0; i < regions.size(); i++){
       String area = dataInputStream.readUTF();
 
-      int no = user_in.getPlacement(area);
+      while(true){
+        int no = user_in.getPlacement(area);
   
-      //send int
-      dataOutputStream.writeInt(no);
-      dataOutputStream.flush();
+        //send int
+        dataOutputStream.writeInt(no);
+        dataOutputStream.flush();
+
+        String result = dataInputStream.readUTF();
+        if(result.equals("Success")){
+          break;
+        }
+        else{
+          System.out.println(result);
+        }
+      }
     }
 
     /*
@@ -157,19 +167,10 @@ public class Client {
           System.out.println(response);
 
         }
-        
         //Check if input (D)one
         else if (action.equals("D")){
           // write "Done"
           dataOutputStream.writeUTF("Done");
-
-          //End message
-          System.out.println("Write Done message 1");
-          objectOutputStream.writeObject(new 
-            MoveAction(id, null,null, -1, true));
-          System.out.println("Write Done message 2");
-          String response = dataInputStream.readUTF();
-          System.out.println(response);
           break;
         }
       }

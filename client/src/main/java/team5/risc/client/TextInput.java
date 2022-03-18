@@ -82,7 +82,7 @@ public class TextInput implements Input{
     String[] values = getValues(prompt);
     int no_unit = Integer.parseInt(values[2]);
 
-    MoveAction move = new MoveAction(id, values[0], values[1], no_unit, false);
+    MoveAction move = new MoveAction(id, values[0], values[1], no_unit);
     
     return move;
   }

@@ -100,6 +100,7 @@ public class Server {
       objectOutputStream.writeObject(txt_region);
       objectOutputStream.flush();
 
+      int no_units = 0;
       // ask for input for each player
       for (String area : txt_region) {
         System.out.println("id : " + id + " Area: " + area);
@@ -107,21 +108,30 @@ public class Server {
         dataOutputStream.writeUTF(strInfo.place_unit);
         dataOutputStream.flush();
 
-        int assignedUnit = 0;
-        int no = -1;
-        try {
-          no = (int) dataInputStream.readInt();
-          AreaNode node = map.getAreaNodeByName(area);
-          System.out.println("no:" + no);
-          region.set_init_unit(node, no);
-          assignedUnit += no;
-          if (assignedUnit > total_units) {
-            System.out.println("Placement Invalid, but now we ignore it");
+        while(true){
+          int no = -1;
+          try {
+            no = (int) dataInputStream.readInt();
+            AreaNode node = map.getAreaNodeByName(area);
+            System.out.println("no:" + no);
+            System.out.println("Recieved " + no + " for " + area + " by Player " + id);
+            if ((no_units + no) > total_units) {
+              String error = "Placement Invalid, Input: " + no + " Remaining: " + (total_units - no_units);
+              dataOutputStream.writeUTF(error);
+              continue;
+            }
+            else{
+              no_units += no;
+              region.set_init_unit(node, no);
+              dataOutputStream.writeUTF("Success");
+              break;
+            }
+          } 
+          catch (Exception e) {
+            System.out.println(e);
+            continue;
           }
-        } catch (Exception e) {
-          System.out.println(e);
         }
-        System.out.println("Recieved " + no + " for " + area + " by Player " + id);
       }
 
       id++;
@@ -199,16 +209,10 @@ public class Server {
           // Get the action type
           String action = dataItream.readUTF();
 
-          // MOVE, DONE ACTION
-          if (action.equals("Move") || action.equals("Done")) {
+          // MOVE ACTION
+          if (action.equals("Move")) {
             MoveAction moveAction = (MoveAction) objIstream.readObject();
 
-            // DONE ACTION
-            if (moveAction.is_terminated) {
-              System.out.println("Player " + index + " finished, go to the next player");
-              dataOtream.writeUTF("correct and done");
-              break;
-            }
             // MOVE ACTION
             System.out.println("Move action from Player " + moveAction.player_id);
             String res = actionValidator.isValid(moveAction, map);
@@ -230,6 +234,9 @@ public class Server {
               dataOtream.writeUTF("correct");
               attackActionList.add(attackAction);
             }
+          }
+          else if(action.equals("Done")){
+            break;
           }
         }
       }
