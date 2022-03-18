@@ -100,6 +100,7 @@ public class Server {
       objectOutputStream.writeObject(txt_region);
       objectOutputStream.flush();
 
+      int no_units = 0;
       // ask for input for each player
       for (String area : txt_region) {
         System.out.println("id : " + id + " Area: " + area);
@@ -107,21 +108,30 @@ public class Server {
         dataOutputStream.writeUTF(strInfo.place_unit);
         dataOutputStream.flush();
 
-        int assignedUnit = 0;
-        int no = -1;
-        try {
-          no = (int) dataInputStream.readInt();
-          AreaNode node = map.getAreaNodeByName(area);
-          System.out.println("no:" + no);
-          region.set_init_unit(node, no);
-          assignedUnit += no;
-          if (assignedUnit > total_units) {
-            System.out.println("Placement Invalid, but now we ignore it");
+        while(true){
+          int no = -1;
+          try {
+            no = (int) dataInputStream.readInt();
+            AreaNode node = map.getAreaNodeByName(area);
+            System.out.println("no:" + no);
+            System.out.println("Recieved " + no + " for " + area + " by Player " + id);
+            if ((no_units + no) > total_units) {
+              String error = "Placement Invalid, Input: " + no + " Remaining: " + (total_units - no_units);
+              dataOutputStream.writeUTF(error);
+              continue;
+            }
+            else{
+              no_units += no;
+              region.set_init_unit(node, no);
+              dataOutputStream.writeUTF("Success");
+              break;
+            }
+          } 
+          catch (Exception e) {
+            System.out.println(e);
+            continue;
           }
-        } catch (Exception e) {
-          System.out.println(e);
         }
-        System.out.println("Recieved " + no + " for " + area + " by Player " + id);
       }
 
       id++;
