@@ -33,4 +33,12 @@ public class MapTest {
     assertEquals(r1.toString(), "-1: [area1, area3]");
   }
 
+  @Test
+  public void test_map_generator() {
+    Map m = new Map(2, 1);
+    ArrayList<String> path = new ArrayList<String>();
+    path.add("0->1");
+    path.add("1->0");
+    assertEquals(path, m.generateMap());
+  }
 }
