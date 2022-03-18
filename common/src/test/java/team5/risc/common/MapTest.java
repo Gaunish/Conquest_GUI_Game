@@ -27,8 +27,8 @@ public class MapTest {
   @Test
   public void test_region() {
     Map m = new Map(4, 2);
-    Region r0 = m.getInitRegions().get(0);
-    Region r1 = m.getInitRegions().get(1);
+    Region r0 = m.getRegions().get(0);
+    Region r1 = m.getRegions().get(1);
     assertEquals(r0.toString(), "-1: [area0, area2]");
     assertEquals(r1.toString(), "-1: [area1, area3]");
   }
