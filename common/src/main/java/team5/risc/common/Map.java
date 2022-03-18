@@ -116,6 +116,16 @@ public class Map implements Serializable {
     return areas;
   }
 
+  public boolean is_loser(int id){
+    ArrayList<AreaNode> areas = getAreas();
+    for(AreaNode area : areas){
+      if(area.getOwnerId() == id){
+        return false;
+      }
+    } 
+    return true;
+  }
+
   // Displays map
   // currently coupled to system.out
   public void displayMap() {

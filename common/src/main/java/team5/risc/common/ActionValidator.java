@@ -3,6 +3,8 @@ package team5.risc.common;
 import java.util.HashSet;
 
 public class ActionValidator {
+
+  //Validate move action
   public String isValid(MoveAction a, Map map) {
     AreaNode sourceNode = map.getAreaNodeByName(a.source);
     AreaNode destinationNode = map.getAreaNodeByName(a.destination);

@@ -80,24 +80,60 @@ public class Client {
     ----------------------------------------------------------------------------
     */
 
-    //Arbitrary number, get 3 Action inputs
     ArrayList<MoveAction> moveActionList = new ArrayList<>();
+
+    /*
+      ------------------------------------------------
+      Protocol:
+      ------------------------------------------------
+      Client first sends a string explaining 
+      which action it is going to send ->
+      
+      1) Move for MoveAction
+      2) Attack for AttackAction
+      3) Done for DoneAction
+      ------------------------------------------------
+    */
+
     while(true){
       String action = user_in.getAction(name);
 
       //check if input (M)ove
       if(action.equals("M")){
+
+        //write "Move"
+        dataOutputStream.writeUTF("Move");
+
         MoveAction m = user_in.getMove(id);
         System.out.println("Recieved move "+m.source+" "+m.destination);
         objectOutputStream.writeObject(m);
         String response = dataInputStream.readUTF();
         System.out.println(response);
-      } else if (action.equals("D")){
+      } 
+
+      // check if input (A)ttack
+      else if(action.equals("A")){
+        // write "Attack"
+        dataOutputStream.writeUTF("Attack");
+
+        AttackAction m = user_in.getAttack(id);
+        System.out.println("Recieved attack " + m.source + " " + m.destination);
+        objectOutputStream.writeObject(m);
+        String response = dataInputStream.readUTF();
+        System.out.println(response);
+
+      }
+      
+      //Check if input (D)one
+      else if (action.equals("D")){
+        // write "Done"
+        dataOutputStream.writeUTF("Done");
+
         //End message
         System.out.println("Write Done message 1");
         objectOutputStream.writeObject(new 
           MoveAction(id, null,null, -1, true));
-          System.out.println("Write Done message 2");
+        System.out.println("Write Done message 2");
         String response = dataInputStream.readUTF();
         System.out.println(response);
         break;

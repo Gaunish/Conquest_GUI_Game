@@ -1,7 +1,7 @@
 package team5.risc.server;
 
 import team5.risc.common.*;
-// import team5.risc.common.Player;
+import team5.risc.common.Players;
 import java.net.*;
 import java.io.*;
 
@@ -43,6 +43,7 @@ public class Server {
     // Accept phase
     // Map map = new Map(2 * num_player, num_player);
     Map map = new Map();
+    Players players = new Players(num_player);
     for (int i = 0; i < num_player; ++i) {
       Socket clientSocket = serverSocket.accept();
       System.out.println("client " + i + " accepted");
@@ -50,7 +51,7 @@ public class Server {
       clientSocketSet.add(clientSocket);
     }
     System.out.println("All client finished, begin to read data");
-
+  
     int id = 0;
     // initial units assigned by server
     int total_units = 5;
@@ -118,33 +119,75 @@ public class Server {
       id++;
     }
 
-    // The phase of action
+    /*
+     * ACTION PHASE
+     * ------------------------------------------------
+     * Protocol:
+     * ------------------------------------------------
+     * Server a string explaining
+     * which action it is going to recieve ->
+     * 
+     * 1) Move for MoveAction
+     * 2) Attack for AttackAction
+     * 3) Done for DoneAction
+     * ------------------------------------------------
+     */
 
     /// Validation and execute Move Action
     ActionValidator actionValidator = new ActionValidator();
     ActionExecutor actionExecutor = new ActionExecutor();
     for (int index = 0; index < num_player; index++) {
+      //check if player has lost
+      boolean has_lost = players.has_lost(map, index);
+      if(has_lost == true){
+        continue;
+      }
+
       ObjectInputStream objIstream = objectInputStreamList.get(index);
       ObjectOutputStream objOstream = objectOutputStreamList.get(index);
       DataInputStream dataItream = dataInputStreamList.get(index);
       DataOutputStream dataOtream = dataOutputStreamList.get(index);
 
       while (true) {
+        
         // Receive Actions
-        System.out.println("Try to fetch move action from player " + index);
-        MoveAction moveAction = (MoveAction) objIstream.readObject();
-        if (moveAction.is_terminated) {
-          System.out.println("Player " + index + " finished, go to the next player");
-          dataOtream.writeUTF("correct and done");
-          break;
+        System.out.println("Try to fetch action from player " + index);
+        
+        //Get the action type
+        String action = dataItream.readUTF();
+        
+        //MOVE, DONE ACTION
+        if(action.equals("Move") || action.equals("Done")){
+          MoveAction moveAction = (MoveAction) objIstream.readObject();
+          
+          //DONE ACTION
+          if (moveAction.is_terminated) {
+            System.out.println("Player " + index + " finished, go to the next player");
+            dataOtream.writeUTF("correct and done");
+            break;
+          }
+
+          //MOVE ACTION
+          System.out.println("Move action from Player " + moveAction.player_id);
+          String res = actionValidator.isValid(moveAction, map);
+          if (res != null) {
+            dataOtream.writeUTF(res);
+          } else {
+            dataOtream.writeUTF("correct");
+            actionExecutor.execute(moveAction, map);
+          }
         }
-        System.out.println("Move action from Player " + moveAction.player_id);
-        String res = actionValidator.isValid(moveAction, map);
-        if (res != null) {
-          dataOtream.writeUTF(res);
-        } else {
-          dataOtream.writeUTF("correct");
-          actionExecutor.execute(moveAction, map);
+        //ATTACK ACTION
+        else if(action.equals("Attack")){
+          AttackAction attackAction = (AttackAction) objIstream.readObject();
+          System.out.println("Attack action from Player " + attackAction.player_id);
+          String res = actionValidator.isValid(attackAction, map);
+          if (res != null) {
+            dataOtream.writeUTF(res);
+          } else {
+            dataOtream.writeUTF("correct");
+            actionExecutor.execute(attackAction, map);
+          }
         }
       }
     }
@@ -183,6 +226,6 @@ public class Server {
    */
   public static void main(String[] args) throws IOException, ClassNotFoundException {
     Server fs = new Server(1651);
-    fs.run(3);
+    fs.run(1);
   }
 }
