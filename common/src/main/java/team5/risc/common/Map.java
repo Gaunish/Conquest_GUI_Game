@@ -135,7 +135,7 @@ public class Map implements Serializable {
     }
   }
 
-  public ArrayList<Region> getInitRegions() {
+  public ArrayList<Region> getRegions() {
     return regions;
   }
 

@@ -61,7 +61,7 @@ public class Server {
     strInfo.unitStr(total_units);
 
     // list of region of areas assigned to each player
-    ArrayList<Region> regions = map.getInitRegions();
+    ArrayList<Region> regions = map.getRegions();
 
     ArrayList<ObjectOutputStream> objectOutputStreamList = new ArrayList<>();
     ArrayList<ObjectInputStream> objectInputStreamList = new ArrayList<>();
@@ -223,6 +223,19 @@ public class Server {
           }
         }
       }
+      // prepare attack army
+      for (AttackAction a : attackActionList) {
+        actionExecutor.execute(a, map);
+      }
+      // combat
+      for (AreaNode area : map.getAreas()) {
+        while (!area.noEnemyLeft()) {
+          Army defender = area.getDefender();
+          Army attacker = area.popFirstEnemy();
+          actionExecutor.combatExecute(defender, attacker, map, area);
+        }
+      }
+
     }
 
     // for (DataInputStream stream : dataInputStreamList) {

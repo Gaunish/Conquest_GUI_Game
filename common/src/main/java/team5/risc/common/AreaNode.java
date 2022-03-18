@@ -21,14 +21,16 @@ public class AreaNode implements Serializable {
 
   @Override
   public boolean equals(Object obj) {
-    if (obj == null) return false;
+    if (obj == null)
+      return false;
     AreaNode other = (AreaNode) obj;
     return other.name.equals(this.name);
   }
 
   @Override
-  public int hashCode(){
-    if (name == null) return -1;
+  public int hashCode() {
+    if (name == null)
+      return -1;
     return name.hashCode();
   }
 
@@ -39,7 +41,7 @@ public class AreaNode implements Serializable {
     this.neighbors = new LinkedHashSet<AreaNode>();
   }
 
-  public Army getArmy(){
+  public Army getArmy() {
     return defender;
   }
 
@@ -57,6 +59,10 @@ public class AreaNode implements Serializable {
 
   public void setDefender(Army new_defender) {
     defender = new_defender;
+  }
+
+  public Army getDefender() {
+    return defender;
   }
 
   public void reduceDefender(int reduce_num) {
@@ -95,6 +101,16 @@ public class AreaNode implements Serializable {
 
   public Boolean noEnemyLeft() {
     return enemies.size() == 0;
+  }
+
+  public Army popFirstEnemy() {
+    if (enemies.size() > 0) {
+      Army the_enemy = enemies.get(0);
+      enemies.remove(the_enemy);
+      return the_enemy;
+    } else {
+      return null;
+    }
   }
 
   public AreaNode deepCopy() {
