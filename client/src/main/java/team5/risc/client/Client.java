@@ -100,6 +100,10 @@ public class Client {
 
       //check if input (M)ove
       if(action.equals("M")){
+
+        //write "Move"
+        dataOutputStream.writeUTF("Move");
+
         MoveAction m = user_in.getMove(id);
         System.out.println("Recieved move "+m.source+" "+m.destination);
         objectOutputStream.writeObject(m);
@@ -109,12 +113,22 @@ public class Client {
 
       // check if input (A)ttack
       else if(action.equals("A")){
+        // write "Attack"
+        dataOutputStream.writeUTF("Attack");
+
         AttackAction m = user_in.getAttack(id);
         System.out.println("Recieved attack " + m.source + " " + m.destination);
+        objectOutputStream.writeObject(m);
+        String response = dataInputStream.readUTF();
+        System.out.println(response);
+
       }
       
       //Check if input (D)one
       else if (action.equals("D")){
+        // write "Done"
+        dataOutputStream.writeUTF("Done");
+
         //End message
         System.out.println("Write Done message 1");
         objectOutputStream.writeObject(new 

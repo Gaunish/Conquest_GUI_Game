@@ -143,20 +143,43 @@ public class Server {
 
       while (true) {
         // Receive Actions
-        System.out.println("Try to fetch move action from player " + index);
-        MoveAction moveAction = (MoveAction) objIstream.readObject();
-        if (moveAction.is_terminated) {
-          System.out.println("Player " + index + " finished, go to the next player");
-          dataOtream.writeUTF("correct and done");
-          break;
+        System.out.println("Try to fetch action from player " + index);
+        
+        //Get the action type
+        String action = dataItream.readUTF();
+        
+        //MOVE, DONE ACTION
+        if(action.equals("Move") || action.equals("Done")){
+          MoveAction moveAction = (MoveAction) objIstream.readObject();
+          
+          //DONE ACTION
+          if (moveAction.is_terminated) {
+            System.out.println("Player " + index + " finished, go to the next player");
+            dataOtream.writeUTF("correct and done");
+            break;
+          }
+
+          //MOVE ACTION
+          System.out.println("Move action from Player " + moveAction.player_id);
+          String res = actionValidator.isValid(moveAction, map);
+          if (res != null) {
+            dataOtream.writeUTF(res);
+          } else {
+            dataOtream.writeUTF("correct");
+            actionExecutor.execute(moveAction, map);
+          }
         }
-        System.out.println("Move action from Player " + moveAction.player_id);
-        String res = actionValidator.isValid(moveAction, map);
-        if (res != null) {
-          dataOtream.writeUTF(res);
-        } else {
-          dataOtream.writeUTF("correct");
-          actionExecutor.execute(moveAction, map);
+        //ATTACK ACTION
+        else if(action.equals("Attack")){
+          AttackAction attackAction = (AttackAction) objIstream.readObject();
+          System.out.println("Attack action from Player " + attackAction.player_id);
+          String res = actionValidator.isValid(attackAction, map);
+          if (res != null) {
+            dataOtream.writeUTF(res);
+          } else {
+            dataOtream.writeUTF("correct");
+            actionExecutor.execute(attackAction, map);
+          }
         }
       }
     }
