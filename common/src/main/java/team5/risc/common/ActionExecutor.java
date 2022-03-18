@@ -25,7 +25,12 @@ public class ActionExecutor {
       //Get attacking army
       Army defender = destinationNode.getArmy();
       Army attacker = new IntArmy(sourceNode.getOwnerId(), no_unit);
+      }
+  }
+  
 
+  public void CombatExecute(Army defender,Army attacker, Map map, AreaNode dest){
+  
       //Do combat, get winner
       Combat c = new DiceCombat(20, 1);
       Army winner = c.doCombat(defender, attacker);
@@ -33,16 +38,15 @@ public class ActionExecutor {
       //Print winner
       System.out.println("Combat winner : " + winner.getOwnerId());
 
-      //Update region, areaNode
-      if(winner.getOwnerId() == destinationNode.getOwnerId()){
+      //Update region, areaNode, if attacker wins
+      if(winner.getOwnerId() == attacker.getOwnerId()){
         //Update areaNode
-        destinationNode.setDefender(winner);
+        dest.setDefender(winner);
 
         //Update regions
-        map.getInitRegions().get(destinationNode.getOwnerId()).removeArea(destinationNode);
-        map.getInitRegions().get(sourceNode.getOwnerId()).addArea(destinationNode);
+        map.getInitRegions().get(defender.getOwnerId()).removeArea(dest);
+        map.getInitRegions().get(attacker.getOwnerId()).addArea(dest);
       }
-    }
   }
 
 }
