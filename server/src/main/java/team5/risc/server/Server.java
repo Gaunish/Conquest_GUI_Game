@@ -1,7 +1,7 @@
 package team5.risc.server;
 
 import team5.risc.common.*;
-// import team5.risc.common.Player;
+import team5.risc.common.Players;
 import java.net.*;
 import java.io.*;
 
@@ -43,6 +43,7 @@ public class Server {
     // Accept phase
     // Map map = new Map(2 * num_player, num_player);
     Map map = new Map();
+    Players players = new Players(num_player);
     for (int i = 0; i < num_player; ++i) {
       Socket clientSocket = serverSocket.accept();
       System.out.println("client " + i + " accepted");
@@ -50,7 +51,7 @@ public class Server {
       clientSocketSet.add(clientSocket);
     }
     System.out.println("All client finished, begin to read data");
-
+  
     int id = 0;
     // initial units assigned by server
     int total_units = 5;
@@ -136,12 +137,19 @@ public class Server {
     ActionValidator actionValidator = new ActionValidator();
     ActionExecutor actionExecutor = new ActionExecutor();
     for (int index = 0; index < num_player; index++) {
+      //check if player has lost
+      boolean has_lost = players.has_lost(map, index);
+      if(has_lost == true){
+        continue;
+      }
+
       ObjectInputStream objIstream = objectInputStreamList.get(index);
       ObjectOutputStream objOstream = objectOutputStreamList.get(index);
       DataInputStream dataItream = dataInputStreamList.get(index);
       DataOutputStream dataOtream = dataOutputStreamList.get(index);
 
       while (true) {
+        
         // Receive Actions
         System.out.println("Try to fetch action from player " + index);
         
