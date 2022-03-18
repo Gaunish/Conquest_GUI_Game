@@ -22,6 +22,9 @@ import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
+
+import javax.annotation.meta.When;
+
 import java.util.concurrent.ThreadPoolExecutor;
 import java.io.PrintWriter;
 import java.util.Scanner;
@@ -160,18 +163,15 @@ public class Client {
     }
     
     //Finished Phase
-    while(true) {
+    // while(true) {
 
-    }
+    // }
     // objectInputStream.close();
     // objectOutputStream.close();
     // dataInputStream.close();
     // dataOutputStream.close();
     // client.close();
   
-    // //display map
-    // Display txt_map = new TextDisplayMap(System.out);
-    // // txt_map.display(map);
 
     // in.close();
   }
