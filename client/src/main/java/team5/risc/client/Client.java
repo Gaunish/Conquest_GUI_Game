@@ -24,6 +24,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 import javax.annotation.meta.When;
+import javax.sound.midi.SysexMessage;
 
 import java.util.concurrent.ThreadPoolExecutor;
 import java.io.PrintWriter;
@@ -38,7 +39,9 @@ public class Client {
 
   public static void main(String[] args) throws UnknownHostException, IOException, ClassNotFoundException {
     Scanner in = new Scanner(System.in);
-    Socket client = new Socket("127.0.0.1", 1651);
+    Integer port = Integer.parseInt(args[1]);
+
+    Socket client = new Socket(args[0], port);
     System.out.println(client.getRemoteSocketAddress());
 
     ObjectOutputStream objectOutputStream = new ObjectOutputStream(client.getOutputStream());
@@ -180,13 +183,13 @@ public class Client {
     // while(true) {
 
     // }
-    // objectInputStream.close();
-    // objectOutputStream.close();
-    // dataInputStream.close();
-    // dataOutputStream.close();
-    // client.close();
+    objectInputStream.close();
+    objectOutputStream.close();
+    dataInputStream.close();
+    dataOutputStream.close();
+    client.close();
   
 
-    // in.close();
+    in.close();
   }
 }

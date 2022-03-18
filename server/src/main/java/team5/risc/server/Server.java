@@ -286,7 +286,7 @@ public class Server {
    * @throws ClassNotFoundException
    */
   public static void main(String[] args) throws IOException, ClassNotFoundException {
-    Server fs = new Server(1651);
-    fs.run(2);
+    Server fs = new Server(Integer.parseInt(args[0]));
+    fs.run(Integer.parseInt(args[1]));
   }
 }
