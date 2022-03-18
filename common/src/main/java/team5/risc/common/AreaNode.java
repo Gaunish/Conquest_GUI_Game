@@ -41,9 +41,9 @@ public class AreaNode implements Serializable {
     this.neighbors = new LinkedHashSet<AreaNode>();
   }
 
-  public Army getArmy() {
-    return defender;
-  }
+  // public Army getArmy() {
+  // return defender;
+  // }
 
   public String getName() {
     return name;
