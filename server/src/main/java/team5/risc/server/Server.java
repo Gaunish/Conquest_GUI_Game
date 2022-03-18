@@ -138,6 +138,16 @@ public class Server {
     ActionExecutor actionExecutor = new ActionExecutor();
 
     while (true) {
+      //Send Map
+      TextDisplayMap txt_map = new TextDisplayMap(System.out);
+      String map_info = txt_map.display(map);
+      //Broadcast information
+      for (int i = 0; i < num_player; ++i) {
+        DataOutputStream dataOutputStream = dataOutputStreamList.get(i);
+        dataOutputStream.writeUTF(map_info);
+      }
+      ArrayList<AttackAction> attackActionList = new ArrayList<>();
+
       for (int index = 0; index < num_player; index++) {
         ObjectInputStream objIstream = objectInputStreamList.get(index);
         ObjectOutputStream objOstream = objectOutputStreamList.get(index);
@@ -154,13 +164,6 @@ public class Server {
         else{
           dataOtream.writeUTF("Player"); 
         }
-        
-        //Send Map
-        TextDisplayMap textDisplayMap = new TextDisplayMap(System.out);
-        String mapInfoStr = textDisplayMap.display(map);
-        dataOtream.writeUTF(mapInfoStr);
-
-        ArrayList<AttackAction> attackActionList = new ArrayList<>();
 
         while (true) {
           
@@ -180,7 +183,6 @@ public class Server {
               dataOtream.writeUTF("correct and done");
               break;
             }
-
             //MOVE ACTION
             System.out.println("Move action from Player " + moveAction.player_id);
             String res = actionValidator.isValid(moveAction, map);
