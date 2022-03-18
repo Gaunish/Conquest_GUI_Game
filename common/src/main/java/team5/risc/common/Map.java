@@ -28,11 +28,12 @@ public class Map implements Serializable {
     this.areas = new ArrayList<AreaNode>();
     // this.name2areas = new HashMap<>();
     for (int i = 0; i < num_area; i++) {
-      AreaNode areaNode = new AreaNode("area" + i, i % num_player);
+      AreaNode areaNode = new AreaNode("area" + i, -1);
       this.areas.add(areaNode);
       // this.name2areas.put("area" + i, areaNode);
     }
     this.num_player = num_player;
+    generateMap();
     this.regions = new ArrayList<Region>();
     generateInitRegions();
   }
@@ -153,25 +154,24 @@ public class Map implements Serializable {
     return true;
   }
 
-  public boolean is_winner(int id){
+  public boolean is_winner(int id) {
     ArrayList<AreaNode> areas = getAreas();
     int no = 0;
-    for(AreaNode area : areas){
-      if(area.getOwnerId() == id){
+    for (AreaNode area : areas) {
+      if (area.getOwnerId() == id) {
         no++;
-      }
-      else{
+      } else {
         return false;
       }
-    } 
-    
-    //Double checking
-    if(no == areas.size()){
+    }
+
+    // Double checking
+    if (no == areas.size()) {
       return true;
     }
     return false;
 
-  } 
+  }
 
   // Displays map
   // currently coupled to system.out
@@ -179,4 +179,12 @@ public class Map implements Serializable {
     System.out.println("Hello World");
   }
 
+  public String toString() {
+    String ans = new String();
+    for (AreaNode a : areas) {
+      ans += a;
+      ans += "\n";
+    }
+    return ans;
+  }
 }
