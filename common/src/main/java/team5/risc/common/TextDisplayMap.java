@@ -29,7 +29,7 @@ public class TextDisplayMap implements Display {
         for (AreaNode areaNode: area.getNeighbors()) {
           out += areaNode.getName() + ",";
         }
-        out = out.substring(0, out.length() - 2);
+        out = out.substring(0, out.length() - 1);
         out += ")\n";
       }
     }
