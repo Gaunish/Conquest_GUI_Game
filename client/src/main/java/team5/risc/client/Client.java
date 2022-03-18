@@ -22,6 +22,9 @@ import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
+
+import javax.annotation.meta.When;
+
 import java.util.concurrent.ThreadPoolExecutor;
 import java.io.PrintWriter;
 import java.util.Scanner;
@@ -94,65 +97,64 @@ public class Client {
       3) Done for DoneAction
       ------------------------------------------------
     */
+    while(true) {
+      // Iterate each turn
+      String map_info = dataInputStream.readUTF();
+      System.out.println(map_info);
 
-    while(true){
-      String action = user_in.getAction(name);
-
-      //check if input (M)ove
-      if(action.equals("M")){
-
-        //write "Move"
-        dataOutputStream.writeUTF("Move");
-
-        MoveAction m = user_in.getMove(id);
-        System.out.println("Recieved move "+m.source+" "+m.destination);
-        objectOutputStream.writeObject(m);
-        String response = dataInputStream.readUTF();
-        System.out.println(response);
-      } 
-
-      // check if input (A)ttack
-      else if(action.equals("A")){
-        // write "Attack"
-        dataOutputStream.writeUTF("Attack");
-
-        AttackAction m = user_in.getAttack(id);
-        System.out.println("Recieved attack " + m.source + " " + m.destination);
-        objectOutputStream.writeObject(m);
-        String response = dataInputStream.readUTF();
-        System.out.println(response);
-
-      }
-      
-      //Check if input (D)one
-      else if (action.equals("D")){
-        // write "Done"
-        dataOutputStream.writeUTF("Done");
-
-        //End message
-        System.out.println("Write Done message 1");
-        objectOutputStream.writeObject(new 
-          MoveAction(id, null,null, -1, true));
-        System.out.println("Write Done message 2");
-        String response = dataInputStream.readUTF();
-        System.out.println(response);
-        break;
+      while(true){
+        String action = user_in.getAction(name);
+        //check if input (M)ove
+        if(action.equals("M")){
+          //write "Move"
+          dataOutputStream.writeUTF("Move");
+          MoveAction m = user_in.getMove(id);
+          System.out.println("Recieved move "+m.source+" "+m.destination);
+          objectOutputStream.writeObject(m);
+          String response = dataInputStream.readUTF();
+          System.out.println(response);
+        } 
+  
+        // check if input (A)ttack
+        else if(action.equals("A")){
+          // write "Attack"
+          dataOutputStream.writeUTF("Attack");
+  
+          AttackAction m = user_in.getAttack(id);
+          System.out.println("Recieved attack " + m.source + " " + m.destination);
+          objectOutputStream.writeObject(m);
+          String response = dataInputStream.readUTF();
+          System.out.println(response);
+  
+        }
+        
+        //Check if input (D)one
+        else if (action.equals("D")){
+          // write "Done"
+          dataOutputStream.writeUTF("Done");
+  
+          //End message
+          System.out.println("Write Done message 1");
+          objectOutputStream.writeObject(new 
+            MoveAction(id, null,null, -1, true));
+          System.out.println("Write Done message 2");
+          String response = dataInputStream.readUTF();
+          System.out.println(response);
+          break;
+        }
       }
     }
     
     //Finished Phase
-    while(true) {
+    // while(true) {
 
-    }
+    // }
     // objectInputStream.close();
     // objectOutputStream.close();
     // dataInputStream.close();
     // dataOutputStream.close();
     // client.close();
   
-    // //display map
-    // Display txt_map = new TextDisplayMap(System.out);
-    // // txt_map.display(map);
 
     // in.close();
   }
