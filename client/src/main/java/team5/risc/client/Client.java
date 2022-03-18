@@ -80,8 +80,21 @@ public class Client {
     ----------------------------------------------------------------------------
     */
 
-    //Arbitrary number, get 3 Action inputs
     ArrayList<MoveAction> moveActionList = new ArrayList<>();
+
+    /*
+      ------------------------------------------------
+      Protocol:
+      ------------------------------------------------
+      Client first sends a string explaining 
+      which action it is going to send ->
+      
+      1) Move for MoveAction
+      2) Attack for AttackAction
+      3) Done for DoneAction
+      ------------------------------------------------
+    */
+
     while(true){
       String action = user_in.getAction(name);
 

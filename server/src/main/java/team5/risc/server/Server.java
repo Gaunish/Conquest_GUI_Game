@@ -118,7 +118,19 @@ public class Server {
       id++;
     }
 
-    // The phase of action
+    /*
+     * ACTION PHASE
+     * ------------------------------------------------
+     * Protocol:
+     * ------------------------------------------------
+     * Server a string explaining
+     * which action it is going to recieve ->
+     * 
+     * 1) Move for MoveAction
+     * 2) Attack for AttackAction
+     * 3) Done for DoneAction
+     * ------------------------------------------------
+     */
 
     /// Validation and execute Move Action
     ActionValidator actionValidator = new ActionValidator();
