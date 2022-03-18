@@ -1,4 +1,4 @@
-package team5.risc.client;
+package team5.risc.common;
 
 import team5.risc.common.*;
 import java.io.PrintStream;
@@ -12,9 +12,10 @@ public class TextDisplayMap implements Display {
   }
 
   //Display map 
-  public void display(Map m){
+  public String display(Map m) {
     String display_str = getRegions(m);
-    out.println(display_str);
+    // out.println(display_str);
+    return display_str;
   }
 
   private String getRegion(int id, ArrayList<AreaNode> areas) {
@@ -22,8 +23,14 @@ public class TextDisplayMap implements Display {
     out += "Player " + id + ":\n";
     for (int i = 0; i < areas.size(); i++) {
       AreaNode area = areas.get(i);
-      if(area.getOwnerId() == id){
-        out += area.getDefenderUnit() + " units in " + area.getName() + "\n";
+      if(area.getOwnerId() == id) {
+        out += area.getDefenderUnit() + 
+        " units in " + area.getName() + " (next to: ";
+        for (AreaNode areaNode: area.getNeighbors()) {
+          out += areaNode.getName() + ",";
+        }
+        out = out.substring(0, out.length() - 2);
+        out += ")\n";
       }
     }
     return out;
