@@ -130,7 +130,24 @@ public class Server {
      * 1) Move for MoveAction
      * 2) Attack for AttackAction
      * 3) Done for DoneAction
+     * -------------------------------------------------
+     * 
+     *------------------------------------------------
+     * Protocol 2
+     *------------------------------------------------
+     * Server will tell client his status -
+     * 1) Winner
+     * 2) Loser
+     * 3) Player
      * ------------------------------------------------
+     * 
+     * ------------------------------------------------
+     * Protocol 3
+     * ------------------------------------------------
+     * At beginning of turn, server will tell client 
+     * if there is any winner -
+     * 1) No Winner OR
+     * 2) Player i has won
      */
 
     /// Validation and execute Move Action
@@ -142,10 +159,26 @@ public class Server {
       DataInputStream dataItream = dataInputStreamList.get(index);
       DataOutputStream dataOtream = dataOutputStreamList.get(index);
 
+      //check if there is a winner
+      int winner = players.get_winner(map, num_player);
+      if(winner == -1){
+        dataOtream.writeUTF("No winner");
+      }
+      else{
+        if(winner == index){
+          dataOtream.writeUTF("Congratulations! You have won.");
+        }
+        else{
+          String win_str = "Player " + winner + " has won."; 
+          dataOtream.writeUTF(win_str);
+        }
+        break;
+      }
+
       //check if player has lost
       boolean has_lost = players.has_lost(map, index);
-      
-      //Player has lost
+            
+      //send client his/her player status
       if(has_lost == true){
         dataOtream.writeUTF("Loser");       
       }
@@ -239,6 +272,6 @@ public class Server {
    */
   public static void main(String[] args) throws IOException, ClassNotFoundException {
     Server fs = new Server(1651);
-    fs.run(1);
+    fs.run(2);
   }
 }
