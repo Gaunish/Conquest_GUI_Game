@@ -84,7 +84,7 @@ public class Client {
 
     /*
       ------------------------------------------------
-      Protocol:
+      Protocol 1:
       ------------------------------------------------
       Client first sends a string explaining 
       which action it is going to send ->
@@ -93,9 +93,28 @@ public class Client {
       2) Attack for AttackAction
       3) Done for DoneAction
       ------------------------------------------------
+
+      ------------------------------------------------
+      Player 2
+      ------------------------------------------------
+      Server will tell client his status -
+      1) Winner
+      2) Loser
+      3) Player
+      ------------------------------------------------
     */
 
     while(true){
+      //get status of player from server
+      String status = dataInputStream.readUTF();
+      String map_str = dataInputStream.readUTF();
+      System.out.println(map_str);
+
+      if(status.equals("Loser")){
+        continue;
+      }
+
+      //Get input from player via terminal
       String action = user_in.getAction(name);
 
       //check if input (M)ove
