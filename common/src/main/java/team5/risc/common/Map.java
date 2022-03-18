@@ -53,7 +53,7 @@ public class Map implements Serializable {
   }
 
   public AreaNode getAreaNodeByName(String name) {
-    for (AreaNode area: areas) {
+    for (AreaNode area : areas) {
       if (area.getName().equals(name)) {
         return area;
       }
@@ -72,6 +72,33 @@ public class Map implements Serializable {
 
   public int getNumPlayer() {
     return num_player;
+  }
+
+  public ArrayList<String> generateMap() {
+    ArrayList<String> path = new ArrayList<String>();
+    int num_area_per = areas.size() / num_player;
+    for (int i = 0; i < num_player; i++) {
+      for (int j = 0; j < num_area_per - 1; j++) {
+        int src = i + j * num_player;
+        int des = i + (j + 1) * num_player;
+        addPath(src, des);
+        path.add(src + "->" + des);
+        addPath(des, src);
+        path.add(des + "->" + src);
+      }
+    }
+    for (int j = 0; j < num_area_per; j++) {
+      for (int i = 0; i < num_player - 1; i++) {
+        int src = j * num_player + i;
+        int des = j * num_player + i + 1;
+        addPath(src, des);
+        path.add(src + "->" + des);
+        addPath(des, src);
+        path.add(des + "->" + src);
+
+      }
+    }
+    return path;
   }
 
   public void generateExampleMap() {
@@ -116,13 +143,13 @@ public class Map implements Serializable {
     return areas;
   }
 
-  public boolean is_loser(int id){
+  public boolean is_loser(int id) {
     ArrayList<AreaNode> areas = getAreas();
-    for(AreaNode area : areas){
-      if(area.getOwnerId() == id){
+    for (AreaNode area : areas) {
+      if (area.getOwnerId() == id) {
         return false;
       }
-    } 
+    }
     return true;
   }
 

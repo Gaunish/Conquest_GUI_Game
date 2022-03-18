@@ -1,12 +1,12 @@
 package team5.risc.server;
 
+import team5.risc.common.TextDisplayMap;
 import team5.risc.common.*;
-import team5.risc.common.Players;
 import java.net.*;
 import java.io.*;
 
 import java.util.ArrayList;
-
+import java.util.HashSet;
 import java.net.ServerSocket;
 import java.io.IOException;
 import java.net.Socket;
@@ -51,7 +51,7 @@ public class Server {
       clientSocketSet.add(clientSocket);
     }
     System.out.println("All client finished, begin to read data");
-  
+
     int id = 0;
     // initial units assigned by server
     int total_units = 5;
@@ -132,9 +132,9 @@ public class Server {
      * 3) Done for DoneAction
      * -------------------------------------------------
      * 
-     *------------------------------------------------
+     * ------------------------------------------------
      * Protocol 2
-     *------------------------------------------------
+     * ------------------------------------------------
      * Server will tell client his status -
      * 1) Winner
      * 2) Loser
@@ -144,7 +144,7 @@ public class Server {
      * ------------------------------------------------
      * Protocol 3
      * ------------------------------------------------
-     * At beginning of turn, server will tell client 
+     * At beginning of turn, server will tell client
      * if there is any winner -
      * 1) No Winner OR
      * 2) Player i has won
@@ -153,111 +153,109 @@ public class Server {
     /// Validation and execute Move Action
     ActionValidator actionValidator = new ActionValidator();
     ActionExecutor actionExecutor = new ActionExecutor();
-    for (int index = 0; index < num_player; index++) {
-      ObjectInputStream objIstream = objectInputStreamList.get(index);
-      ObjectOutputStream objOstream = objectOutputStreamList.get(index);
-      DataInputStream dataItream = dataInputStreamList.get(index);
-      DataOutputStream dataOtream = dataOutputStreamList.get(index);
+    while (true) {
+      // get Map info
+      TextDisplayMap txt_map = new TextDisplayMap(System.out);
+      String map_info = txt_map.display(map);
 
-      //check if there is a winner
-      int winner = players.get_winner(map, num_player);
-      if(winner == -1){
-        dataOtream.writeUTF("No winner");
-      }
-      else{
-        if(winner == index){
-          dataOtream.writeUTF("Congratulations! You have won.");
-        }
-        else{
-          String win_str = "Player " + winner + " has won."; 
-          dataOtream.writeUTF(win_str);
-        }
-        break;
-      }
+      //attack list init
+      ArrayList<AttackAction> attackActionList = new ArrayList<>();
 
-      //check if player has lost
-      boolean has_lost = players.has_lost(map, index);
-            
-      //send client his/her player status
-      if(has_lost == true){
-        dataOtream.writeUTF("Loser");       
-      }
-      else{
-        dataOtream.writeUTF("Player"); 
-      }
-      
-      //Send Map
-      dataOtream.writeUTF("Map");
+      for (int index = 0; index < num_player; index++) {
+        ObjectInputStream objIstream = objectInputStreamList.get(index);
+        ObjectOutputStream objOstream = objectOutputStreamList.get(index);
+        DataInputStream dataItream = dataInputStreamList.get(index);
+        DataOutputStream dataOtream = dataOutputStreamList.get(index);
 
-      //If player has lost, skip actions
-      if(has_lost == true){
-        continue;
-      }
+        // Send Map
+        dataOtream.writeUTF(map_info);
 
-      while (true) {
-        
-        // Receive Actions
-        System.out.println("Try to fetch action from player " + index);
-        
-        //Get the action type
-        String action = dataItream.readUTF();
-        
-        //MOVE, DONE ACTION
-        if(action.equals("Move") || action.equals("Done")){
-          MoveAction moveAction = (MoveAction) objIstream.readObject();
-          
-          //DONE ACTION
-          if (moveAction.is_terminated) {
-            System.out.println("Player " + index + " finished, go to the next player");
-            dataOtream.writeUTF("correct and done");
-            break;
-          }
-
-          //MOVE ACTION
-          System.out.println("Move action from Player " + moveAction.player_id);
-          String res = actionValidator.isValid(moveAction, map);
-          if (res != null) {
-            dataOtream.writeUTF(res);
+        // check if there is a winner
+        int winner = players.get_winner(map, num_player);
+        if (winner == -1) {
+          dataOtream.writeUTF("No winner");
+        } else {
+          if (winner == index) {
+            dataOtream.writeUTF("Congratulations! You have won.");
           } else {
-            dataOtream.writeUTF("correct");
-            actionExecutor.execute(moveAction, map);
+            String win_str = "Player " + winner + " has won.";
+            dataOtream.writeUTF(win_str);
           }
+          break;
         }
-        //ATTACK ACTION
-        else if(action.equals("Attack")){
-          AttackAction attackAction = (AttackAction) objIstream.readObject();
-          System.out.println("Attack action from Player " + attackAction.player_id);
-          String res = actionValidator.isValid(attackAction, map);
-          if (res != null) {
-            dataOtream.writeUTF(res);
-          } else {
-            dataOtream.writeUTF("correct");
-            actionExecutor.execute(attackAction, map);
+
+        // check if player has lost
+        boolean has_lost = players.has_lost(map, index);
+
+        // send client his/her player status
+        if (has_lost == true) {
+          dataOtream.writeUTF("Loser");
+        } else {
+          dataOtream.writeUTF("Player");
+        }
+
+        while (true) {
+
+          // Receive Actions
+          System.out.println("Try to fetch action from player " + index);
+
+          // Get the action type
+          String action = dataItream.readUTF();
+
+          // MOVE, DONE ACTION
+          if (action.equals("Move") || action.equals("Done")) {
+            MoveAction moveAction = (MoveAction) objIstream.readObject();
+
+            // DONE ACTION
+            if (moveAction.is_terminated) {
+              System.out.println("Player " + index + " finished, go to the next player");
+              dataOtream.writeUTF("correct and done");
+              break;
+            }
+            // MOVE ACTION
+            System.out.println("Move action from Player " + moveAction.player_id);
+            String res = actionValidator.isValid(moveAction, map);
+            if (res != null) {
+              dataOtream.writeUTF(res);
+            } else {
+              dataOtream.writeUTF("correct");
+              actionExecutor.execute(moveAction, map);
+            }
+          }
+          // ATTACK ACTION
+          else if (action.equals("Attack")) {
+            AttackAction attackAction = (AttackAction) objIstream.readObject();
+            System.out.println("Attack action from Player " + attackAction.player_id);
+            String res = actionValidator.isValid(attackAction, map);
+            if (res != null) {
+              dataOtream.writeUTF(res);
+            } else {
+              dataOtream.writeUTF("correct");
+              attackActionList.add(attackAction);
+            }
           }
         }
       }
     }
 
-    /// Take action (execute Attack Action, then combat)
+    // for (DataInputStream stream : dataInputStreamList) {
+    // stream.close();
+    // }
+    // for (DataOutputStream stream : dataOutputStreamList) {
+    // stream.close();
+    // }
+    // for (ObjectInputStream stream : objectInputStreamList) {
+    // stream.close();
+    // }
+    // for (ObjectOutputStream stream : objectOutputStreamList) {
+    // stream.close();
+    // }
 
-    for (DataInputStream stream : dataInputStreamList) {
-      stream.close();
-    }
-    for (DataOutputStream stream : dataOutputStreamList) {
-      stream.close();
-    }
-    for (ObjectInputStream stream : objectInputStreamList) {
-      stream.close();
-    }
-    for (ObjectOutputStream stream : objectOutputStreamList) {
-      stream.close();
-    }
+    // for (Socket c : clientSocketSet) {
+    // c.close();
+    // }
 
-    for (Socket c : clientSocketSet) {
-      c.close();
-    }
-
-    serverSocket.close();
+    // serverSocket.close();
   }
 
   /**

@@ -22,6 +22,9 @@ import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
+
+import javax.annotation.meta.When;
+
 import java.util.concurrent.ThreadPoolExecutor;
 import java.io.PrintWriter;
 import java.util.Scanner;
@@ -105,6 +108,10 @@ public class Client {
     */
 
     while(true){
+      //get map
+      String map_str = dataInputStream.readUTF();
+      System.out.println(map_str);
+
       //get winner status of game
       String game_status = dataInputStream.readUTF();
       if(!game_status.equals("No winner")){
@@ -115,8 +122,6 @@ public class Client {
 
       //get status of player from server
       String pl_status = dataInputStream.readUTF();
-      String map_str = dataInputStream.readUTF();
-      System.out.println(map_str);
 
       if(pl_status.equals("Loser")){
         continue;
@@ -171,18 +176,15 @@ public class Client {
     }
     
     //Finished Phase
-    while(true) {
+    // while(true) {
 
-    }
+    // }
     // objectInputStream.close();
     // objectOutputStream.close();
     // dataInputStream.close();
     // dataOutputStream.close();
     // client.close();
   
-    // //display map
-    // Display txt_map = new TextDisplayMap(System.out);
-    // // txt_map.display(map);
 
     // in.close();
   }
