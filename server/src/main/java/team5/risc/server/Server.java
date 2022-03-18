@@ -64,7 +64,7 @@ public class Server {
     strInfo.unitStr(total_units);
 
     // list of region of areas assigned to each player
-    ArrayList<Region> regions = map.getInitRegions();
+    ArrayList<Region> regions = map.getRegions();
 
     ArrayList<ObjectOutputStream> objectOutputStreamList = new ArrayList<>();
     ArrayList<ObjectInputStream> objectInputStreamList = new ArrayList<>();
@@ -130,34 +130,21 @@ public class Server {
     System.out.println("Placement Phase has done");
 
     /*
-     * ACTION PHASE
-     * ------------------------------------------------
-     * Protocol:
-     * ------------------------------------------------
-     * Server a string explaining
+     * ACTION PHASE ------------------------------------------------ Protocol:
+     * ------------------------------------------------ Server a string explaining
      * which action it is going to recieve ->
      * 
-     * 1) Move for MoveAction
-     * 2) Attack for AttackAction
-     * 3) Done for DoneAction
+     * 1) Move for MoveAction 2) Attack for AttackAction 3) Done for DoneAction
      * -------------------------------------------------
      * 
-     * ------------------------------------------------
-     * Protocol 2
-     * ------------------------------------------------
-     * Server will tell client his status -
-     * 1) Winner
-     * 2) Loser
-     * 3) Player
+     * ------------------------------------------------ Protocol 2
+     * ------------------------------------------------ Server will tell client his
+     * status - 1) Winner 2) Loser 3) Player
      * ------------------------------------------------
      * 
-     * ------------------------------------------------
-     * Protocol 3
-     * ------------------------------------------------
-     * At beginning of turn, server will tell client
-     * if there is any winner -
-     * 1) No Winner OR
-     * 2) Player i has won
+     * ------------------------------------------------ Protocol 3
+     * ------------------------------------------------ At beginning of turn, server
+     * will tell client if there is any winner - 1) No Winner OR 2) Player i has won
      */
 
     /// Validation and execute Move Action
@@ -168,7 +155,7 @@ public class Server {
       TextDisplayMap txt_map = new TextDisplayMap(System.out);
       String map_info = txt_map.display(map);
 
-      //attack list init
+      // attack list init
       ArrayList<AttackAction> attackActionList = new ArrayList<>();
 
       for (int index = 0; index < num_player; index++) {
@@ -246,6 +233,19 @@ public class Server {
           }
         }
       }
+      // prepare attack army
+      for (AttackAction a : attackActionList) {
+        actionExecutor.execute(a, map);
+      }
+      // combat
+      for (AreaNode area : map.getAreas()) {
+        while (!area.noEnemyLeft()) {
+          Army defender = area.getDefender();
+          Army attacker = area.popFirstEnemy();
+          actionExecutor.combatExecute(defender, attacker, map, area);
+        }
+      }
+
     }
 
     // for (DataInputStream stream : dataInputStreamList) {
