@@ -98,7 +98,7 @@ public class Client {
       ------------------------------------------------
 
       ------------------------------------------------
-      Player 2
+      Protocol 2
       ------------------------------------------------
       Server will tell client his status -
       1) Winner
@@ -108,57 +108,70 @@ public class Client {
     */
 
     while(true){
-      //get status of player from server
-      String status = dataInputStream.readUTF();
+      //get map
       String map_str = dataInputStream.readUTF();
       System.out.println(map_str);
 
-      if(status.equals("Loser")){
+      //get winner status of game
+      String game_status = dataInputStream.readUTF();
+      if(!game_status.equals("No winner")){
+        String winner_str = dataInputStream.readUTF();
+        System.out.println(winner_str);
+        break;
+      }
+
+      //get status of player from server
+      String pl_status = dataInputStream.readUTF();
+
+      if(pl_status.equals("Loser")){
         continue;
       }
 
-      //Get input from player via terminal
-      String action = user_in.getAction(name);
+      //Each turn
+      while(true){
+        //Get input from player via terminal
+        String action = user_in.getAction(name);
 
-      //check if input (M)ove
-      if(action.equals("M")){
+        //check if input (M)ove
+        if(action.equals("M")){
 
-        //write "Move"
-        dataOutputStream.writeUTF("Move");
+          //write "Move"
+          dataOutputStream.writeUTF("Move");
 
-        MoveAction m = user_in.getMove(id);
-        System.out.println("Recieved move "+m.source+" "+m.destination);
-        objectOutputStream.writeObject(m);
-        String response = dataInputStream.readUTF();
-        System.out.println(response);
-      } 
+          MoveAction m = user_in.getMove(id);
+          System.out.println("Recieved move "+m.source+" "+m.destination);
+          objectOutputStream.writeObject(m);
+          String response = dataInputStream.readUTF();
+          System.out.println(response);
+        } 
 
-      // check if input (A)ttack
-      else if(action.equals("A")){
-        // write "Attack"
-        dataOutputStream.writeUTF("Attack");
+        // check if input (A)ttack
+        else if(action.equals("A")){
+          // write "Attack"
+          dataOutputStream.writeUTF("Attack");
 
-        AttackAction m = user_in.getAttack(id);
-        System.out.println("Recieved attack " + m.source + " " + m.destination);
-        objectOutputStream.writeObject(m);
-        String response = dataInputStream.readUTF();
-        System.out.println(response);
+          AttackAction m = user_in.getAttack(id);
+          System.out.println("Recieved attack " + m.source + " " + m.destination);
+          objectOutputStream.writeObject(m);
+          String response = dataInputStream.readUTF();
+          System.out.println(response);
 
-      }
-      
-      //Check if input (D)one
-      else if (action.equals("D")){
-        // write "Done"
-        dataOutputStream.writeUTF("Done");
+        }
+        
+        //Check if input (D)one
+        else if (action.equals("D")){
+          // write "Done"
+          dataOutputStream.writeUTF("Done");
 
-        //End message
-        System.out.println("Write Done message 1");
-        objectOutputStream.writeObject(new 
-          MoveAction(id, null,null, -1, true));
-        System.out.println("Write Done message 2");
-        String response = dataInputStream.readUTF();
-        System.out.println(response);
-        break;
+          //End message
+          System.out.println("Write Done message 1");
+          objectOutputStream.writeObject(new 
+            MoveAction(id, null,null, -1, true));
+          System.out.println("Write Done message 2");
+          String response = dataInputStream.readUTF();
+          System.out.println(response);
+          break;
+        }
       }
     }
     
