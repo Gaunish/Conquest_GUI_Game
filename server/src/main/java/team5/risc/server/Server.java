@@ -202,16 +202,10 @@ public class Server {
           // Get the action type
           String action = dataItream.readUTF();
 
-          // MOVE, DONE ACTION
-          if (action.equals("Move") || action.equals("Done")) {
+          // MOVE ACTION
+          if (action.equals("Move")) {
             MoveAction moveAction = (MoveAction) objIstream.readObject();
 
-            // DONE ACTION
-            if (moveAction.is_terminated) {
-              System.out.println("Player " + index + " finished, go to the next player");
-              dataOtream.writeUTF("correct and done");
-              break;
-            }
             // MOVE ACTION
             System.out.println("Move action from Player " + moveAction.player_id);
             String res = actionValidator.isValid(moveAction, map);
@@ -233,6 +227,9 @@ public class Server {
               dataOtream.writeUTF("correct");
               attackActionList.add(attackAction);
             }
+          }
+          else if(action.equals("Done")){
+            break;
           }
         }
       }

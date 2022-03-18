@@ -157,19 +157,10 @@ public class Client {
           System.out.println(response);
 
         }
-        
         //Check if input (D)one
         else if (action.equals("D")){
           // write "Done"
           dataOutputStream.writeUTF("Done");
-
-          //End message
-          System.out.println("Write Done message 1");
-          objectOutputStream.writeObject(new 
-            MoveAction(id, null,null, -1, true));
-          System.out.println("Write Done message 2");
-          String response = dataInputStream.readUTF();
-          System.out.println(response);
           break;
         }
       }
