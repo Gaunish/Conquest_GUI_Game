@@ -38,4 +38,15 @@ public class IntArmyTest {
     assertEquals("(0: 3)", a.toString());
     // assertEquals(a.getUnitNum(), 6);
   }
+
+  @Test
+  public void test_deepcopy() {
+    IntArmy a = new IntArmy(0, 3);
+    IntArmy b = a.deepCopy();
+
+    assertEquals(0, b.getOwnerId());
+    assertEquals(3, b.getUnitNum());
+    a.removeUnit(5);
+    assertEquals(3, b.getUnitNum());
+  }
 }
