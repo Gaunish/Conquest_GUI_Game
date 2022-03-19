@@ -18,10 +18,10 @@ public class MapTest {
 
     Map m1 = new Map(4, 2);
     ArrayList<AreaNode> areas1 = m1.getAreas();
-    assertEquals(0, areas1.get(0).getOwnerId());
-    assertEquals(1, areas1.get(1).getOwnerId());
-    assertEquals(0, areas1.get(2).getOwnerId());
-    assertEquals(1, areas1.get(3).getOwnerId());
+    assertEquals(-1, areas1.get(0).getOwnerId());
+    assertEquals(-1, areas1.get(1).getOwnerId());
+    assertEquals(-1, areas1.get(2).getOwnerId());
+    assertEquals(-1, areas1.get(3).getOwnerId());
   }
 
   @Test

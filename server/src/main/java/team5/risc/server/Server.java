@@ -240,6 +240,7 @@ public class Server {
           }
         }
       }
+      
       // prepare attack army
       for (AttackAction a : attackActionList) {
         actionExecutor.execute(a, map);
@@ -286,7 +287,7 @@ public class Server {
    * @throws ClassNotFoundException
    */
   public static void main(String[] args) throws IOException, ClassNotFoundException {
-    Server fs = new Server(Integer.parseInt(args[0]));
-    fs.run(Integer.parseInt(args[1]));
+    Server fs = new Server(1651);
+    fs.run(2);
   }
 }
