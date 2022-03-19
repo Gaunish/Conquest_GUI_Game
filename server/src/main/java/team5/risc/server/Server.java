@@ -45,7 +45,7 @@ public class Server {
   public void run(int num_player) throws IOException, ClassNotFoundException {
     // Accept phase
     // Map map = new Map(2 * num_player, num_player);
-    Map map = new Map();
+    Map map = new Map(3*num_player,num_player);
     Players players = new Players(num_player);
     for (int i = 0; i < num_player; ++i) {
       Socket clientSocket = serverSocket.accept();
@@ -175,6 +175,7 @@ public class Server {
         DataOutputStream dataOtream = dataOutputStreamList.get(index);
 
         // Send Map
+        System.out.println("Tota;_map : " + map_info);
         dataOtream.writeUTF(map_info);
 
         // check if there is a winner
@@ -220,7 +221,9 @@ public class Server {
               dataOtream.writeUTF(res);
             } else {
               dataOtream.writeUTF("correct");
+              System.out.println("Move action: " + moveAction.toString());
               actionExecutor.execute(moveAction, map);
+              System.out.println("Move : " + map.toString());
             }
           }
           // ATTACK ACTION
@@ -234,6 +237,7 @@ public class Server {
               dataOtream.writeUTF("correct");
               attackActionList.add(attackAction);
             }
+          
           }
           else if(action.equals("Done")){
             break;
