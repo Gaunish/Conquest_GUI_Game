@@ -71,6 +71,7 @@ public class ActionPhase {
     }
 
     private void do_combat(ArrayList<AttackAction> attackActionList){
+      Combat c= new DiceCombat(20, 1);
       // prepare attack army
       for (AttackAction a : attackActionList) {
         actionExecutor.execute(a, map);
@@ -79,7 +80,7 @@ public class ActionPhase {
       //System.out.println(map.toString());
 
       //Do combat
-      actionExecutor.resolveAllCombat(map);
+      actionExecutor.resolveAllCombat(map,c);
     }
 
     //Play turn with moveAction
