@@ -99,9 +99,9 @@ public class Client {
 
       //get winner status of game
       String game_status = riscServer.readUTF();
-      if(!game_status.equals("No winner")){
-        String winner_str = riscServer.readUTF();
-        System.out.println(winner_str);
+      System.out.println(game_status);
+      if(game_status.equals("No winner") == false){
+        System.out.println(game_status);
         break;
       }
 
