@@ -35,7 +35,7 @@ public class TextInput implements Input{
           error_msg("Unexpected input");
           continue;
         }
-        finally{
+        finally {
           if(no < 0){
             error_msg("Invalid input");
             continue;
