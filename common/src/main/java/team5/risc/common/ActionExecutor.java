@@ -28,30 +28,20 @@ public class ActionExecutor {
     }
   }
 
-  public void simpleCombatExecute(Army defender, Army attacker, Map map, AreaNode dest) {
-
-    // Do combat, get winner
-    Combat c = new DiceCombat(20, 1);
-    Army winner = c.doSimpleCombat(defender, attacker);
-
-    // Print winner
-    System.out.println("Combat winner : " + winner.getOwnerId());
-
-    // Update region, areaNode, if attacker wins
-    if (winner.getOwnerId() == attacker.getOwnerId()) {
-      // Update areaNode
-      dest.setDefender(winner);
-
-      // Update regions
-      map.getRegions().get(defender.getOwnerId()).removeArea(dest);
-      map.getRegions().get(attacker.getOwnerId()).addArea(dest);
+  public void resolveAllCombat(Map map, Combat c) {
+    for (AreaNode area : map.getAreas()) {
+      while (!area.noEnemyLeft()) {
+        Army defender = area.getDefender();
+        Army attacker = area.popFirstEnemy();
+        combatExecute(defender, attacker, map, area, c);
+      }
     }
   }
 
-  public void combatExecute(Army defender, Army attacker, Map map, AreaNode dest) {
+  public void combatExecute(Army defender, Army attacker, Map map, AreaNode dest, Combat c) {
 
     // Do combat, get winner
-    Combat c = new DiceCombat(20, 1);
+    // Combat c = new DiceCombat(20, 1);
     Army winner = c.doCombat(defender, attacker);
 
     // Print winner

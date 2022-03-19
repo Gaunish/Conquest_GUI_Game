@@ -166,7 +166,7 @@ public class Map implements Serializable {
         return false;
       }
     }
-    return true;
+   return true;
   }
 
   public boolean is_winner(int id) {

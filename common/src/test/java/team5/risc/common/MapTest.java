@@ -41,4 +41,6 @@ public class MapTest {
     path.add("1->0");
     assertEquals(path, m.generateMap());
   }
+
+ 
 }
