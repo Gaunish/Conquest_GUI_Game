@@ -10,4 +10,9 @@ public class ClientTest {
     Client c = new Client();
   }
 
+
+  @Test
+  public void test_client() {
+    
+  }
 }
