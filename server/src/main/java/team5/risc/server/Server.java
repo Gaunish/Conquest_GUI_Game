@@ -45,7 +45,7 @@ public class Server {
   public void run(int num_player) throws IOException, ClassNotFoundException {
     // Accept phase
     // Map map = new Map(2 * num_player, num_player);
-    Map map = new Map();
+    Map map = new Map(4, 2);
     Players players = new Players(num_player);
     for (int i = 0; i < num_player; ++i) {
       Socket clientSocket = serverSocket.accept();
@@ -108,7 +108,7 @@ public class Server {
         dataOutputStream.writeUTF(strInfo.place_unit);
         dataOutputStream.flush();
 
-        while(true){
+        while (true) {
           int no = -1;
           try {
             no = (int) dataInputStream.readInt();
@@ -119,15 +119,13 @@ public class Server {
               String error = "Placement Invalid, Input: " + no + " Remaining: " + (total_units - no_units);
               dataOutputStream.writeUTF(error);
               continue;
-            }
-            else{
+            } else {
               no_units += no;
               region.set_init_unit(node, no);
               dataOutputStream.writeUTF("Success");
               break;
             }
-          } 
-          catch (Exception e) {
+          } catch (Exception e) {
             System.out.println(e);
             continue;
           }
@@ -234,16 +232,18 @@ public class Server {
               dataOtream.writeUTF("correct");
               attackActionList.add(attackAction);
             }
-          }
-          else if(action.equals("Done")){
+          } else if (action.equals("Done")) {
             break;
           }
         }
       }
       // prepare attack army
       for (AttackAction a : attackActionList) {
+        System.out.println("try execute action:" + a.toString() + "\n");
         actionExecutor.execute(a, map);
       }
+      System.out.println("place enemy army:\n");
+      System.out.println(map.toString());
       // combat
       for (AreaNode area : map.getAreas()) {
         while (!area.noEnemyLeft()) {

@@ -28,6 +28,26 @@ public class ActionExecutor {
     }
   }
 
+  public void simpleCombatExecute(Army defender, Army attacker, Map map, AreaNode dest) {
+
+    // Do combat, get winner
+    Combat c = new DiceCombat(20, 1);
+    Army winner = c.doSimpleCombat(defender, attacker);
+
+    // Print winner
+    System.out.println("Combat winner : " + winner.getOwnerId());
+
+    // Update region, areaNode, if attacker wins
+    if (winner.getOwnerId() == attacker.getOwnerId()) {
+      // Update areaNode
+      dest.setDefender(winner);
+
+      // Update regions
+      map.getRegions().get(defender.getOwnerId()).removeArea(dest);
+      map.getRegions().get(attacker.getOwnerId()).addArea(dest);
+    }
+  }
+
   public void combatExecute(Army defender, Army attacker, Map map, AreaNode dest) {
 
     // Do combat, get winner
