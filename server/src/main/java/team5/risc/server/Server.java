@@ -244,6 +244,7 @@ public class Server {
       }
       System.out.println("place enemy army:\n");
       System.out.println(map.toString());
+
       // combat
       for (AreaNode area : map.getAreas()) {
         while (!area.noEnemyLeft()) {
@@ -252,6 +253,9 @@ public class Server {
           actionExecutor.combatExecute(defender, attacker, map, area);
         }
       }
+
+      // add one unit to each area after each turn
+      actionExecutor.addUnitToAllArea(1, map);
 
     }
 

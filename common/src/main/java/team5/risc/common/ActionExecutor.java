@@ -68,4 +68,9 @@ public class ActionExecutor {
     }
   }
 
+  public void addUnitToAllArea(int unit_num, Map map) {
+    for (AreaNode a : map.getAreas()) {
+      a.increaseDefender(unit_num);
+    }
+  }
 }
