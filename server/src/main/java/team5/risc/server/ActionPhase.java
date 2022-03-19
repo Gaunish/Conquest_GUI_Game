@@ -162,6 +162,9 @@ public class ActionPhase {
       // attack list init
       ArrayList<AttackAction> attackActionList = new ArrayList<>();
 
+      //Flag to find winner
+      boolean winner = false;
+
       //Play turn for each player
       for (int index = 0; index < num_player; index++) {
         
@@ -176,9 +179,9 @@ public class ActionPhase {
         dataOtream.writeUTF(map_info);
 
         // check if there is a winner
-        boolean winner = check_winner(index);
+        winner = check_winner(index);
         if(winner){
-            break;
+            continue;
         }
 
         // send client his/her player status
@@ -192,6 +195,10 @@ public class ActionPhase {
         //Play the turn
         play_turn(index, attackActionList);
       } 
+      //Found winner 
+      if(winner == true){
+        break;
+      }
       
       // Execute attacks-list
       do_combat(attackActionList);
@@ -200,5 +207,6 @@ public class ActionPhase {
       actionExecutor.addUnitToAllArea(1, map);
 
     }
+
     }
 }
