@@ -63,14 +63,4 @@ public class ActionExecutor {
       a.increaseDefender(unit_num);
     }
   }
-
-  public void resolveAllCombat(Map map){
-    for (AreaNode area : map.getAreas()) {
-      while (!area.noEnemyLeft()) {
-        Army defender = area.getDefender();
-        Army attacker = area.popFirstEnemy();
-        combatExecute(defender, attacker, map, area);
-      }
-    }
-  }
 }

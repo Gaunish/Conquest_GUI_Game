@@ -42,5 +42,13 @@ public class MapTest {
     assertEquals(path, m.generateMap());
   }
 
- 
+  @Test
+  public void test_toString() {
+    Map map = new Map();
+    String ans = new String();
+    ans += "area0:(0: 10)\n[]\n" + "area1:(1: 13)\n[]\n" + "area2:(2: 6)\n[]\n" + "area3:(0: 12)\n[]\n"
+        + "area4:(1: 8)\n[]\n" + "area5:(2: 5)\n[]\n" + "area6:(0: 14)\n[]\n" + "area7:(1: 3)\n[]\n"
+        + "area8:(2: 3)\n[]\n";
+    assertEquals(map.toString(), ans);
+  }
 }
