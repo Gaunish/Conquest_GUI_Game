@@ -15,5 +15,6 @@ public abstract class SimpleAction implements Action, Serializable {
         this.player_id = id;
         this.source = src;
         this.destination = dst;
+        this.num_unit = unit;
     }
 }

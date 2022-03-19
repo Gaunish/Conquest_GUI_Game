@@ -22,8 +22,8 @@ public class DiceCombat implements Combat{
                 break;
             }
             //Defender wins combat
-            if (defender.getUnitNum() <= 0) {
-                winner = attacker;
+            if (attacker.getUnitNum() <= 0) {
+                winner = defender;
                 break;
             }
 
