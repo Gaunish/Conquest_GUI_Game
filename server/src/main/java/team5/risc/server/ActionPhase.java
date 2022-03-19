@@ -58,7 +58,7 @@ public class ActionPhase {
     }
 
     //method to send player status
-    private void send_status(int index) throws IOException{
+    private boolean send_status(int index) throws IOException{
         boolean has_lost = players.has_lost(map, index);
 
         // send client his/her player status
@@ -67,7 +67,7 @@ public class ActionPhase {
         } else {
           dataOtream.writeUTF("Player");
         }
-
+        return has_lost;
     }
 
     private void do_combat(ArrayList<AttackAction> attackActionList){
@@ -182,7 +182,12 @@ public class ActionPhase {
         }
 
         // send client his/her player status
-        send_status(index);
+        boolean is_loser = send_status(index);
+        if(is_loser){
+            //Loser found
+            //Skip playing turn
+            continue;
+        }
 
         //Play the turn
         play_turn(index, attackActionList);

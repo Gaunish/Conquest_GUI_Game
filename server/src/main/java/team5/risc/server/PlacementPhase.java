@@ -65,12 +65,12 @@ public class PlacementPhase {
             dataOutputStream.writeUTF(error);
             return false;
           }
-          else{
+        else{
             no_units += no;
             region.set_init_unit(node, no);
             dataOutputStream.writeUTF("Success");
             return true;
-          }
+        }
     }
 
     //Method to get one placement from a user
