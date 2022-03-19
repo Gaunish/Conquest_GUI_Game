@@ -19,6 +19,7 @@ public class Server {
   ServerSocket serverSocket;
   ArrayList<Socket> clientSocketSet;
   int listen_port;
+  ServerSock server_sock;
 
   /**
    * This constructts a FactorServer with the specified Factorer and ServerSocket.
@@ -33,6 +34,7 @@ public class Server {
     this.listen_port = listen_port;
     this.serverSocket = new ServerSocket(listen_port);
     this.clientSocketSet = new ArrayList<>();
+    this.server_sock = new ServerSock();
   }
 
   /**
@@ -45,101 +47,34 @@ public class Server {
   public void run(int num_player) throws IOException, ClassNotFoundException {
     // Accept phase
     // Map map = new Map(2 * num_player, num_player);
-    Map map = new Map(4, 2);
+    Map map = new Map(3*num_player,num_player);
     Players players = new Players(num_player);
-    for (int i = 0; i < num_player; ++i) {
-      Socket clientSocket = serverSocket.accept();
-      System.out.println("client " + i + " accepted");
-      System.out.println(clientSocket);
-      clientSocketSet.add(clientSocket);
-    }
+
+    //Accept client connection
+    server_sock.AcceptConnection(num_player, serverSocket, clientSocketSet);
     System.out.println("All client finished, begin to read data");
 
     int id = 0;
     // initial units assigned by server
     int total_units = 50;
 
-    // class to send strings to clients
-    MetaInfo strInfo = new MetaInfo();
-    strInfo.unitStr(total_units);
+    //Add client streams to the list
+    server_sock.init(clientSocketSet);
 
-    // list of region of areas assigned to each player
-    ArrayList<Region> regions = map.getRegions();
+    /*
+    ---------------------------------------------------------------------
+      PLACEMENT PHASE
+    ---------------------------------------------------------------------
+    */
 
-    ArrayList<ObjectOutputStream> objectOutputStreamList = new ArrayList<>();
-    ArrayList<ObjectInputStream> objectInputStreamList = new ArrayList<>();
-    ArrayList<DataOutputStream> dataOutputStreamList = new ArrayList<>();
-    ArrayList<DataInputStream> dataInputStreamList = new ArrayList<>();
-
-    for (Socket client : clientSocketSet) {
-      objectOutputStreamList.add(new ObjectOutputStream(client.getOutputStream()));
-      objectInputStreamList.add(new ObjectInputStream(client.getInputStream()));
-      dataOutputStreamList.add(new DataOutputStream(client.getOutputStream()));
-      dataInputStreamList.add(new DataInputStream(client.getInputStream()));
-    }
-
-    for (int index = 0; index < num_player; index++) {
-      ObjectInputStream objectInputStream = objectInputStreamList.get(index);
-      ObjectOutputStream objectOutputStream = objectOutputStreamList.get(index);
-      DataInputStream dataInputStream = dataInputStreamList.get(index);
-      DataOutputStream dataOutputStream = dataOutputStreamList.get(index);
-
-      dataOutputStream.writeInt(id);
-      dataOutputStream.flush();
-
-      // send prompt
-      dataOutputStream.writeUTF(strInfo.inform_unit);
-      dataOutputStream.flush();
-
-      // get region in text form for player
-      Region region = regions.get(id);
-      region.set_owner_id(id);
-      ArrayList<String> txt_region = region.getAreasName();
-
-      // send region in text form
-      objectOutputStream.writeObject(txt_region);
-      objectOutputStream.flush();
-
-      int no_units = 0;
-      // ask for input for each player
-      for (String area : txt_region) {
-        System.out.println("id : " + id + " Area: " + area);
-        strInfo.placeStr(area);
-        dataOutputStream.writeUTF(strInfo.place_unit);
-        dataOutputStream.flush();
-
-        while (true) {
-          int no = -1;
-          try {
-            no = (int) dataInputStream.readInt();
-            AreaNode node = map.getAreaNodeByName(area);
-            System.out.println("no:" + no);
-            System.out.println("Recieved " + no + " for " + area + " by Player " + id);
-            if ((no_units + no) > total_units) {
-              String error = "Placement Invalid, Input: " + no + " Remaining: " + (total_units - no_units);
-              dataOutputStream.writeUTF(error);
-              continue;
-            } else {
-              no_units += no;
-              region.set_init_unit(node, no);
-              dataOutputStream.writeUTF("Success");
-              break;
-            }
-          } catch (Exception e) {
-            System.out.println(e);
-            continue;
-          }
-        }
-      }
-
-      id++;
-    }
-
+    PlacementPhase placement = new PlacementPhase();
+    placement.DoPlacement(num_player, server_sock, map, total_units);
     System.out.println("Placement Phase has done");
 
     /*
-     * ACTION PHASE ------------------------------------------------ Protocol:
-     * ------------------------------------------------ Server a string explaining
+     * ACTION PHASE ------------------------------------------------ 
+     * Protocol:
+     * ------------------------------------------------ Server sends a string explaining
      * which action it is going to recieve ->
      * 
      * 1) Move for MoveAction 2) Attack for AttackAction 3) Done for DoneAction
@@ -155,128 +90,23 @@ public class Server {
      * will tell client if there is any winner - 1) No Winner OR 2) Player i has won
      */
 
-    /// Validation and execute Move Action
-    ActionValidator actionValidator = new ActionValidator();
-    ActionExecutor actionExecutor = new ActionExecutor();
-    while (true) {
-      // get Map info
-      TextDisplayMap txt_map = new TextDisplayMap(System.out);
-      String map_info = txt_map.display(map);
+      ActionPhase play_game = new ActionPhase();
+      play_game.doAction(map, num_player, server_sock, players);
 
-      // attack list init
-      ArrayList<AttackAction> attackActionList = new ArrayList<>();
+    /*
+    ---------------------------------------------------------
+    EXIT PHASE
+    ---------------------------------------------------------
+    */
+    server_sock.close();
 
-      for (int index = 0; index < num_player; index++) {
-        ObjectInputStream objIstream = objectInputStreamList.get(index);
-        ObjectOutputStream objOstream = objectOutputStreamList.get(index);
-        DataInputStream dataItream = dataInputStreamList.get(index);
-        DataOutputStream dataOtream = dataOutputStreamList.get(index);
-
-        // Send Map
-        dataOtream.writeUTF(map_info);
-
-        // check if there is a winner
-        int winner = players.get_winner(map, num_player);
-        if (winner == -1) {
-          dataOtream.writeUTF("No winner");
-        } else {
-          if (winner == index) {
-            dataOtream.writeUTF("Congratulations! You have won.");
-          } else {
-            String win_str = "Player " + winner + " has won.";
-            dataOtream.writeUTF(win_str);
-          }
-          break;
-        }
-
-        // check if player has lost
-        boolean has_lost = players.has_lost(map, index);
-
-        // send client his/her player status
-        if (has_lost == true) {
-          dataOtream.writeUTF("Loser");
-        } else {
-          dataOtream.writeUTF("Player");
-        }
-
-        while (true) {
-
-          // Receive Actions
-          System.out.println("Try to fetch action from player " + index);
-
-          // Get the action type
-          String action = dataItream.readUTF();
-
-          // MOVE ACTION
-          if (action.equals("Move")) {
-            MoveAction moveAction = (MoveAction) objIstream.readObject();
-
-            // MOVE ACTION
-            System.out.println("Move action from Player " + moveAction.player_id);
-            String res = actionValidator.isValid(moveAction, map);
-            if (res != null) {
-              dataOtream.writeUTF(res);
-            } else {
-              dataOtream.writeUTF("correct");
-              actionExecutor.execute(moveAction, map);
-            }
-          }
-          // ATTACK ACTION
-          else if (action.equals("Attack")) {
-            AttackAction attackAction = (AttackAction) objIstream.readObject();
-            System.out.println("Attack action from Player " + attackAction.player_id);
-            String res = actionValidator.isValid(attackAction, map);
-            if (res != null) {
-              dataOtream.writeUTF(res);
-            } else {
-              dataOtream.writeUTF("correct");
-              attackActionList.add(attackAction);
-            }
-          } else if (action.equals("Done")) {
-            break;
-          }
-        }
-      }
-      // prepare attack army
-      for (AttackAction a : attackActionList) {
-        System.out.println("try execute action:" + a.toString() + "\n");
-        actionExecutor.execute(a, map);
-      }
-      System.out.println("place enemy army:\n");
-      System.out.println(map.toString());
-
-      // combat
-      for (AreaNode area : map.getAreas()) {
-        while (!area.noEnemyLeft()) {
-          Army defender = area.getDefender();
-          Army attacker = area.popFirstEnemy();
-          actionExecutor.combatExecute(defender, attacker, map, area);
-        }
-      }
-
-      // add one unit to each area after each turn
-      actionExecutor.addUnitToAllArea(1, map);
-
+    //Close all clients socket
+    for (Socket c : clientSocketSet) {
+     c.close();
     }
 
-    // for (DataInputStream stream : dataInputStreamList) {
-    // stream.close();
-    // }
-    // for (DataOutputStream stream : dataOutputStreamList) {
-    // stream.close();
-    // }
-    // for (ObjectInputStream stream : objectInputStreamList) {
-    // stream.close();
-    // }
-    // for (ObjectOutputStream stream : objectOutputStreamList) {
-    // stream.close();
-    // }
-
-    // for (Socket c : clientSocketSet) {
-    // c.close();
-    // }
-
-    // serverSocket.close();
+    //Closer server socket
+    serverSocket.close();
   }
 
   /**
@@ -290,7 +120,7 @@ public class Server {
    * @throws ClassNotFoundException
    */
   public static void main(String[] args) throws IOException, ClassNotFoundException {
-    Server fs = new Server(Integer.parseInt(args[0]));
-    fs.run(Integer.parseInt(args[1]));
+    Server fs = new Server(1651);
+    fs.run(2);
   }
 }
