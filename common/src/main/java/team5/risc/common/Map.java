@@ -166,7 +166,7 @@ public class Map implements Serializable {
         return false;
       }
     }
-   return true;
+    return true;
   }
 
   public boolean is_winner(int id) {
@@ -179,13 +179,11 @@ public class Map implements Serializable {
         return false;
       }
     }
-
-    // Double checking
-    if (no == areas.size()) {
-      return true;
-    }
-    return false;
-
+    return true;
+    // never happen, can't do unit testing
+    /*
+     * // Double checking if (no == areas.size()) { return true; } return false;
+     */
   }
   /*
    * // Displays map // currently coupled to system.out public void displayMap() {
