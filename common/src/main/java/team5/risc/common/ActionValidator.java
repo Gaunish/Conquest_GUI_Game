@@ -4,7 +4,7 @@ import java.util.HashSet;
 
 public class ActionValidator {
 
-  //Validate move action
+  // Validate move action
   public String isValid(MoveAction a, Map map) {
     AreaNode sourceNode = map.getAreaNodeByName(a.source);
     AreaNode destinationNode = map.getAreaNodeByName(a.destination);
@@ -14,16 +14,17 @@ public class ActionValidator {
           + sourceNode.getOwnerId();
     }
     if (sourceNode.getOwnerId() != destinationNode.getOwnerId()) {
-      return destinationNode.getName() + " belongs to Player" + destinationNode.getOwnerId();
+      return "Player " + a.player_id + " can't move unit to " + destinationNode.getName() + ", which is owned by Player "
+          + destinationNode.getOwnerId();
     }
     if (sourceNode.getDefenderUnit() < a.num_unit) {
-      return sourceNode.getName() + "doesn't have enough unit to move";
+      return sourceNode.getName() + " doesn't have enough unit to move";
     }
 
     // Check reachability
     Boolean reachable = checkReachable(sourceNode, destinationNode, a.player_id);
     if (!reachable) {
-      return "Unreachale";
+      return "Unreachable";
     }
     return null;
   }
@@ -38,7 +39,7 @@ public class ActionValidator {
     }
 
     if (sourceNode.getOwnerId() == destinationNode.getOwnerId()) {
-      return destinationNode.getName() + " also belongs to Player" + destinationNode.getOwnerId()
+      return destinationNode.getName() + " also belongs to Player " + destinationNode.getOwnerId()
           + ", please attack other players' areas";
     }
 

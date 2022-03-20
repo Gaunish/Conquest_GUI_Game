@@ -1,6 +1,9 @@
 package team5.risc.common;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
+import java.util.LinkedHashSet;
 
 import org.junit.jupiter.api.Test;
 
@@ -13,11 +16,39 @@ public class AreaNodeTest {
   }
 
   @Test
+  public void test_equals_hasCode() {
+    AreaNode a = new AreaNode("area0");
+    AreaNode b = new AreaNode("area0");
+    AreaNode c = new AreaNode("area1");
+    AreaNode d = new AreaNode(null);
+    assertEquals(false, a.equals(null));
+    assertEquals(true, a.equals(b));
+    assertEquals(false, b.equals(c));
+    assertEquals(true, c.equals(c));
+    assertEquals(a.hashCode(), b.hashCode());
+    assertNotEquals(b.hashCode(), c.hashCode());
+    assertEquals(-1, d.hashCode());
+  }
+
+  @Test
   public void test_defender() {
     AreaNode a = new AreaNode("a", -1);
     Army d = new IntArmy(1, 5);
     a.setDefender(d);
     assertEquals(1, a.getOwnerId());
+  }
+
+  @Test
+  public void test_defender_2() {
+    AreaNode a = new AreaNode("a");
+    IntArmy d = new IntArmy(2, 4);
+    a.setDefender(d);
+    assertEquals(4, a.getDefenderUnit());
+    assertEquals(d, a.getDefender());
+    a.reduceDefender(2);
+    assertEquals(2, a.getDefenderUnit());
+    a.increaseDefender(10);
+    assertEquals(12, a.getDefenderUnit());
   }
 
   @Test
@@ -39,6 +70,11 @@ public class AreaNodeTest {
     a.clearEmptyEnemyArmy();
     assertEquals(a.toString(), "a:(0: 5)\n[(1: 10), (2: 1)]");
     assertEquals(a.noEnemyLeft(), false);
+    a.popFirstEnemy();
+    assertEquals(a.noEnemyLeft(), false);
+    assertEquals(e3.equals(a.popFirstEnemy()), true);
+    assertEquals(a.noEnemyLeft(), true);
+    assertEquals(a.popFirstEnemy(), null);
   }
 
   @Test
@@ -50,6 +86,10 @@ public class AreaNodeTest {
     a.addNeighbor(c);
     a.addNeighbor(b);
     assertEquals(a.getNeighborsName().toString(), "[b, c]");
+    LinkedHashSet<AreaNode> nei = new LinkedHashSet<AreaNode>();
+    nei.add(b);
+    nei.add(c);
+    assertEquals(nei.equals(a.getNeighbors()), true);
   }
 
 }

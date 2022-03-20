@@ -38,6 +38,7 @@ public class Map implements Serializable {
     generateInitRegions();
   }
 
+  // for testing
   public Map() {
     this.areas = new ArrayList<AreaNode>();
     // this.name2areas = new HashMap<>();
@@ -51,6 +52,20 @@ public class Map implements Serializable {
     this.num_player = 3;
     this.regions = new ArrayList<Region>();
     generateInitRegions();
+    regions.get(0).set_owner_id(0);
+    regions.get(1).set_owner_id(1);
+    regions.get(2).set_owner_id(2);
+    regions.get(0).set_init_unit(getAreaNodeByName("area0"), 10);
+    regions.get(0).set_init_unit(getAreaNodeByName("area3"), 12);
+    regions.get(0).set_init_unit(getAreaNodeByName("area6"), 14);
+
+    regions.get(1).set_init_unit(getAreaNodeByName("area1"), 13);
+    regions.get(1).set_init_unit(getAreaNodeByName("area4"), 8);
+    regions.get(1).set_init_unit(getAreaNodeByName("area7"), 3);
+
+    regions.get(2).set_init_unit(getAreaNodeByName("area2"), 6);
+    regions.get(2).set_init_unit(getAreaNodeByName("area5"), 5);
+    regions.get(2).set_init_unit(getAreaNodeByName("area8"), 3);
   }
 
   public AreaNode getAreaNodeByName(String name) {
@@ -151,7 +166,7 @@ public class Map implements Serializable {
         return false;
       }
     }
-    return true;
+   return true;
   }
 
   public boolean is_winner(int id) {
@@ -172,12 +187,10 @@ public class Map implements Serializable {
     return false;
 
   }
-
-  // Displays map
-  // currently coupled to system.out
-  public void displayMap() {
-    System.out.println("Hello World");
-  }
+  /*
+   * // Displays map // currently coupled to system.out public void displayMap() {
+   * System.out.println("Hello World"); }
+   */
 
   public String toString() {
     String ans = new String();

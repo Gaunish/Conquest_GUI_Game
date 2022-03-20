@@ -39,7 +39,7 @@ public class IntArmy implements Army, Serializable {
     unit_num += to_merge.getUnitNum();
   }
 
-  public Army deepCopy() {
+  public IntArmy deepCopy() {
     return new IntArmy(owner_id, unit_num);
   }
 
