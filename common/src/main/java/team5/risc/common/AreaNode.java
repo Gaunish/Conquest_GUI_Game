@@ -36,7 +36,7 @@ public class AreaNode implements Serializable {
 
   public AreaNode(String name, int id) {
     this.name = name;
-    this.defender = new IntArmy(id, id * 2); // owner_id -1 means this area has no owner
+    this.defender = new IntArmy(id, 0); // owner_id -1 means this area has no owner
     this.enemies = new ArrayList<Army>();
     this.neighbors = new LinkedHashSet<AreaNode>();
   }
@@ -95,10 +95,9 @@ public class AreaNode implements Serializable {
     }
   }
 
-  public void removeEnemy(Army to_remove) {
-    enemies.remove(to_remove);
-  }
-
+  /*
+   * public void removeEnemy(Army to_remove) { enemies.remove(to_remove); }
+   */
   public Boolean noEnemyLeft() {
     return enemies.size() == 0;
   }
@@ -113,20 +112,14 @@ public class AreaNode implements Serializable {
     }
   }
 
-  public AreaNode deepCopy() {
-    AreaNode new_node = new AreaNode(name);
-    Army new_defender = defender.deepCopy();
-    new_node.setDefender(new_defender);
-    Iterator<Army> it = enemies.iterator();
-    while (it.hasNext()) {
-      Army cur_enemy = it.next();
-      Army new_enemy = cur_enemy.deepCopy();
-      new_node.addEnemy(new_enemy);
-    }
-    // can't add neighbor info here, neighbor info will be add in Map
-    return new_node;
-  }
-
+  /*
+   * public AreaNode deepCopy() { AreaNode new_node = new AreaNode(name); Army
+   * new_defender = defender.deepCopy(); new_node.setDefender(new_defender);
+   * Iterator<Army> it = enemies.iterator(); while (it.hasNext()) { Army cur_enemy
+   * = it.next(); Army new_enemy = cur_enemy.deepCopy();
+   * new_node.addEnemy(new_enemy); } // can't add neighbor info here, neighbor
+   * info will be add in Map return new_node; }
+   */
   public String toString() {
     return name + ":" + defender + "\n" + enemies;
   }
