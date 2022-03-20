@@ -59,8 +59,8 @@ public class ServerSock {
     public void AcceptConnection(int num_player, ServerSocket serverSocket, ArrayList<Socket> clientSocketSet) throws IOException{
       for (int i = 0; i < num_player; ++i) {
         Socket clientSocket = serverSocket.accept();
-        System.out.println("client " + i + " accepted");
-        System.out.println(clientSocket);
+        System.out.println("Player " + i + " connected!");
+        //System.out.println(clientSocket);
         clientSocketSet.add(clientSocket);
       }
     }

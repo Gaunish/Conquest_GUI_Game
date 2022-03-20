@@ -75,7 +75,7 @@ public class ActionPhase {
       for (AttackAction a : attackActionList) {
         actionExecutor.execute(a, map);
       }
-      System.out.println("place enemy army:\n");
+      //System.out.println("place enemy army:\n");
       //System.out.println(map.toString());
 
       //Do combat
@@ -87,7 +87,7 @@ public class ActionPhase {
         //get the move action
         MoveAction moveAction = (MoveAction) objIstream.readObject();
 
-        System.out.println("Move action from Player " + moveAction.player_id);
+        //System.out.println("Move action from Player " + moveAction.player_id);
         //Check if move is valid
         String res = actionValidator.isValid(moveAction, map);
         
@@ -106,7 +106,7 @@ public class ActionPhase {
     private void play_attack(ArrayList<AttackAction> attackActionList) throws ClassNotFoundException, IOException{
         //Get attack action
         AttackAction attackAction = (AttackAction) objIstream.readObject();
-        System.out.println("Attack action from Player " + attackAction.player_id);
+        //System.out.println("Attack action from Player " + attackAction.player_id);
         
         //Check if attack is valid
         String res = actionValidator.isValid(attackAction, map);
@@ -126,7 +126,7 @@ public class ActionPhase {
         while (true) {
 
           // Receive Actions
-          System.out.println("Try to fetch action from player " + index);
+          //System.out.println("Try to fetch action from player " + index);
 
           // Get the action type
           String action = dataItream.readUTF();
@@ -175,7 +175,7 @@ public class ActionPhase {
         this.dataOtream = server_sock.getDataOut(index);
 
         // Send Map
-        System.out.println("Total_map : " + map_info);
+        //System.out.println("Total_map : " + map_info);
         dataOtream.writeUTF(map_info);
 
         // check if there is a winner

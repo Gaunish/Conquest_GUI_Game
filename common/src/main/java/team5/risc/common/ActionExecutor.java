@@ -35,7 +35,7 @@ public class ActionExecutor {
     Army winner = c.doSimpleCombat(defender, attacker);
 
     // Print winner
-    System.out.println("Combat winner : " + winner.getOwnerId());
+    //System.out.println("Combat winner : " + winner.getOwnerId());
 
     // Update region, areaNode, if attacker wins
     if (winner.getOwnerId() == attacker.getOwnerId()) {
@@ -55,7 +55,7 @@ public class ActionExecutor {
     Army winner = c.doCombat(defender, attacker);
 
     // Print winner
-    System.out.println("Combat winner : " + winner.getOwnerId());
+    //System.out.println("Combat winner : " + winner.getOwnerId());
 
     // Update region, areaNode, if attacker wins
     if (winner.getOwnerId() == attacker.getOwnerId()) {

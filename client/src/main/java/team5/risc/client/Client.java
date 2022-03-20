@@ -16,7 +16,7 @@ public class Client {
   public Client(RISCServer server, Input input) throws IOException {
     riscServer = server;
     id = riscServer.readInt();
-    System.out.println("id :" + id + "\n");
+    //System.out.println("id :" + id + "\n");
     name = "Player " + id;
     regions = null;
     user_in = input;
@@ -33,8 +33,8 @@ public class Client {
   public ArrayList<String> getRegionPhase() throws IOException, ClassNotFoundException {
     String no_assigned = riscServer.readUTF();
     regions = (ArrayList<String>) riscServer.readObject();
-    System.out.println(no_assigned);
-    System.out.println("You have been assigned region : " + regions);
+    System.out.print(no_assigned);
+    System.out.println("You have been assigned region: " + regions + "\n");
     return regions;
   }
 
@@ -53,11 +53,11 @@ public class Client {
         riscServer.writeInt(no);
         String result = riscServer.readUTF();
         if(result.equals("Success")){
-          System.out.println("Successly place unit " + no);
+          System.out.println("Successfully placed unit!\n");
           break;
         }
         else{
-          System.out.println(result);
+          System.out.println(result + "\n");
         }
       }
     }
@@ -95,11 +95,12 @@ public class Client {
     while(true){
       //get map
       String map_str = riscServer.readUTF();
+      System.out.println("Game Map:");
       System.out.println(map_str);
 
       //get winner status of game
       String game_status = riscServer.readUTF();
-      System.out.println(game_status);
+      //System.out.println(game_status);
       if(game_status.equals("No winner") == false){
         System.out.println(game_status);
         break;
@@ -109,6 +110,7 @@ public class Client {
       String pl_status = riscServer.readUTF();
 
       if(pl_status.equals("Loser")){
+        System.out.println("You have lost the game, Continue watching!\n");
         //Loser found
         //Skip taking actions
         continue;
@@ -124,20 +126,20 @@ public class Client {
           //write "Move"
           riscServer.writeUTF("Move");
           MoveAction m = user_in.getMove(id);
-          System.out.println("Recieved move "+m.source+" "+m.destination);
+          //System.out.println("Recieved move "+m.source+" "+m.destination);
           riscServer.writeObject(m);
           String response = riscServer.readUTF();
-          System.out.println(response);
+          print_action(response);
         } 
         // check if input (A)ttack
         else if(action.equals("A")){
           // write "Attack"
           riscServer.writeUTF("Attack");
           AttackAction m = user_in.getAttack(id);
-          System.out.println("Recieved attack " + m.source + " " + m.destination);
+          //System.out.println("Recieved attack " + m.source + " " + m.destination);
           riscServer.writeObject(m);
           String response = riscServer.readUTF();
-          System.out.println(response);
+          print_action(response);
         }
         //Check if input (D)one
         else if (action.equals("D")){
@@ -146,6 +148,15 @@ public class Client {
           break;
         }
       }
+    }
+  }
+
+  private void print_action(String result){
+    if(result.equals("correct")){
+      System.out.println("Action executed successfully!\n");
+    }
+    else{
+      System.out.println("Error: " + result + "\n");
     }
   }
 
