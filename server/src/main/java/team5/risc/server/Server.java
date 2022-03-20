@@ -52,9 +52,8 @@ public class Server {
 
     //Accept client connection
     server_sock.AcceptConnection(num_player, serverSocket, clientSocketSet);
-    System.out.println("All client finished, begin to read data");
+    System.out.println("All players are connected, let's start the game!");
 
-    int id = 0;
     // initial units assigned by server
     int total_units = 50;
 
@@ -69,7 +68,7 @@ public class Server {
 
     PlacementPhase placement = new PlacementPhase();
     placement.DoPlacement(num_player, server_sock, map, total_units);
-    System.out.println("Placement Phase has done");
+    System.out.println("Placement Phase has finished");
 
     /*
      * ACTION PHASE ------------------------------------------------ 
@@ -92,6 +91,7 @@ public class Server {
 
       ActionPhase play_game = new ActionPhase();
       play_game.doAction(map, num_player, server_sock, players);
+      System.out.println("Game has ended, Thanks for Playing!");
 
     /*
     ---------------------------------------------------------
@@ -120,7 +120,7 @@ public class Server {
    * @throws ClassNotFoundException
    */
   public static void main(String[] args) throws IOException, ClassNotFoundException {
-    Server fs = new Server(1651);
-    fs.run(2);
+    Server fs = new Server(Integer.parseInt(args[0]));
+    fs.run(Integer.parseInt(args[1]));
   }
 }

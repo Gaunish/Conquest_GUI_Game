@@ -87,7 +87,7 @@ class ClientTest {
         System.setOut(new PrintStream(outputStreamCaptor));
         client.placementPhase();
         assertEquals(
-            "Successly place unit 1\nSuccessly place unit 2\nSuccessly place unit 4\n", 
+            "Successfully placed unit!\n\nSuccessfully placed unit!\n\nSuccessfully placed unit!\n\n", 
             outputStreamCaptor.toString()
         );
 
