@@ -3,58 +3,12 @@ package team5.risc.common;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
-import java.util.ArrayList;
 
-public class MapTest {
+public class PlayersTest {
   @Test
-  public void test_Map() {
-    Map m = new Map(2);
-    assertEquals("area0", m.getAreasName().get(0));
-    assertEquals("area1", m.getAreasName().get(1));
-
-    ArrayList<AreaNode> areas = m.getAreas();
-    assertEquals("area0", areas.get(0).getName());
-    assertEquals(-1, areas.get(0).getOwnerId());
-
-    Map m1 = new Map(4, 2);
-    ArrayList<AreaNode> areas1 = m1.getAreas();
-    assertEquals(-1, areas1.get(0).getOwnerId());
-    assertEquals(-1, areas1.get(1).getOwnerId());
-    assertEquals(-1, areas1.get(2).getOwnerId());
-    assertEquals(-1, areas1.get(3).getOwnerId());
-  }
-
-  @Test
-  public void test_region() {
-    Map m = new Map(4, 2);
-    Region r0 = m.getRegions().get(0);
-    Region r1 = m.getRegions().get(1);
-    assertEquals(r0.toString(), "-1: [area0, area2]");
-    assertEquals(r1.toString(), "-1: [area1, area3]");
-  }
-
-  @Test
-  public void test_map_generator() {
-    Map m = new Map(2, 1);
-    ArrayList<String> path = new ArrayList<String>();
-    path.add("0->1");
-    path.add("1->0");
-    assertEquals(path, m.generateMap());
-  }
-
-  @Test
-  public void test_toString() {
+  public void test_lose_win() {
     Map map = new Map();
-    String ans = new String();
-    ans += "area0:(0: 10)\n[]\n" + "area1:(1: 13)\n[]\n" + "area2:(2: 6)\n[]\n" + "area3:(0: 12)\n[]\n"
-        + "area4:(1: 8)\n[]\n" + "area5:(2: 5)\n[]\n" + "area6:(0: 14)\n[]\n" + "area7:(1: 3)\n[]\n"
-        + "area8:(2: 3)\n[]\n";
-    assertEquals(map.toString(), ans);
-  }
-
-  @Test
-  public void test_win_lose() {
-    Map map = new Map();
+    Players p = new Players(3);
     ActionExecutor e = new ActionExecutor();
     MoveAction m1 = new MoveAction(0, "area0", "area3", 10);
     MoveAction m2 = new MoveAction(1, "area1", "area4", 13);
@@ -85,6 +39,9 @@ public class MapTest {
     assertEquals(true, map.is_loser(1));
     assertEquals(false, map.is_loser(0));
     assertEquals(false, map.is_winner(2));
+    assertEquals(true, p.has_lost(map, 1));
+    assertEquals(false, p.has_lost(map, 2));
+    assertEquals(-1, p.get_winner(map, 3));
 
     AttackAction a6 = new AttackAction(2, "area1", "area4", 3);
     e.execute(a6, map);
@@ -97,17 +54,11 @@ public class MapTest {
     AttackAction a8 = new AttackAction(2, "area3", "area0", 2);
     e.execute(a8, map);
     e.resolveAllCombat(map, new CompareCombat());
+    assertEquals(true, p.has_lost(map, 0));
+    assertEquals(true, p.has_lost(map, 0));
     assertEquals(true, map.is_winner(2));
-
-    // System.out.println(map.toString());
-    //  assertEquals(0, 1);
+    assertEquals(2, p.get_winner(map, 3));
+    assertEquals(2, p.get_winner(map, 3));
   }
 
-  @Test
-  public void test_misc(){
-    Map map = new Map();
-    assertEquals(null, map.getAreaNodeByName("kkk"));
-    assertEquals(3, map.getNumPlayer());
-    
-  }
 }
