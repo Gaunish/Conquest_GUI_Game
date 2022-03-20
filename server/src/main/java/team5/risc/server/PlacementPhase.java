@@ -81,8 +81,8 @@ public class PlacementPhase {
               //Get no units
               no = get_no_units();
 
-              System.out.println("no:" + no);
-              System.out.println("Recieved " + no + " for " + area + " by Player " + id);
+              //System.out.println("no:" + no);
+              //System.out.println("Recieved " + no + " for " + area + " by Player " + id);
 
               //check validity of input, update if correct
               boolean is_valid = check_units(no_units, no, total_units, region, area, map);
@@ -111,7 +111,7 @@ public class PlacementPhase {
         int no_units = 0;
 
         for (String area : txt_region) {
-            System.out.println("id : " + id + " Area: " + area);
+            //System.out.println("id : " + id + " Area: " + area);
 
             //Send prompt to client to ask for no of units
             send_prompt(strInfo, area);

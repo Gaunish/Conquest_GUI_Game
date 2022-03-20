@@ -87,56 +87,57 @@ class ClientTest {
         System.setOut(new PrintStream(outputStreamCaptor));
         client.placementPhase();
         assertEquals(
-            "Successly place unit 1\nSuccessly place unit 2\nSuccessly place unit 4\n", 
+            "Successfully placed unit!\n\nSuccessfully placed unit!\n\nSuccessfully placed unit!\n\n", 
             outputStreamCaptor.toString()
         );
 
     }
 
-    // @Test
-    // public void testClientActionPhase() throws IOException, ClassNotFoundException {
-    //     RISCServer mockServer = mock(RISCServer.class);
-    //     Mockito.lenient().when(mockServer.readInt()).thenReturn(1);
-    //     Mockito.lenient().when(mockServer.readObject()).
-    //         thenReturn(new ArrayList<String>(Arrays.asList("area0", "area3", "area6")));
+    @Test
+    public void testClientActionPhase() throws IOException, ClassNotFoundException {
+        RISCServer mockServer = mock(RISCServer.class);
+        Mockito.lenient().when(mockServer.readInt()).thenReturn(1);
+        Mockito.lenient().when(mockServer.readObject()).
+            thenReturn(new ArrayList<String>(Arrays.asList("area0", "area3", "area6")));
         
-    //     Mockito.lenient().when(mockServer.readUTF()).thenReturn("10");//num of unit for each client
+        Mockito.lenient().when(mockServer.readUTF()).thenReturn("10");//num of unit for each client
         
-    //     Mockito.lenient().when(mockServer.readUTF()).thenReturn("How many units do you want to place in area0?\n");
-    //     Mockito.lenient().when(mockServer.readUTF()).thenReturn("Success");
-    //     Mockito.lenient().when(mockServer.readUTF()).thenReturn("How many units do you want to place in area3?\n");
-    //     Mockito.lenient().when(mockServer.readUTF()).thenReturn("Success");
-    //     Mockito.lenient().when(mockServer.readUTF()).thenReturn("How many units do you want to place in area6?\n");
-    //     Mockito.lenient().when(mockServer.readUTF()).thenReturn("Success");
+        Mockito.lenient().when(mockServer.readUTF()).thenReturn("How many units do you want to place in area0?\n");
+        Mockito.lenient().when(mockServer.readUTF()).thenReturn("Success");
+        Mockito.lenient().when(mockServer.readUTF()).thenReturn("How many units do you want to place in area3?\n");
+        Mockito.lenient().when(mockServer.readUTF()).thenReturn("Success");
+        Mockito.lenient().when(mockServer.readUTF()).thenReturn("How many units do you want to place in area6?\n");
+        Mockito.lenient().when(mockServer.readUTF()).thenReturn("Success");
 
-    //     TextInput mockTextInput = mock(TextInput.class);
-    //     Mockito.lenient().when(
-    //         mockTextInput.getPlacement(
-    //             anyString()
-    //         )).
-    //     thenReturn(1, 2, 4);
+        TextInput mockTextInput = mock(TextInput.class);
+        Mockito.lenient().when(
+            mockTextInput.getPlacement(
+                anyString()
+            )).
+        thenReturn(1, 2, 4);
     
-    //     Client client = new Client(mockServer, mockTextInput);
-    //     client.getRegionPhase();
-    //     client.placementPhase();
+        Client client = new Client(mockServer, mockTextInput);
+        client.getRegionPhase();
+        client.placementPhase();
 
-    //     Mockito.lenient().when(mockServer.readUTF()).thenReturn("map info....");
-    //     Mockito.lenient().when(mockServer.readUTF()).thenReturn("winner");
-    //     // Mockito.lenient().when(mockServer.readUTF()).thenReturn("Not loser");
-    //     // Mockito.lenient().when(mockServer.readUTF()).thenReturn("Success");
-    //     // Mockito.lenient().when(mockTextInput.getAction(anyString())).
-    //     //     thenReturn("M", "D");
-    //     // Mockito.lenient().when(mockTextInput.getMove(anyInt())).
-    //     //     thenReturn(new MoveAction(1, "area3", "area6", 2));
+        Mockito.lenient().when(mockServer.readUTF()).thenReturn("DDD");
+        Mockito.lenient().when(mockServer.readUTF()).thenReturn("map info....");
+        Mockito.lenient().when(mockServer.readUTF()).thenReturn("winner");
+        // Mockito.lenient().when(mockServer.readUTF()).thenReturn("");
+        // Mockito.lenient().when(mockServer.readUTF()).thenReturn("Not loser");
+        // Mockito.lenient().when(mockServer.readUTF()).thenReturn("Success");
+        // Mockito.lenient().when(mockTextInput.getAction(anyString())).
+        //     thenReturn("M", "D");
+        // Mockito.lenient().when(mockTextInput.getMove(anyInt())).
+        //     thenReturn(new MoveAction(1, "area3", "area6", 2));
 
-    //     ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
-    //     client.actionPhase();
-
-    //     System.setOut(new PrintStream(outputStreamCaptor));
-    //     assertEquals(
-    //         "winner winner", 
-    //         outputStreamCaptor.toString()
-    //     );
-
-    // }
+        ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStreamCaptor));
+        client.actionPhase();
+        
+        assertEquals(
+            "Game Map:\nwinner\nwinner\n", 
+            outputStreamCaptor.toString()
+        );
+    }
 }

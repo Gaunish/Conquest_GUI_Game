@@ -18,7 +18,7 @@ public class TextInput implements Input{
   }
 
   private void error_msg(String str){
-    out.println(str + ", Try again!");
+    out.println(str + ", Try again!\n");
   }
 
   public int getPlacement(String area){
@@ -60,7 +60,7 @@ public class TextInput implements Input{
 
         //Get input
         user_in = in.nextLine();
-        out.print("input is:"+user_in);
+        //out.print("input is:"+user_in);
         if(!user_in.equals("M") && !user_in.equals("A") && !user_in.equals("D")){
           error_msg("Invalid Input");
           continue;
