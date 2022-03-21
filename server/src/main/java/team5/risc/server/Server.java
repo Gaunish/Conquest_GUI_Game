@@ -20,6 +20,7 @@ public class Server {
   ArrayList<Socket> clientSocketSet;
   int listen_port;
   ServerSock server_sock;
+  int total_units;
 
   /**
    * This constructts a FactorServer with the specified Factorer and ServerSocket.
@@ -35,6 +36,12 @@ public class Server {
     this.serverSocket = new ServerSocket(listen_port);
     this.clientSocketSet = new ArrayList<>();
     this.server_sock = new ServerSock();
+  }
+
+  //Test constructor
+  public Server(int listen_port, int no) throws SocketException, IOException, ClassNotFoundException{
+    this(listen_port);
+    this.run(no);
   }
 
   /**
@@ -55,7 +62,7 @@ public class Server {
     System.out.println("All players are connected, let's start the game!");
 
     // initial units assigned by server
-    int total_units = 50;
+    total_units = 50;
 
     //Add client streams to the list
     server_sock.init(clientSocketSet);
