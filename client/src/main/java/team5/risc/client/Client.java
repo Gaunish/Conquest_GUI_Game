@@ -6,6 +6,7 @@ import team5.risc.common.*;
 import java.net.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import javafx.application.Application;
 
 public class Client {
   RISCServer riscServer;
@@ -168,9 +169,16 @@ public class Client {
   }
 
   public static void main(String[] args) throws UnknownHostException, IOException, ClassNotFoundException {
-    RISCServer riscServer = new RISCServer(args[0], Integer.parseInt(args[1]));
-    Input user_in = new TextInput(System.in, System.out);
-    Client client = new Client(riscServer, user_in);
-    client.run();
+    System.out.print(args[2]);
+    if (args[2].equals("text")) {
+      RISCServer riscServer = new RISCServer(args[0], Integer.parseInt(args[1]));
+      Input user_in = new TextInput(System.in, System.out);
+      Client client = new Client(riscServer, user_in);
+      client.run();
+    } else if (args[2].equals("gui")) {
+      Application.launch(GUIClient.class, "");
+    } else {
+      throw new UnsupportedOperationException("Unsupported operation");
+    }
   }
 }
