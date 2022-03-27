@@ -9,13 +9,19 @@ public class ActionValidator {
     AreaNode sourceNode = map.getAreaNodeByName(a.source);
     AreaNode destinationNode = map.getAreaNodeByName(a.destination);
 
+    if (sourceNode == null) {
+      return "Invalid source name";
+    }
+    if (destinationNode == null) {
+      return "Invalid destination name";
+    }
     if (a.player_id != sourceNode.getOwnerId()) {
       return "Player " + a.player_id + " has no access to " + sourceNode.getName() + ", which is owned by Player "
           + sourceNode.getOwnerId();
     }
     if (sourceNode.getOwnerId() != destinationNode.getOwnerId()) {
-      return "Player " + a.player_id + " can't move unit to " + destinationNode.getName() + ", which is owned by Player "
-          + destinationNode.getOwnerId();
+      return "Player " + a.player_id + " can't move unit to " + destinationNode.getName()
+          + ", which is owned by Player " + destinationNode.getOwnerId();
     }
     if (sourceNode.getDefenderUnit() < a.num_unit) {
       return sourceNode.getName() + " doesn't have enough unit to move";
@@ -32,6 +38,13 @@ public class ActionValidator {
   public String isValid(AttackAction a, Map map) {
     AreaNode sourceNode = map.getAreaNodeByName(a.source);
     AreaNode destinationNode = map.getAreaNodeByName(a.destination);
+
+    if (sourceNode == null) {
+      return "Invalid source name";
+    }
+    if (destinationNode == null) {
+      return "Invalid destination name";
+    }
 
     if (a.player_id != sourceNode.getOwnerId()) {
       return "Player " + a.player_id + " has no access to " + sourceNode.getName() + ", which is owned by Player "
