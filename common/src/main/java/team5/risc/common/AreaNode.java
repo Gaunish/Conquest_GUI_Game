@@ -11,12 +11,38 @@ public class AreaNode implements Serializable {
   private Army defender;
   private ArrayList<Army> enemies;
   private LinkedHashSet<AreaNode> neighbors;
+  private int food_produce;
+  private int tech_produce;
+  private int size;
 
   public AreaNode(String name) {
     this.name = name;
     this.defender = new IntArmy(-1, 0); // owner_id -1 means this area has no owner
     this.enemies = new ArrayList<Army>();
     this.neighbors = new LinkedHashSet<AreaNode>();
+    this.food_produce = 2;
+    this.tech_produce = 3;
+    this.size = 1;
+  }
+
+  public AreaNode(String name, int id) {
+    this.name = name;
+    this.defender = new IntArmy(id, 0); // owner_id -1 means this area has no owner
+    this.enemies = new ArrayList<Army>();
+    this.neighbors = new LinkedHashSet<AreaNode>();
+    this.food_produce = 2;
+    this.tech_produce = 3;
+    this.size = 1;
+  }
+
+  public AreaNode(String name, int food, int tech, int size) {
+    this.name = name;
+    this.defender = new IntArmy(-1, 0); // owner_id -1 means this area has no owner
+    this.enemies = new ArrayList<Army>();
+    this.neighbors = new LinkedHashSet<AreaNode>();
+    this.food_produce = food;
+    this.tech_produce = tech;
+    this.size = size;
   }
 
   @Override
@@ -33,17 +59,6 @@ public class AreaNode implements Serializable {
       return -1;
     return name.hashCode();
   }
-
-  public AreaNode(String name, int id) {
-    this.name = name;
-    this.defender = new IntArmy(id, 0); // owner_id -1 means this area has no owner
-    this.enemies = new ArrayList<Army>();
-    this.neighbors = new LinkedHashSet<AreaNode>();
-  }
-
-  // public Army getArmy() {
-  // return defender;
-  // }
 
   public String getName() {
     return name;
@@ -95,9 +110,6 @@ public class AreaNode implements Serializable {
     }
   }
 
-  /*
-   * public void removeEnemy(Army to_remove) { enemies.remove(to_remove); }
-   */
   public Boolean noEnemyLeft() {
     return enemies.size() == 0;
   }
@@ -141,4 +153,15 @@ public class AreaNode implements Serializable {
     return neighbors;
   }
 
+  public int getFood() {
+    return food_produce;
+  }
+
+  public int getTech() {
+    return tech_produce;
+  }
+
+  public int getSize() {
+    return size;
+  }
 }
