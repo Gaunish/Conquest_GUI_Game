@@ -78,21 +78,27 @@ public class Server {
     System.out.println("Placement Phase has finished");
 
     /*
-     * ACTION PHASE ------------------------------------------------ 
+     * ACTION PHASE
+     *  ------------------------------------------------ 
      * Protocol:
-     * ------------------------------------------------ Server sends a string explaining
+     * ------------------------------------------------ 
+     * Server sends a string explaining
      * which action it is going to recieve ->
      * 
      * 1) Move for MoveAction 2) Attack for AttackAction 3) Done for DoneAction
      * -------------------------------------------------
      * 
-     * ------------------------------------------------ Protocol 2
-     * ------------------------------------------------ Server will tell client his
+     * ------------------------------------------------ 
+     * Protocol 2
+     * ------------------------------------------------ 
+     * Server will tell client his
      * status - 1) Winner 2) Loser 3) Player
      * ------------------------------------------------
      * 
-     * ------------------------------------------------ Protocol 3
-     * ------------------------------------------------ At beginning of turn, server
+     * ------------------------------------------------ 
+     * Protocol 3
+     * ------------------------------------------------ 
+     * At beginning of turn, server
      * will tell client if there is any winner - 1) No Winner OR 2) Player i has won
      */
 

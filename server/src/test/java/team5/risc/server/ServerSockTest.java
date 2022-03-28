@@ -35,16 +35,17 @@ public class ServerSockTest {
   @Test
   public void test_server() throws SocketException, ClassNotFoundException, IOException {
     /*
+    RISCClient mockClient1 = mock(RISCClient.class);
+    RISCClient mockClient2 = mock(RISCClient.class);
+
     Server server = new Server(1234, 2);
 
     ByteArrayOutputStream out = new ByteArrayOutputStream();
     System.setOut(new PrintStream(out));
-    
-    RISCClient mockClient1 = mock(RISCClient.class);
+  
     assertEquals("Player 0 connected!\n", out.toString());
     out.reset();
 
-    RISCClient mockClient2 = mock(RISCClient.class);
     assertEquals("Player 1 connected!\n", out.toString());
     out.reset();
 
@@ -78,7 +79,7 @@ public class ServerSockTest {
 
     mockClient1.close();
     mockClient2.close();
-    */
+  */
   }
   
 }
