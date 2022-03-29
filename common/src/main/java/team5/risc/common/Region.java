@@ -5,20 +5,24 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.io.Serializable;
 
-public class Region implements Serializable{
+public class Region implements Serializable {
   private int owner_id;
   private LinkedHashSet<AreaNode> areas;
+  private int food_resource;
+  private int tech_resource;
 
   public Region() {
     this.owner_id = -1; // no owner at the beginning
     this.areas = new LinkedHashSet<AreaNode>();
+    this.food_resource = 0;
+    this.tech_resource = 0;
   }
 
-  public void set_owner_id(int owner_id) {
+  public void setOwnerId(int owner_id) {
     this.owner_id = owner_id;
   }
 
-  public void set_init_unit(AreaNode the_area, int unit_num) throws RuntimeException {
+  public void setInitUnit(AreaNode the_area, int unit_num) throws RuntimeException {
     if (areas.contains(the_area)) {
       the_area.setDefender(new IntArmy(this.owner_id, unit_num));
     } else {
@@ -45,6 +49,39 @@ public class Region implements Serializable{
       areas_name.add(it.next().getName());
     }
     return areas_name;
+  }
+
+  public int getFoodResource() {
+    return food_resource;
+  }
+
+  public int getTechResource() {
+    return tech_resource;
+  }
+
+  public void consumeFood(int to_remove) throws RuntimeException {
+    if (to_remove > food_resource) {
+      throw new UnsupportedOperationException("No enough food");
+    } else {
+      food_resource -= to_remove;
+    }
+  }
+
+  public void consumeTech(int to_remove) throws RuntimeException {
+    if (to_remove > tech_resource) {
+      throw new UnsupportedOperationException("No enough tech");
+    } else {
+      tech_resource -= to_remove;
+    }
+  }
+
+  public void collectResource() {
+    Iterator<AreaNode> it = areas.iterator();
+    while (it.hasNext()) {
+      AreaNode cur = it.next();
+      food_resource += cur.getFood();
+      tech_resource += cur.getTech();
+    }
   }
 
   public String toString() {

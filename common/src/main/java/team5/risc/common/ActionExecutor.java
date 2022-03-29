@@ -45,7 +45,7 @@ public class ActionExecutor {
     Army winner = c.doCombat(defender, attacker);
 
     // Print winner
-    //System.out.println("Combat winner : " + winner.getOwnerId());
+    // System.out.println("Combat winner : " + winner.getOwnerId());
 
     // Update region, areaNode, if attacker wins
     if (winner.getOwnerId() == attacker.getOwnerId()) {
@@ -61,6 +61,12 @@ public class ActionExecutor {
   public void addUnitToAllArea(int unit_num, Map map) {
     for (AreaNode a : map.getAreas()) {
       a.increaseDefender(unit_num);
+    }
+  }
+
+  public void updateResources(Map map) {
+    for (Region r : map.getRegions()) {
+      r.collectResource();
     }
   }
 }

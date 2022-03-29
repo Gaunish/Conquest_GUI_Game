@@ -52,20 +52,20 @@ public class Map implements Serializable {
     this.num_player = 3;
     this.regions = new ArrayList<Region>();
     generateInitRegions();
-    regions.get(0).set_owner_id(0);
-    regions.get(1).set_owner_id(1);
-    regions.get(2).set_owner_id(2);
-    regions.get(0).set_init_unit(getAreaNodeByName("area0"), 10);
-    regions.get(0).set_init_unit(getAreaNodeByName("area3"), 12);
-    regions.get(0).set_init_unit(getAreaNodeByName("area6"), 14);
+    regions.get(0).setOwnerId(0);
+    regions.get(1).setOwnerId(1);
+    regions.get(2).setOwnerId(2);
+    regions.get(0).setInitUnit(getAreaNodeByName("area0"), 10);
+    regions.get(0).setInitUnit(getAreaNodeByName("area3"), 12);
+    regions.get(0).setInitUnit(getAreaNodeByName("area6"), 14);
 
-    regions.get(1).set_init_unit(getAreaNodeByName("area1"), 13);
-    regions.get(1).set_init_unit(getAreaNodeByName("area4"), 8);
-    regions.get(1).set_init_unit(getAreaNodeByName("area7"), 3);
+    regions.get(1).setInitUnit(getAreaNodeByName("area1"), 13);
+    regions.get(1).setInitUnit(getAreaNodeByName("area4"), 8);
+    regions.get(1).setInitUnit(getAreaNodeByName("area7"), 3);
 
-    regions.get(2).set_init_unit(getAreaNodeByName("area2"), 6);
-    regions.get(2).set_init_unit(getAreaNodeByName("area5"), 5);
-    regions.get(2).set_init_unit(getAreaNodeByName("area8"), 3);
+    regions.get(2).setInitUnit(getAreaNodeByName("area2"), 6);
+    regions.get(2).setInitUnit(getAreaNodeByName("area5"), 5);
+    regions.get(2).setInitUnit(getAreaNodeByName("area8"), 3);
   }
 
   public AreaNode getAreaNodeByName(String name) {
@@ -180,15 +180,7 @@ public class Map implements Serializable {
       }
     }
     return true;
-    // never happen, can't do unit testing
-    /*
-     * // Double checking if (no == areas.size()) { return true; } return false;
-     */
   }
-  /*
-   * // Displays map // currently coupled to system.out public void displayMap() {
-   * System.out.println("Hello World"); }
-   */
 
   public String toString() {
     String ans = new String();

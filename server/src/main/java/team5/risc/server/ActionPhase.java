@@ -157,6 +157,9 @@ public class ActionPhase {
     setVariables(players, num_player, map);
 
     while (true) {
+      // update resource for each player
+      actionExecutor.updateResources(map);
+      
       // get Map in String form 
       String map_info = txt_map();
 

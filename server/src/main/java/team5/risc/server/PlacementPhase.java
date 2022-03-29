@@ -67,7 +67,7 @@ public class PlacementPhase {
           }
         else{
             no_units += no;
-            region.set_init_unit(node, no);
+            region.setInitUnit(node, no);
             dataOutputStream.writeUTF("Success");
             return true;
         }
@@ -105,7 +105,7 @@ public class PlacementPhase {
     //Method to get all placements from a client
     private void get_placements(Map map, int id, int total_units, MetaInfoPlacement strInfo, ArrayList<Region> regions) throws IOException{
         Region region = regions.get(id);
-        region.set_owner_id(id);
+        region.setOwnerId(id);
         ArrayList<String> txt_region = send_region(region);
   
         int no_units = 0;
