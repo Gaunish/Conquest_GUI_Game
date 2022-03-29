@@ -13,6 +13,7 @@ public class PlacementPhase {
     private DataOutputStream dataOutputStream;
     private ObjectOutputStream objectOutputStream;
     private DataInputStream dataInputStream;
+    private int no_units;
 
     //Method to set DataOutputStream
     private void setOutStream(DataOutputStream dataOutputStream, ObjectOutputStream objectOutputStream, DataInputStream dataInputStream){
@@ -57,7 +58,7 @@ public class PlacementPhase {
     }
 
     //Method to check validity of input, update if correct
-    private boolean check_units(int no_units, int no, int total_units, Region region, String area, Map map) throws IOException{
+    private boolean check_units(int no, int total_units, Region region, String area, Map map) throws IOException{
         AreaNode node = map.getAreaNodeByName(area);
 
         if ((no_units + no) > total_units) {
@@ -66,7 +67,8 @@ public class PlacementPhase {
             return false;
           }
         else{
-            no_units += no;
+            //System.out.println("NO_UNITSY : " + no_units);
+            no_units = no_units + no;
             region.set_init_unit(node, no);
             dataOutputStream.writeUTF("Success");
             return true;
@@ -74,7 +76,7 @@ public class PlacementPhase {
     }
 
     //Method to get one placement from a user
-    private void get_one_placement(int id, int no_units, int total_units, String area, Region region, Map map){
+    private void get_one_placement(int id, int total_units, String area, Region region, Map map){
         while(true){
             int no = -1;
             try {
@@ -85,7 +87,7 @@ public class PlacementPhase {
               //System.out.println("Recieved " + no + " for " + area + " by Player " + id);
 
               //check validity of input, update if correct
-              boolean is_valid = check_units(no_units, no, total_units, region, area, map);
+              boolean is_valid = check_units(no, total_units, region, area, map);
               
               //Based on input, determine flow
               if (is_valid) {
@@ -108,15 +110,13 @@ public class PlacementPhase {
         region.set_owner_id(id);
         ArrayList<String> txt_region = send_region(region);
   
-        int no_units = 0;
-
         for (String area : txt_region) {
             //System.out.println("id : " + id + " Area: " + area);
 
             //Send prompt to client to ask for no of units
             send_prompt(strInfo, area);
     
-            get_one_placement(id, no_units, total_units, area, region, map);
+            get_one_placement(id, total_units, area, region, map);
         }
     }
 
@@ -142,8 +142,10 @@ public class PlacementPhase {
             write_client1(id, strInfo);
       
             //Get all placements from user
+            no_units = 0;
             get_placements(map, id, total_units, strInfo, regions);
             id++;
+            
           }
     }
 }

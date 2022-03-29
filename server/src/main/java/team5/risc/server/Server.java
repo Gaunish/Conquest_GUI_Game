@@ -20,6 +20,7 @@ public class Server {
   ArrayList<Socket> clientSocketSet;
   int listen_port;
   ServerSock server_sock;
+  int total_units;
 
   /**
    * This constructts a FactorServer with the specified Factorer and ServerSocket.
@@ -35,6 +36,12 @@ public class Server {
     this.serverSocket = new ServerSocket(listen_port);
     this.clientSocketSet = new ArrayList<>();
     this.server_sock = new ServerSock();
+  }
+
+  //Test constructor
+  public Server(int listen_port, int no) throws SocketException, IOException, ClassNotFoundException{
+    this(listen_port);
+    this.run(no);
   }
 
   /**
@@ -55,7 +62,7 @@ public class Server {
     System.out.println("All players are connected, let's start the game!");
 
     // initial units assigned by server
-    int total_units = 50;
+    total_units = 50;
 
     //Add client streams to the list
     server_sock.init(clientSocketSet);
@@ -71,21 +78,27 @@ public class Server {
     System.out.println("Placement Phase has finished");
 
     /*
-     * ACTION PHASE ------------------------------------------------ 
+     * ACTION PHASE
+     *  ------------------------------------------------ 
      * Protocol:
-     * ------------------------------------------------ Server sends a string explaining
+     * ------------------------------------------------ 
+     * Server sends a string explaining
      * which action it is going to recieve ->
      * 
      * 1) Move for MoveAction 2) Attack for AttackAction 3) Done for DoneAction
      * -------------------------------------------------
      * 
-     * ------------------------------------------------ Protocol 2
-     * ------------------------------------------------ Server will tell client his
+     * ------------------------------------------------ 
+     * Protocol 2
+     * ------------------------------------------------ 
+     * Server will tell client his
      * status - 1) Winner 2) Loser 3) Player
      * ------------------------------------------------
      * 
-     * ------------------------------------------------ Protocol 3
-     * ------------------------------------------------ At beginning of turn, server
+     * ------------------------------------------------ 
+     * Protocol 3
+     * ------------------------------------------------ 
+     * At beginning of turn, server
      * will tell client if there is any winner - 1) No Winner OR 2) Player i has won
      */
 

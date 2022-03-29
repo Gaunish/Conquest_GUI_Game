@@ -43,7 +43,7 @@ public class LoginController {
         } else {
             // Alert 
             Stage secondStage = new Stage();
-            Label label = new Label("Login failed"); // 放一个标签
+            Label label = new Label("Login failed"); 
             StackPane secondPane = new StackPane(label);
             Scene secondScene = new Scene(secondPane, 300, 200);
             secondStage.setScene(secondScene);
