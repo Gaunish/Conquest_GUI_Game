@@ -8,10 +8,12 @@ import java.io.Serializable;
 public class Region implements Serializable{
   private int owner_id;
   private LinkedHashSet<AreaNode> areas;
+  private Resources resource; 
 
   public Region() {
     this.owner_id = -1; // no owner at the beginning
     this.areas = new LinkedHashSet<AreaNode>();
+    resource = new Resources();
   }
 
   public void set_owner_id(int owner_id) {
@@ -24,6 +26,22 @@ public class Region implements Serializable{
     } else {
       throw new UnsupportedOperationException("The area doesn't belong to this onwer");
     }
+  }
+
+  //Method to increment total food/tech
+  //after each turn
+  public void incFoodTech(){
+    resource.incFoodTech(areas);
+  }
+
+  //Method to subtract food
+  public boolean subFood(int food){
+    return resource.subFood(food);
+  }
+
+  //Method to subtract tech
+  public boolean subTech(int tech){
+    return resource.subTech(tech);
   }
 
   public void addArea(AreaNode to_add) {
