@@ -3,6 +3,7 @@ package team5.risc.common;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class Map implements Serializable {
   private static final long serialVersionUID = 1L;
@@ -78,6 +79,14 @@ public class Map implements Serializable {
     // return this.name2areas.get(name);
   }
 
+  public Region getRegionById(int id) {
+    if (id < regions.size()) {
+      return regions.get(id);
+    }
+    return null;
+    // return this.name2areas.get(name);
+  }
+
   public ArrayList<String> getAreasName() {
     ArrayList<String> areas_name = new ArrayList<String>();
     for (int i = 0; i < areas.size(); i++) {
@@ -115,6 +124,45 @@ public class Map implements Serializable {
       }
     }
     return path;
+  }
+
+  int calculateMinimumFood(AreaNode sourceNode, AreaNode destinationNode, int num_unit) {
+    HashSet<String> currentSet = new HashSet<>();
+    HashMap<String, Integer> node2Distance = new HashMap<>();
+    int player_id = sourceNode.getOwnerId();
+    currentSet.add(sourceNode.getName());
+    node2Distance.put(sourceNode.getName(), 0); 
+
+    while (true) {
+      int shortest_cost = 100000;
+      String shortest_name = "";
+      for (HashMap.Entry<String,Integer> entry : node2Distance.entrySet()) {
+        if (!currentSet.contains(entry.getKey()) && 
+            entry.getValue() < shortest_cost) {
+              shortest_name = entry.getKey();
+              shortest_cost = entry.getValue();
+        }
+      }
+      if (shortest_name.equals("")) return -1;
+      if (shortest_name.equals(destinationNode.getName())) {
+        return num_unit * shortest_cost;
+      }
+
+      currentSet.add(shortest_name);
+      for (String neighbor : getAreaNodeByName(shortest_name).getNeighborsName()) {
+        if (getAreaNodeByName(neighbor).getOwnerId() != player_id)
+            continue;
+
+        if (!node2Distance.containsKey(neighbor) || 
+          node2Distance.get(neighbor) > shortest_cost + getAreaNodeByName(neighbor).getFood()
+        ) {
+          node2Distance.put(
+            neighbor,
+            shortest_cost + getAreaNodeByName(neighbor).getFood()
+          );
+        }
+      }
+    }
   }
 
   public void generateExampleMap() {
