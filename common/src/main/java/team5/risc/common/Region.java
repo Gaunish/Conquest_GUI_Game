@@ -34,6 +34,10 @@ public class Region implements Serializable{
     resource.incFoodTech(areas);
   }
 
+  public boolean checkFoodEnough(int food){
+    return food < resource.getFood();
+  }
+
   //Method to subtract food
   public boolean subFood(int food){
     return resource.subFood(food);
