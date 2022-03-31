@@ -8,17 +8,13 @@ public class ActionExecutor {
     AreaNode destinationNode = map.getAreaNodeByName(a.destination);
 
     Region sourceRegion = map.getRegionById(sourceNode.getOwnerId());
-
     int foodNeed = map.calculateMinimumFood(sourceNode, destinationNode, a.num_unit);
-    if (sourceRegion.checkFoodEnough(foodNeed)) {
-      sourceRegion.subFood(foodNeed);
-    } else {
-      //Not enough food.
-      return;
-    }
-
+    sourceRegion.subFood(foodNeed);
+    
     sourceNode.reduceDefender(a.num_unit);
     destinationNode.increaseDefender(a.num_unit);
+
+    return;
   }
 
   public void execute(AttackAction a, Map map) {
