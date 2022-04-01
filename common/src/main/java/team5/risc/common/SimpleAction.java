@@ -7,11 +7,13 @@ public abstract class SimpleAction implements Action, Serializable {
   public String source;
   public String destination;
   public int num_unit;
+  private int lvl;
 
-  public SimpleAction(int id, String src, String dst, int unit) {
+  public SimpleAction(int id, String src, String dst, int index, int unit) {
     this.player_id = id;
     this.source = src;
     this.destination = dst;
+    this.lvl = index;
     this.num_unit = unit;
   }
 

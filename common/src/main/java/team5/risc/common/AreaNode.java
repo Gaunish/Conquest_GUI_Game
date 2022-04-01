@@ -223,6 +223,7 @@ public class AreaNode implements Serializable {
     return name + ":" + defender.get(lvl) + "\n" + enemies;
   }
 
+  //Get list of defender in text form
   public String getDefenderText(){
     String out = "";
     for(int i = 0; i < no_level; i++){

@@ -104,6 +104,12 @@ public class ActionPhase {
         }
     }
 
+    private void play_upgrade() throws ClassNotFoundException, IOException{
+      //get the upgrade action
+      UpgradeAction upgradeAction = (UpgradeAction) objIstream.readObject();
+      System.out.println(upgradeAction);
+    }
+
     private void play_attack(ArrayList<AttackAction> attackActionList) throws ClassNotFoundException, IOException{
         //Get attack action
         AttackAction attackAction = (AttackAction) objIstream.readObject();
@@ -139,7 +145,10 @@ public class ActionPhase {
           // ATTACK ACTION
           else if (action.equals("Attack")) {
             play_attack(attackActionList);
-          
+          }
+          //UPGRADE ACTION
+          else if (action.equals("Upgrade")){
+            play_upgrade();
           }
           //DONE ACTION
           else if(action.equals("Done")){
