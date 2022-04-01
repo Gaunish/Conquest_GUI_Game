@@ -83,6 +83,7 @@ public class Client {
      * 1) Move for MoveAction 
      * 2) Attack for AttackAction 
      * 3) Done for DoneAction
+     * 4) Upgrade for UpgradeAction
      * ------------------------------------------------
      * 
      * ------------------------------------------------
@@ -152,9 +153,13 @@ public class Client {
 
         // Check if input (U)pgrade
         else if (action.equals("U")) {
+          // write "Upgrade"
+          riscServer.writeUTF("Upgrade");
+
           //Get area to upgrade
           String area_in = user_in.getArea();
           UpgradeAction u = user_in.getUpgrade(id, area_in);
+          riscServer.writeObject(u);
           System.out.println(u.toString());
         }
 

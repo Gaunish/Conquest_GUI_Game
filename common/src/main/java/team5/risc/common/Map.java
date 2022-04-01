@@ -134,7 +134,7 @@ public class Map implements Serializable {
     node2Distance.put(sourceNode.getName(), 0); 
 
     while (true) {
-      int shortest_cost = 100000;
+      int shortest_cost = 1000000;
       String shortest_name = "";
       for (HashMap.Entry<String,Integer> entry : node2Distance.entrySet()) {
         if (!currentSet.contains(entry.getKey()) && 

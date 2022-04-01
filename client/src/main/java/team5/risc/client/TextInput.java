@@ -77,34 +77,37 @@ public class TextInput implements Input{
   }
 
   public MoveAction getMove(int id){
-    String prompt = "Enter the source, destination, no of players\n";
+    String prompt = "Enter the source, destination, index, no of units\n";
 
     String[] values = getValues(prompt);
-    int no_unit = Integer.parseInt(values[2]);
+    int no_unit = Integer.parseInt(values[3]);
+    int index = Integer.parseInt(values[2]);
 
-    MoveAction move = new MoveAction(id, values[0], values[1], no_unit);
+    MoveAction move = new MoveAction(id, values[0], values[1], index, no_unit);
     
     return move;
   }
 
   public AttackAction getAttack(int id){
-    String prompt = "Enter the source, destination, no of players\n";
+    String prompt = "Enter the source, destination, index, no of players\n";
     
     String[] values = getValues(prompt);
-    int no_unit = Integer.parseInt(values[2]);
+    int no_unit = Integer.parseInt(values[3]);
+    int index = Integer.parseInt(values[2]);
 
-    AttackAction attack = new AttackAction(id, values[0], values[1], no_unit);
+    AttackAction attack = new AttackAction(id, values[0], values[1], index, no_unit);
     
     return attack;
   }
 
   public UpgradeAction getUpgrade(int id, String area){
-    String prompt = "Enter the army index, no of units to upgrade \n";
+    String prompt = "Enter the army index, no of units, upgrade level\n";
     String[] values = getUpgradeValues(prompt);
     int index = Integer.parseInt(values[0]);
     int no = Integer.parseInt(values[1]);
+    int new_lvl = Integer.parseInt(values[2]);
 
-    UpgradeAction upgrade = new UpgradeAction(id, area, index, no);
+    UpgradeAction upgrade = new UpgradeAction(id, area, index, no, new_lvl);
     return upgrade;
   }
 
@@ -121,17 +124,23 @@ public class TextInput implements Input{
         values = user_in.split(" ");
 
         // Invalid input 1
-        if (values.length != 2) {
+        if (values.length != 3) {
           error_msg("Invalid no of args");
           continue;
         }
         
         int index = Integer.parseInt(values[0]);
         int no = Integer.parseInt(values[1]);
+        int new_lvl = Integer.parseInt(values[2]);
 
         // Invalid input 2
-        if (index <= 0 || no <= 0) {
-          error_msg("Negative input no");
+        if (index < 0 || no <= 0 || new_lvl <= 0) {
+          error_msg("Negative/0 input no");
+          continue;
+        }
+
+        if(new_lvl <= index){
+          error_msg("Upgrading level less than curr one");
           continue;
         }
 
@@ -223,15 +232,16 @@ public class TextInput implements Input{
         values = user_in.split(" ");
 
         // Invalid input 1
-        if (values.length != 3) {
+        if (values.length != 4) {
           error_msg("Invalid no of args");
           continue;
         }
 
-        int no = Integer.parseInt(values[2]);
+        int no = Integer.parseInt(values[3]);
+        int index = Integer.parseInt(values[2]);
 
         // Invalid input 2
-        if (no <= 0) {
+        if (no <= 0 || index <= 0) {
           error_msg("Negative no of input");
           continue;
         }

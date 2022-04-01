@@ -85,7 +85,8 @@ public class Server {
      * Server sends a string explaining
      * which action it is going to recieve ->
      * 
-     * 1) Move for MoveAction 2) Attack for AttackAction 3) Done for DoneAction
+     * 1) Move for MoveAction 2) Attack for AttackAction 3) Done for DoneAction 
+     * 4) Upgrade for UpgradeAction
      * -------------------------------------------------
      * 
      * ------------------------------------------------ 

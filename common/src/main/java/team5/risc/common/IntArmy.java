@@ -19,6 +19,10 @@ public class IntArmy implements Army, Serializable {
     return unit_num;
   }
 
+  public int getLevel(){
+    return 0;
+  }
+
   public void removeUnit(int num_to_remove) throws RuntimeException {
     if (unit_num - num_to_remove >= 0) {
       unit_num -= num_to_remove;
