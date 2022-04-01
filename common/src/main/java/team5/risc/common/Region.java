@@ -28,6 +28,24 @@ public class Region implements Serializable{
     }
   }
 
+  //Method to check if upgrade is valid
+  public boolean isUpgradeValid(int lvl, int new_lvl, int no_unit, AreaNode area){
+    if(!areas.contains(area)){
+      return false;
+    }
+    return true;
+  }
+
+  //Method to upgrade unit in given area
+  public void upgradeArmy(int lvl, int new_lvl, int no_unit, AreaNode area){
+    if(!isUpgradeValid(lvl, new_lvl, no_unit, area) || area.isUpgradeValid(lvl, new_lvl, no_unit, resource.getTech())){
+      return;
+    }
+    area.upgradeArmy(lvl, new_lvl, no_unit);
+    int cost = area.cost(lvl, new_lvl);
+    resource.subTech(no_unit * cost);
+  }
+
   //Method to increment total food/tech
   //after each turn
   public void incFoodTech(){
