@@ -5,22 +5,24 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.io.Serializable;
 
-public class Region implements Serializable{
+public class Region implements Serializable {
   private int owner_id;
   private LinkedHashSet<AreaNode> areas;
-  private Resources resource; 
+  private Resources resource;
 
   public Region() {
     this.owner_id = -1; // no owner at the beginning
     this.areas = new LinkedHashSet<AreaNode>();
+
     resource = new Resources();
+
   }
 
-  public void set_owner_id(int owner_id) {
+  public void setOwnerId(int owner_id) {
     this.owner_id = owner_id;
   }
 
-  public void set_init_unit(AreaNode the_area, int unit_num) throws RuntimeException {
+  public void setInitUnit(AreaNode the_area, int unit_num) throws RuntimeException {
     if (areas.contains(the_area)) {
       the_area.setDefender(new IntArmy(this.owner_id, unit_num));
     } else {
@@ -28,17 +30,18 @@ public class Region implements Serializable{
     }
   }
 
-  //Method to check if upgrade is valid
-  public boolean isUpgradeValid(int lvl, int new_lvl, int no_unit, AreaNode area){
-    if(!areas.contains(area)){
+  // Method to check if upgrade is valid
+  public boolean isUpgradeValid(int lvl, int new_lvl, int no_unit, AreaNode area) {
+    if (!areas.contains(area)) {
       return false;
     }
     return true;
   }
 
-  //Method to upgrade unit in given area
-  public void upgradeArmy(int lvl, int new_lvl, int no_unit, AreaNode area){
-    if(!isUpgradeValid(lvl, new_lvl, no_unit, area) || area.isUpgradeValid(lvl, new_lvl, no_unit, resource.getTech())){
+  // Method to upgrade unit in given area
+  public void upgradeArmy(int lvl, int new_lvl, int no_unit, AreaNode area) {
+    if (!isUpgradeValid(lvl, new_lvl, no_unit, area)
+        || area.isUpgradeValid(lvl, new_lvl, no_unit, resource.getTech())) {
       return;
     }
     area.upgradeArmy(lvl, new_lvl, no_unit);
@@ -46,23 +49,27 @@ public class Region implements Serializable{
     resource.subTech(no_unit * cost);
   }
 
-  //Method to increment total food/tech
-  //after each turn
-  public void incFoodTech(){
+  // Method to increment total food/tech
+  // after each turn
+  public void incFoodTech() {
     resource.incFoodTech(areas);
   }
 
-  public boolean checkFoodEnough(int food){
-    return food < resource.getFood();
+  public boolean checkFoodEnough(int food) {
+    return food <= resource.getFood();
   }
 
-  //Method to subtract food
-  public boolean subFood(int food){
+  public boolean checkTechEnough(int tech) {
+    return tech <= resource.getTech();
+  }
+
+  // Method to subtract food
+  public boolean subFood(int food) {
     return resource.subFood(food);
   }
 
-  //Method to subtract tech
-  public boolean subTech(int tech){
+  // Method to subtract tech
+  public boolean subTech(int tech) {
     return resource.subTech(tech);
   }
 

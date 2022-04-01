@@ -10,7 +10,7 @@ public class ActionExecutor {
     Region sourceRegion = map.getRegionById(sourceNode.getOwnerId());
     int foodNeed = map.calculateMinimumFood(sourceNode, destinationNode, a.num_unit);
     sourceRegion.subFood(foodNeed);
-    
+
     sourceNode.reduceDefender(a.num_unit);
     destinationNode.increaseDefender(a.num_unit);
 
@@ -52,7 +52,7 @@ public class ActionExecutor {
     Army winner = c.doCombat(defender, attacker);
 
     // Print winner
-    //System.out.println("Combat winner : " + winner.getOwnerId());
+    // System.out.println("Combat winner : " + winner.getOwnerId());
 
     // Update region, areaNode, if attacker wins
     if (winner.getOwnerId() == attacker.getOwnerId()) {
@@ -70,4 +70,11 @@ public class ActionExecutor {
       a.increaseDefender(unit_num);
     }
   }
+
+  public void updateResources(Map map) {
+    for (Region r : map.getRegions()) {
+      r.incFoodTech();
+    }
+  }
+
 }

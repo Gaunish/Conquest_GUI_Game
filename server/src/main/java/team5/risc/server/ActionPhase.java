@@ -169,6 +169,9 @@ public class ActionPhase {
     ArrayList<Integer> exit_losers = new ArrayList<Integer>();
 
     while (true) {
+      // update resource for each player
+      actionExecutor.updateResources(map);
+      
       // get Map in String form 
       String map_info = txt_map();
 

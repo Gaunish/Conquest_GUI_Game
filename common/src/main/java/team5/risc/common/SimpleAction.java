@@ -7,7 +7,7 @@ public abstract class SimpleAction implements Action, Serializable {
   public String source;
   public String destination;
   public int num_unit;
-  private int lvl;
+  public int lvl;
 
   public SimpleAction(int id, String src, String dst, int index, int unit) {
     this.player_id = id;
@@ -21,6 +21,7 @@ public abstract class SimpleAction implements Action, Serializable {
     String ans = new String();
     ans += source + "->" + destination + ":";
     ans += num_unit;
+    ans += "(" + lvl + ")";
     return ans;
   }
 }

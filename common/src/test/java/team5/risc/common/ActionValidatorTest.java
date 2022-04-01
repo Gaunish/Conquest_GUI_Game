@@ -22,7 +22,7 @@ public class ActionValidatorTest {
     MoveAction m2 = new MoveAction(1, "area1", "area6", 3);
     assertEquals("Player 1 can't move unit to area6, which is owned by Player 0", v.isValid(m2, map));
     MoveAction m3 = new MoveAction(1, "area1", "area4", 14);
-    assertEquals("area1 doesn't have enough unit to move", v.isValid(m3, map));
+    assertEquals("area1 doesn't have enough unit (level 0) to move", v.isValid(m3, map));
     MoveAction m4 = new MoveAction(1, "area1", "area7", 3);
     assertEquals("Unreachable", v.isValid(m4, map));
     MoveAction m5 = new MoveAction(2, "area8", "area2", 3);
