@@ -1,48 +1,67 @@
 package team5.risc.common;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.io.Serializable;
 
 public class AreaNode implements Serializable {
 
   private String name;
-  private Army defender;
+  private ArrayList<Army> defender;
   private ArrayList<Army> enemies;
   private LinkedHashSet<AreaNode> neighbors;
   private int food_produce;
   private int tech_produce;
   private int size;
+  private int no_level;
+  private List<Integer> cost;
 
   public AreaNode(String name) {
     this.name = name;
-    this.defender = new IntArmy(-1, 0); // owner_id -1 means this area has no owner
+    this.defender = new ArrayList<Army>();
+    this.defender.add(new IntArmy(-1, 0)); // owner_id -1 means this area has no owner
     this.enemies = new ArrayList<Army>();
     this.neighbors = new LinkedHashSet<AreaNode>();
     this.food_produce = 2;
     this.tech_produce = 3;
     this.size = 1;
+    this.no_level = 1;
   }
 
   public AreaNode(String name, int id) {
     this.name = name;
-    this.defender = new IntArmy(id, 0); // owner_id -1 means this area has no owner
+    this.defender = new ArrayList<Army>();
+    this.defender.add(new IntArmy(-1, 0)); // owner_id -1 means this area has no owner
     this.enemies = new ArrayList<Army>();
     this.neighbors = new LinkedHashSet<AreaNode>();
     this.food_produce = 2;
     this.tech_produce = 3;
     this.size = 1;
+    this.no_level = 1;
   }
 
   public AreaNode(String name, int food, int tech, int size) {
     this.name = name;
-    this.defender = new IntArmy(-1, 0); // owner_id -1 means this area has no owner
+    this.defender = new ArrayList<Army>();
     this.enemies = new ArrayList<Army>();
     this.neighbors = new LinkedHashSet<AreaNode>();
     this.food_produce = food;
     this.tech_produce = tech;
     this.size = size;
+    this.no_level = 7;
+    cost =  Arrays.asList(0, 3, 11, 30, 55, 90, 140);
+
+    initLevelDefender(-1);
+  }
+
+  //Method to init level defender list
+  public void initLevelDefender(int owner_id){
+    for(int lvl = 0; lvl < no_level; lvl++){
+      defender.add(new LevelArmy(owner_id, 0, 0));
+    }
   }
 
   @Override
@@ -60,32 +79,96 @@ public class AreaNode implements Serializable {
     return name.hashCode();
   }
 
+  //Method to calculate cost to upgrade 
+  public int cost(int lvl, int new_lvl){
+    return (cost.get(new_lvl) - cost.get(lvl));
+  }
+
+  //Method to check if upgrade is valid
+  //Checks if enough units of given lvl
+  //Checks if new_lvl is valid
+  //Check if enough tech resource
+  public boolean isUpgradeValid(int lvl, int new_lvl, int no_unit, int tech){
+    //Check lvl
+    if(new_lvl >= no_level){
+      return false;
+    }
+
+    //Check no of unit
+    Army army = defender.get(lvl);
+    if(army.getUnitNum() < no_unit){
+      return false;
+    }
+
+    //Check tech
+    if(no_unit * cost(lvl, new_lvl) > tech){
+      return false;
+    }
+
+    return true;
+  }
+
+  //Method to upgrade units of given lvl
+  public void upgradeArmy(int lvl, int new_lvl, int no_unit){   
+    reduceDefender(no_unit, lvl);
+    increaseDefender(no_unit, new_lvl);
+  }
+
   public String getName() {
     return name;
   }
 
   public int getOwnerId() {
-    return defender.getOwnerId();
+    return defender.get(0).getOwnerId();
   }
 
   public int getDefenderUnit() {
-    return defender.getUnitNum();
+    return getDefenderUnit(0);
+  }
+
+  //Get given lvl defender no
+  public int getDefenderUnit(int lvl){
+    return defender.get(lvl).getUnitNum();
   }
 
   public void setDefender(Army new_defender) {
-    defender = new_defender;
+    setDefender(new_defender, 0);
+  }
+
+  //set given lvl defender
+  public void setDefender(Army new_defender, int lvl) {
+    defender.set(lvl, new_defender);
   }
 
   public Army getDefender() {
-    return defender;
+    return getDefender(0);
+  }
+
+  //Get given lvl defender
+  public Army getDefender(int lvl) {
+    return defender.get(lvl);
   }
 
   public void reduceDefender(int reduce_num) {
-    defender.removeUnit(reduce_num);
+    reduceDefender(reduce_num, 0);
+  }
+
+  //Reduce given lvl defender num
+  public void reduceDefender(int reduce_num, int lvl) {
+    Army def = defender.get(lvl); 
+    def.removeUnit(reduce_num);
+    defender.set(lvl, def);
   }
 
   public void increaseDefender(int increase_num) {
-    defender.addUnit(increase_num);
+    increaseDefender(increase_num, 0);
+  }
+
+  //Increase given lvl defender num
+  public void increaseDefender(int increase_num, int lvl) {
+    Army def = defender.get(lvl); 
+    def.addUnit(increase_num);
+    defender.set(lvl, def);
   }
 
   public void addEnemy(Army to_add) {
@@ -133,7 +216,20 @@ public class AreaNode implements Serializable {
    * info will be add in Map return new_node; }
    */
   public String toString() {
-    return name + ":" + defender + "\n" + enemies;
+    return toString(0);
+  }
+
+  public String toString(int lvl) {
+    return name + ":" + defender.get(lvl) + "\n" + enemies;
+  }
+
+  public String getDefenderText(){
+    String out = "";
+    for(int i = 0; i < no_level; i++){
+      Army a = defender.get(i);
+      out += "Level " + i + ": " + a.getUnitNum();
+    }
+    return out;
   }
 
   public void addNeighbor(AreaNode to_add) {
