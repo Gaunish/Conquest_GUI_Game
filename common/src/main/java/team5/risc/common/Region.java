@@ -8,14 +8,14 @@ import java.io.Serializable;
 public class Region implements Serializable {
   private int owner_id;
   private LinkedHashSet<AreaNode> areas;
-  private int food_resource;
-  private int tech_resource;
+  private Resources resource;
 
   public Region() {
     this.owner_id = -1; // no owner at the beginning
     this.areas = new LinkedHashSet<AreaNode>();
-    this.food_resource = 0;
-    this.tech_resource = 0;
+
+    resource = new Resources();
+
   }
 
   public void setOwnerId(int owner_id) {
@@ -28,6 +28,26 @@ public class Region implements Serializable {
     } else {
       throw new UnsupportedOperationException("The area doesn't belong to this onwer");
     }
+  }
+
+  // Method to increment total food/tech
+  // after each turn
+  public void incFoodTech() {
+    resource.incFoodTech(areas);
+  }
+
+  public boolean checkFoodEnough(int food) {
+    return food < resource.getFood();
+  }
+
+  // Method to subtract food
+  public boolean subFood(int food) {
+    return resource.subFood(food);
+  }
+
+  // Method to subtract tech
+  public boolean subTech(int tech) {
+    return resource.subTech(tech);
   }
 
   public void addArea(AreaNode to_add) {
@@ -49,39 +69,6 @@ public class Region implements Serializable {
       areas_name.add(it.next().getName());
     }
     return areas_name;
-  }
-
-  public int getFoodResource() {
-    return food_resource;
-  }
-
-  public int getTechResource() {
-    return tech_resource;
-  }
-
-  public void consumeFood(int to_remove) throws RuntimeException {
-    if (to_remove > food_resource) {
-      throw new UnsupportedOperationException("No enough food");
-    } else {
-      food_resource -= to_remove;
-    }
-  }
-
-  public void consumeTech(int to_remove) throws RuntimeException {
-    if (to_remove > tech_resource) {
-      throw new UnsupportedOperationException("No enough tech");
-    } else {
-      tech_resource -= to_remove;
-    }
-  }
-
-  public void collectResource() {
-    Iterator<AreaNode> it = areas.iterator();
-    while (it.hasNext()) {
-      AreaNode cur = it.next();
-      food_resource += cur.getFood();
-      tech_resource += cur.getTech();
-    }
   }
 
   public String toString() {

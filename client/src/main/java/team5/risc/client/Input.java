@@ -7,4 +7,7 @@ public interface Input {
   public int getPlacement(String area);
   public MoveAction getMove(int id);
   public AttackAction getAttack(int id);
+  public String getLoser();
+  public String getArea();
+  public UpgradeAction getUpgrade(int id, String area);
 }

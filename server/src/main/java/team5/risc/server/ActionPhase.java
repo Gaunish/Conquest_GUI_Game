@@ -149,12 +149,15 @@ public class ActionPhase {
     }
 
     public void doAction(Map map, int num_player, ServerSock server_sock, Players players) throws IOException, ClassNotFoundException{
-         /// Validation and execute Move Action
+    /// Validation and execute Move Action
     this.actionValidator = new ActionValidator();
     this.actionExecutor = new ActionExecutor();
 
     //set class variables
     setVariables(players, num_player, map);
+
+    //List to track exited users
+    ArrayList<Integer> exit_losers = new ArrayList<Integer>();
 
     while (true) {
       // update resource for each player
@@ -172,6 +175,11 @@ public class ActionPhase {
       //Play turn for each player
       for (int index = 0; index < num_player; index++) {
         
+        //check if player is loser, has exited
+        if(exit_losers.contains(index)){
+          continue;
+        }
+
         //Get streams for the player
         this.objIstream = server_sock.getObjIn(index);
         //ObjectOutputStream objOstream = server_sock.getObjOut(index);
@@ -193,6 +201,10 @@ public class ActionPhase {
         if(is_loser){
             //Loser found
             //Skip playing turn
+            String opt = dataItream.readUTF();
+            if(opt.equals("exit")){
+              exit_losers.add(index);
+            }
             continue;
         }
 

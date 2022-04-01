@@ -6,8 +6,15 @@ public class ActionExecutor {
   public void execute(MoveAction a, Map map) {
     AreaNode sourceNode = map.getAreaNodeByName(a.source);
     AreaNode destinationNode = map.getAreaNodeByName(a.destination);
+
+    Region sourceRegion = map.getRegionById(sourceNode.getOwnerId());
+    int foodNeed = map.calculateMinimumFood(sourceNode, destinationNode, a.num_unit);
+    sourceRegion.subFood(foodNeed);
+
     sourceNode.reduceDefender(a.num_unit);
     destinationNode.increaseDefender(a.num_unit);
+
+    return;
   }
 
   public void execute(AttackAction a, Map map) {
@@ -63,10 +70,8 @@ public class ActionExecutor {
       a.increaseDefender(unit_num);
     }
   }
-
-  public void updateResources(Map map) {
-    for (Region r : map.getRegions()) {
-      r.collectResource();
-    }
-  }
+  /*
+   * public void updateResources(Map map) { for (Region r : map.getRegions()) {
+   * r.collectResource(); } }
+   */
 }

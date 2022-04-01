@@ -7,6 +7,7 @@ import team5.risc.common.*;
 import java.net.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import javafx.application.Application;
 
 public class Client {
   RISCServer riscServer;
@@ -68,20 +69,26 @@ public class Client {
   public void actionPhase() throws IOException {
     /*
      * ----------------------------------------------------------------------------
-     * MOVE PHASE
+     * ACTION PHASE
      * ----------------------------------------------------------------------------
      */
 
     /*
-     * ------------------------------------------------ Protocol 1:
-     * ------------------------------------------------ Client first sends a string
+     * ------------------------------------------------ 
+     * Protocol 1:
+     * ------------------------------------------------ 
+     * Client first sends a string
      * explaining which action it is going to send ->
      * 
-     * 1) Move for MoveAction 2) Attack for AttackAction 3) Done for DoneAction
+     * 1) Move for MoveAction 
+     * 2) Attack for AttackAction 
+     * 3) Done for DoneAction
      * ------------------------------------------------
      * 
-     * ------------------------------------------------ Protocol 2
-     * ------------------------------------------------ Server will tell client his
+     * ------------------------------------------------
+     * Protocol 2:
+     * ------------------------------------------------
+     * Server will tell client his
      * status - 1) Winner 2) Loser 3) Player
      * ------------------------------------------------
      */
@@ -104,7 +111,13 @@ public class Client {
       String pl_status = riscServer.readUTF();
 
       if (pl_status.equals("Loser")) {
-        System.out.println("You have lost the game, Continue watching!\n");
+        String user_opt = user_in.getLoser();
+        riscServer.writeUTF(user_opt);
+
+        if(user_opt.equals("exit")){
+          break;
+        }
+
         // Loser found
         // Skip taking actions
         continue;
@@ -125,6 +138,7 @@ public class Client {
           String response = riscServer.readUTF();
           print_action(response);
         }
+
         // check if input (A)ttack
         else if (action.equals("A")) {
           // write "Attack"
@@ -135,6 +149,15 @@ public class Client {
           String response = riscServer.readUTF();
           print_action(response);
         }
+
+        // Check if input (U)pgrade
+        else if (action.equals("U")) {
+          //Get area to upgrade
+          String area_in = user_in.getArea();
+          UpgradeAction u = user_in.getUpgrade(id, area_in);
+          System.out.println(u.toString());
+        }
+
         // Check if input (D)one
         else if (action.equals("D")) {
           // write "Done"
@@ -161,9 +184,16 @@ public class Client {
   }
 
   public static void main(String[] args) throws UnknownHostException, IOException, ClassNotFoundException {
-    RISCServer riscServer = new RISCServer(args[0], Integer.parseInt(args[1]));
-    Input user_in = new TextInput(System.in, System.out);
-    Client client = new Client(riscServer, user_in);
-    client.run();
+    System.out.print(args[2]);
+    if (args[2].equals("text")) {
+      RISCServer riscServer = new RISCServer(args[0], Integer.parseInt(args[1]));
+      Input user_in = new TextInput(System.in, System.out);
+      Client client = new Client(riscServer, user_in);
+      client.run();
+    } else if (args[2].equals("gui")) {
+      Application.launch(GUIClient.class, "");
+    } else {
+      throw new UnsupportedOperationException("Unsupported operation");
+    }
   }
 }
