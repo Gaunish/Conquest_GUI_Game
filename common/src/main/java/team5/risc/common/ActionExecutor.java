@@ -70,8 +70,11 @@ public class ActionExecutor {
       a.increaseDefender(unit_num);
     }
   }
-  /*
-   * public void updateResources(Map map) { for (Region r : map.getRegions()) {
-   * r.collectResource(); } }
-   */
+
+  public void updateResources(Map map) {
+    for (Region r : map.getRegions()) {
+      r.incFoodTech();
+    }
+  }
+
 }

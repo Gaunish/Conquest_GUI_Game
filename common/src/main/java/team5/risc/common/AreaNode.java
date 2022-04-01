@@ -149,6 +149,10 @@ public class AreaNode implements Serializable {
     return defender.get(lvl);
   }
 
+  public Army getDefenderByIndex(int idex){
+    return defender.get(idex);
+  }
+
   public void reduceDefender(int reduce_num) {
     reduceDefender(reduce_num, 0);
   }
