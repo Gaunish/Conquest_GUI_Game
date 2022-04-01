@@ -70,7 +70,7 @@ public class PlacementPhase {
 
       // System.out.println("NO_UNITSY : " + no_units);
       no_units = no_units + no;
-      region.set_init_unit(node, no);
+      region.setInitUnit(node, no);
       dataOutputStream.writeUTF("Success");
       return true;
     }
