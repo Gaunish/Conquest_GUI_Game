@@ -1,6 +1,7 @@
 package team5.risc.common;
 
 public interface Army{
+  // interface for army
   public int getOwnerId();
   public int getLevel();
   public int getUnitNum();
