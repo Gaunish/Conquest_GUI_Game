@@ -84,6 +84,7 @@ public class AreaNode implements Serializable {
     return (cost.get(new_lvl) - cost.get(lvl));
   }
 
+  /*
   //Method to check if upgrade is valid
   //Checks if enough units of given lvl
   //Checks if new_lvl is valid
@@ -106,7 +107,7 @@ public class AreaNode implements Serializable {
     }
 
     return true;
-  }
+  }*/
 
   //Method to upgrade units of given lvl
   public void upgradeArmy(int lvl, int new_lvl, int no_unit){   
@@ -232,7 +233,7 @@ public class AreaNode implements Serializable {
     String out = "";
     for(int i = 0; i < no_level; i++){
       Army a = defender.get(i);
-      out += "Level " + i + ": " + a.getUnitNum();
+      out += "Level " + i + ": " + a.getUnitNum() + " units\n";
     }
     return out;
   }

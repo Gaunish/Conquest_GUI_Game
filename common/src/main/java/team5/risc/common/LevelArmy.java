@@ -71,6 +71,10 @@ public class LevelArmy implements Army, Serializable{
         return level;
     }
 
+    public int getBonus(){
+        return bonus;
+    }
+
     public void mergeArmy(Army toMerge) throws RuntimeException{
         if(owner_id != toMerge.getOwnerId() || level != toMerge.getLevel()){
             throw new UnsupportedOperationException("Armies don't have the same owner/Level. Merge request is refused.");
