@@ -72,6 +72,13 @@ public class ActionValidator {
     if (!reachable) {
       return "Unreachable";
     }
+
+    // Check food
+    Region sourceRegion = map.getRegionById(sourceNode.getOwnerId());
+    if (!sourceRegion.checkFoodEnough(a.num_unit)) {
+      return "Not enough food for attacking";
+    }
+
     return null;
   }
 
