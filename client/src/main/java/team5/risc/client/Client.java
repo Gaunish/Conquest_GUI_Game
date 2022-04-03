@@ -7,6 +7,7 @@ import team5.risc.common.*;
 import java.net.*;
 import java.io.IOException;
 import java.util.ArrayList;
+
 import javafx.application.Application;
 
 public class Client {
@@ -31,6 +32,10 @@ public class Client {
 
   public ArrayList<String> getRegions() {
     return regions;
+  }
+
+  public RISCServer getRiscServer() {
+    return riscServer;
   }
 
   @SuppressWarnings("unchecked")

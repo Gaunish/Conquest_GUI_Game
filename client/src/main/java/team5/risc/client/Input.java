@@ -1,5 +1,7 @@
 package team5.risc.client;
 
+import java.io.IOException;
+
 import team5.risc.common.*;
 
 public interface Input {

@@ -67,7 +67,11 @@ goto fail
 :execute
 @rem Setup the command line
 
+<<<<<<< HEAD:gradlew.bat
 set CLASSPATH=%APP_HOME%\gradle\wrapper\gradle-wrapper.jar
+=======
+set CLASSPATH=%APP_HOME%\lib\client.jar;%APP_HOME%\lib\javafx-fxml-16-mac.jar;%APP_HOME%\lib\javafx-controls-16-mac.jar;%APP_HOME%\lib\javafx-controls-16.jar;%APP_HOME%\lib\javafx-graphics-16-mac.jar;%APP_HOME%\lib\javafx-graphics-16.jar;%APP_HOME%\lib\javafx-base-16-mac.jar;%APP_HOME%\lib\javafx-base-16.jar;%APP_HOME%\lib\common.jar;%APP_HOME%\lib\commons-text-1.9.jar;%APP_HOME%\lib\guava-30.1.1-jre.jar;%APP_HOME%\lib\commons-lang3-3.11.jar;%APP_HOME%\lib\failureaccess-1.0.1.jar;%APP_HOME%\lib\listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar;%APP_HOME%\lib\jsr305-3.0.2.jar;%APP_HOME%\lib\checker-qual-3.8.0.jar;%APP_HOME%\lib\error_prone_annotations-2.5.1.jar;%APP_HOME%\lib\j2objc-annotations-1.3.jar
+>>>>>>> parse client:client/build/install/client/bin/client.bat
 
 
 @rem Execute Gradle
