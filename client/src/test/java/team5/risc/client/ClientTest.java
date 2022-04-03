@@ -86,10 +86,12 @@ class ClientTest {
         ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStreamCaptor));
         client.placementPhase();
-        // assertEquals(
-        //     "Successfully placed unit!\r\n\r\nSuccessfully placed unit!\r\n\r\nSuccessfully placed unit!\r\n\r\n|", 
-        //     outputStreamCaptor.toString()+"|"
-        // );
+        String expected = "Successfully placed unit!\n\nSuccessfully placed unit!\n\nSuccessfully placed unit!\n\n"
+                       .replaceAll("\\n|\\r\\n", System.getProperty("line.separator"));
+        assertEquals(
+            expected, 
+            outputStreamCaptor.toString().replaceAll("\\n|\\r\\n", System.getProperty("line.separator"))
+        );
 
     }
 
@@ -136,8 +138,8 @@ class ClientTest {
         client.actionPhase();
         
         assertEquals(
-            "Game Map:\r\nwinner\r\nwinner\r\n", 
-            outputStreamCaptor.toString()
+            "Game Map:\nwinner\nwinner\n".replaceAll("\\n|\\r\\n", System.getProperty("line.separator")),
+            outputStreamCaptor.toString().replaceAll("\\n|\\r\\n", System.getProperty("line.separator"))
         );
     }
 }
