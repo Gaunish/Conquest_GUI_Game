@@ -241,7 +241,7 @@ public class TextInput implements Input{
         int index = Integer.parseInt(values[2]);
 
         // Invalid input 2
-        if (no <= 0 || index < 0) {
+        if (no <= 0 || index <= 0) {
           error_msg("Negative no of input");
           continue;
         }

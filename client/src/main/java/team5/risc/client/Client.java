@@ -165,8 +165,7 @@ public class Client {
           String area_in = user_in.getArea();
           UpgradeAction u = user_in.getUpgrade(id, area_in);
           riscServer.writeObject(u);
-          String response = riscServer.readUTF();
-          print_action(response);
+          System.out.println(u.toString());
         }
 
         // Check if input (D)one

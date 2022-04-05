@@ -28,7 +28,7 @@ public class ActionPhase {
     //method to get text version of map
     private String txt_map(){
         TextDisplayMap txt = new TextDisplayMap(System.out);
-        String map_info = txt.levelDisplay(map);
+        String map_info = txt.display(map);
         return map_info;
     }
 
@@ -107,18 +107,7 @@ public class ActionPhase {
     private void play_upgrade() throws ClassNotFoundException, IOException{
       //get the upgrade action
       UpgradeAction upgradeAction = (UpgradeAction) objIstream.readObject();
-      String res = actionValidator.isValid(upgradeAction, map);
-
-      if(res != null){
-        //Upgrade is invalid
-        dataOtream.writeUTF(res);
-      }
-      else{
-        //Upgrade is valid, execute
-        dataOtream.writeUTF("correct");
-        System.out.println(upgradeAction.toString());
-        actionExecutor.execute(upgradeAction, map);
-      }
+      System.out.println(upgradeAction);
     }
 
     private void play_attack(ArrayList<AttackAction> attackActionList) throws ClassNotFoundException, IOException{
@@ -179,7 +168,10 @@ public class ActionPhase {
     //List to track exited users
     ArrayList<Integer> exit_losers = new ArrayList<Integer>();
 
-    while (true) {      
+    while (true) {
+      // update resource for each player
+      actionExecutor.updateResources(map);
+      
       // get Map in String form 
       String map_info = txt_map();
 
@@ -239,9 +231,7 @@ public class ActionPhase {
       // add one unit to each area after each turn
       actionExecutor.addUnitToAllArea(1, map);
 
-      //Update resources of all areas
-      actionExecutor.updateResources(map);
     }
 
-  }
+    }
 }

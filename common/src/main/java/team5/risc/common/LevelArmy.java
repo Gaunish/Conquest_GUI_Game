@@ -59,10 +59,6 @@ public class LevelArmy implements Army, Serializable{
         }
     }
 
-    public String getName(){
-        return "Level " + level;
-    }
-
     public int getOwnerId(){
         return owner_id;
     }
@@ -73,10 +69,6 @@ public class LevelArmy implements Army, Serializable{
 
     public int getLevel(){
         return level;
-    }
-
-    public int getBonus(){
-        return bonus;
     }
 
     public void mergeArmy(Army toMerge) throws RuntimeException{

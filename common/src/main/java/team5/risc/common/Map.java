@@ -29,7 +29,7 @@ public class Map implements Serializable {
     this.areas = new ArrayList<AreaNode>();
     // this.name2areas = new HashMap<>();
     for (int i = 0; i < num_area; i++) {
-      AreaNode areaNode = new AreaNode("area" + i, 2, 3, 1);
+      AreaNode areaNode = new AreaNode("area" + i, -1);
       this.areas.add(areaNode);
       // this.name2areas.put("area" + i, areaNode);
     }

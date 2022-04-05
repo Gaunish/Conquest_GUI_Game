@@ -30,25 +30,23 @@ public class Region implements Serializable {
     }
   }
 
-  /*
   // Method to check if upgrade is valid
   public boolean isUpgradeValid(int lvl, int new_lvl, int no_unit, AreaNode area) {
     if (!areas.contains(area)) {
       return false;
     }
     return true;
-  }*/
-  
+  }
 
   // Method to upgrade unit in given area
   public void upgradeArmy(int lvl, int new_lvl, int no_unit, AreaNode area) {
-    /*if (!isUpgradeValid(lvl, new_lvl, no_unit, area)
+    if (!isUpgradeValid(lvl, new_lvl, no_unit, area)
         || area.isUpgradeValid(lvl, new_lvl, no_unit, resource.getTech())) {
       return;
-    }*/
+    }
     area.upgradeArmy(lvl, new_lvl, no_unit);
-    int cost = area.costLevel(lvl, new_lvl);
-    subTech(no_unit * cost);
+    int cost = area.cost(lvl, new_lvl);
+    resource.subTech(no_unit * cost);
   }
 
   // Method to increment total food/tech
@@ -58,11 +56,11 @@ public class Region implements Serializable {
   }
 
   public boolean checkFoodEnough(int food) {
-    return resource.isFoodValid(food);
+    return food <= resource.getFood();
   }
 
   public boolean checkTechEnough(int tech) {
-    return resource.isTechValid(tech);
+    return tech <= resource.getTech();
   }
 
   // Method to subtract food
@@ -98,21 +96,6 @@ public class Region implements Serializable {
 
   public String toString() {
     return owner_id + ": " + getAreasName();
-  }
 
-  public String strDisplay(AreaNode a){
-    String txt = new String();
-    txt += a.getName() + "\n";
-    txt += "Owner: Player" + owner_id + "\n"; 
-    txt += a.displayRsrc();
-    return txt;
-  }
-
-  public String strDisplay(){
-    String txt = new String();
-    for(AreaNode a : areas){
-      txt += strDisplay(a);
-    }
-    return txt;
   }
 }

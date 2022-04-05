@@ -26,7 +26,7 @@ public class ActionValidator {
 
     // Check unit num with specific level
     if (sourceNode.getDefenderUnit(a.lvl) < a.num_unit) {
-      return sourceNode.getName() + " doesn't have enough (level " + a.lvl + ") units to move";
+      return sourceNode.getName() + " doesn't have enough unit (level " + a.lvl + ") to move";
     }
 
     // Check reachability
@@ -39,7 +39,6 @@ public class ActionValidator {
     Region sourceRegion = map.getRegionById(sourceNode.getOwnerId());
 
     int foodNeed = map.calculateMinimumFood(sourceNode, destinationNode, a.num_unit);
-    //System.out.println("FOOD NEEDED : " + foodNeed);
     if (!sourceRegion.checkFoodEnough(foodNeed)) {
       return "Not enough food";
     }
@@ -80,11 +79,6 @@ public class ActionValidator {
       return "Not enough food for attacking";
     }
 
-    //Check enough no of units for given level
-    if (sourceNode.getDefenderUnit(a.lvl) < a.num_unit) {
-      return sourceNode.getName() + " doesn't have enough (level " + a.lvl + ") units to move";
-    }
-
     return null;
   }
 
@@ -111,7 +105,7 @@ public class ActionValidator {
     }
 
     // check tech resource
-    int need_tech = a.no_units * sourceNode.costLevel(cur_level, a.new_lvl);
+    int need_tech = a.no_units * sourceNode.cost(cur_level, a.new_lvl);
     if (sourceRegion.checkTechEnough(need_tech) == false) {
       return "no enough tech";
     }
