@@ -180,7 +180,7 @@ public class AreaNode implements Serializable {
     Iterator<Army> it = enemies.iterator();
     while (it.hasNext()) {
       Army cur_enemy = it.next();
-      if (cur_enemy.getOwnerId() == to_add.getOwnerId()) {
+      if (cur_enemy.getOwnerId() == to_add.getOwnerId() && cur_enemy.getLevel() == to_add.getLevel()) {
         cur_enemy.mergeArmy(to_add);
         return;
       }
@@ -226,6 +226,16 @@ public class AreaNode implements Serializable {
 
   public String toString(int lvl) {
     return name + ":" + defender.get(lvl) + "\n" + enemies;
+  }
+  
+  public String displayRsrc(){
+    String txt = new String();
+    txt += "Defender:\n";
+    txt += getDefenderText();
+    txt += "Food production: " + food_produce + "\n";
+    txt += "Tech production: " + tech_produce + "\n";
+    txt += "Size: " + size + "\n\n";
+    return txt;
   }
 
   //Get list of defender in text form

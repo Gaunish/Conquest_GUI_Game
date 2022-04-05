@@ -59,6 +59,10 @@ public class LevelArmy implements Army, Serializable{
         }
     }
 
+    public String getName(){
+        return "Level " + level;
+    }
+
     public int getOwnerId(){
         return owner_id;
     }

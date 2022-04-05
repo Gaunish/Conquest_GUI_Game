@@ -20,19 +20,29 @@ public class ActionExecutor {
   public void execute(AttackAction a, Map map) {
     AreaNode sourceNode = map.getAreaNodeByName(a.source);
     AreaNode destinationNode = map.getAreaNodeByName(a.destination);
+    Region sourceRegion = map.getRegionById(sourceNode.getOwnerId());
     // int no_unit = a.num_unit;
 
     // skip if not enough unit
-    if (sourceNode.getDefenderUnit() >= a.num_unit) {
+    if (sourceNode.getDefenderUnit(a.lvl) >= a.num_unit) {
 
       // Reduce no of units from source, add attacker to list
       sourceNode.reduceDefender(a.num_unit);
-      destinationNode.addEnemy(new IntArmy(a.player_id, a.num_unit));
+      destinationNode.addEnemy(new LevelArmy(a.player_id, a.num_unit, a.lvl));
+    
+      //Reduce food resource
+      sourceRegion.subFood(a.num_unit);
 
       // Get attacking army
       // Army defender = destinationNode.getArmy();
       // Army attacker = new IntArmy(sourceNode.getOwnerId(), no_unit);
     }
+  }
+
+  public void execute(UpgradeAction a, Map map) {
+    AreaNode area = map.getAreaNodeByName(a.area);
+    Region region = map.getRegionById(area.getOwnerId());
+    region.upgradeArmy(a.index_army, a.new_lvl, a.no_units, area);
   }
 
   public void resolveAllCombat(Map map, Combat c) {

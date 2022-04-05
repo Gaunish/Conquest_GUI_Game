@@ -28,7 +28,7 @@ public class ActionPhase {
     //method to get text version of map
     private String txt_map(){
         TextDisplayMap txt = new TextDisplayMap(System.out);
-        String map_info = txt.display(map);
+        String map_info = txt.levelDisplay(map);
         return map_info;
     }
 
@@ -168,10 +168,7 @@ public class ActionPhase {
     //List to track exited users
     ArrayList<Integer> exit_losers = new ArrayList<Integer>();
 
-    while (true) {
-      // update resource for each player
-      actionExecutor.updateResources(map);
-      
+    while (true) {      
       // get Map in String form 
       String map_info = txt_map();
 
@@ -231,7 +228,9 @@ public class ActionPhase {
       // add one unit to each area after each turn
       actionExecutor.addUnitToAllArea(1, map);
 
+      //Update resources of all areas
+      actionExecutor.updateResources(map);
     }
 
-    }
+  }
 }

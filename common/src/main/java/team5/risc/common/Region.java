@@ -98,6 +98,21 @@ public class Region implements Serializable {
 
   public String toString() {
     return owner_id + ": " + getAreasName();
+  }
 
+  public String strDisplay(AreaNode a){
+    String txt = new String();
+    txt += a.getName() + "\n";
+    txt += "Owner: Player" + owner_id + "\n"; 
+    txt += a.displayRsrc();
+    return txt;
+  }
+
+  public String strDisplay(){
+    String txt = new String();
+    for(AreaNode a : areas){
+      txt += strDisplay(a);
+    }
+    return txt;
   }
 }
