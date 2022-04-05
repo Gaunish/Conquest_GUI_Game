@@ -11,8 +11,8 @@ public class ActionExecutor {
     int foodNeed = map.calculateMinimumFood(sourceNode, destinationNode, a.num_unit);
     sourceRegion.subFood(foodNeed);
 
-    sourceNode.reduceDefender(a.num_unit);
-    destinationNode.increaseDefender(a.num_unit);
+    sourceNode.reduceDefender(a.num_unit, a.lvl);
+    destinationNode.increaseDefender(a.num_unit, a.lvl);
 
     return;
   }
@@ -27,7 +27,7 @@ public class ActionExecutor {
     if (sourceNode.getDefenderUnit(a.lvl) >= a.num_unit) {
 
       // Reduce no of units from source, add attacker to list
-      sourceNode.reduceDefender(a.num_unit);
+      sourceNode.reduceDefender(a.num_unit, a.lvl);
       destinationNode.addEnemy(new LevelArmy(a.player_id, a.num_unit, a.lvl));
     
       //Reduce food resource

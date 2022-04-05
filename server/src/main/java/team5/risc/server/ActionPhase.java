@@ -107,7 +107,18 @@ public class ActionPhase {
     private void play_upgrade() throws ClassNotFoundException, IOException{
       //get the upgrade action
       UpgradeAction upgradeAction = (UpgradeAction) objIstream.readObject();
-      System.out.println(upgradeAction);
+      String res = actionValidator.isValid(upgradeAction, map);
+
+      if(res != null){
+        //Upgrade is invalid
+        dataOtream.writeUTF(res);
+      }
+      else{
+        //Upgrade is valid, execute
+        dataOtream.writeUTF("correct");
+        System.out.println(upgradeAction.toString());
+        actionExecutor.execute(upgradeAction, map);
+      }
     }
 
     private void play_attack(ArrayList<AttackAction> attackActionList) throws ClassNotFoundException, IOException{

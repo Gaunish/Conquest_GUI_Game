@@ -29,6 +29,7 @@ public class AreaNode implements Serializable {
     this.tech_produce = 3;
     this.size = 1;
     this.no_level = 1;
+    cost = Arrays.asList(0);
   }
 
   public AreaNode(String name, int id) {
@@ -41,6 +42,7 @@ public class AreaNode implements Serializable {
     this.tech_produce = 3;
     this.size = 1;
     this.no_level = 1;
+    cost =  Arrays.asList(0);
   }
 
   public AreaNode(String name, int food, int tech, int size) {
@@ -80,7 +82,7 @@ public class AreaNode implements Serializable {
   }
 
   //Method to calculate cost to upgrade 
-  public int cost(int lvl, int new_lvl){
+  public int costLevel(int lvl, int new_lvl){
     return (cost.get(new_lvl) - cost.get(lvl));
   }
 

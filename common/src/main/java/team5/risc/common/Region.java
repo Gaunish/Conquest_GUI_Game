@@ -47,7 +47,7 @@ public class Region implements Serializable {
       return;
     }*/
     area.upgradeArmy(lvl, new_lvl, no_unit);
-    int cost = area.cost(lvl, new_lvl);
+    int cost = area.costLevel(lvl, new_lvl);
     subTech(no_unit * cost);
   }
 

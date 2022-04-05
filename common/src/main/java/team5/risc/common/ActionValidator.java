@@ -111,7 +111,7 @@ public class ActionValidator {
     }
 
     // check tech resource
-    int need_tech = a.no_units * sourceNode.cost(cur_level, a.new_lvl);
+    int need_tech = a.no_units * sourceNode.costLevel(cur_level, a.new_lvl);
     if (sourceRegion.checkTechEnough(need_tech) == false) {
       return "no enough tech";
     }
