@@ -29,6 +29,7 @@ public class AreaNode implements Serializable {
     this.tech_produce = 3;
     this.size = 1;
     this.no_level = 1;
+    cost = Arrays.asList(0);
   }
 
   public AreaNode(String name, int id) {
@@ -41,6 +42,7 @@ public class AreaNode implements Serializable {
     this.tech_produce = 3;
     this.size = 1;
     this.no_level = 1;
+    cost =  Arrays.asList(0);
   }
 
   public AreaNode(String name, int food, int tech, int size) {
@@ -80,10 +82,11 @@ public class AreaNode implements Serializable {
   }
 
   //Method to calculate cost to upgrade 
-  public int cost(int lvl, int new_lvl){
+  public int costLevel(int lvl, int new_lvl){
     return (cost.get(new_lvl) - cost.get(lvl));
   }
 
+  /*
   //Method to check if upgrade is valid
   //Checks if enough units of given lvl
   //Checks if new_lvl is valid
@@ -106,7 +109,7 @@ public class AreaNode implements Serializable {
     }
 
     return true;
-  }
+  }*/
 
   //Method to upgrade units of given lvl
   public void upgradeArmy(int lvl, int new_lvl, int no_unit){   
@@ -179,7 +182,7 @@ public class AreaNode implements Serializable {
     Iterator<Army> it = enemies.iterator();
     while (it.hasNext()) {
       Army cur_enemy = it.next();
-      if (cur_enemy.getOwnerId() == to_add.getOwnerId()) {
+      if (cur_enemy.getOwnerId() == to_add.getOwnerId() && cur_enemy.getLevel() == to_add.getLevel()) {
         cur_enemy.mergeArmy(to_add);
         return;
       }
@@ -226,13 +229,23 @@ public class AreaNode implements Serializable {
   public String toString(int lvl) {
     return name + ":" + defender.get(lvl) + "\n" + enemies;
   }
+  
+  public String displayRsrc(){
+    String txt = new String();
+    txt += "Defender:\n";
+    txt += getDefenderText();
+    txt += "Food production: " + food_produce + "\n";
+    txt += "Tech production: " + tech_produce + "\n";
+    txt += "Size: " + size + "\n\n";
+    return txt;
+  }
 
   //Get list of defender in text form
   public String getDefenderText(){
     String out = "";
     for(int i = 0; i < no_level; i++){
       Army a = defender.get(i);
-      out += "Level " + i + ": " + a.getUnitNum();
+      out += "Level " + i + ": " + a.getUnitNum() + " units\n";
     }
     return out;
   }
