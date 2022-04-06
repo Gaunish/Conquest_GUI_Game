@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team5.risc.client.controller.UpgradeController>
+   <children>
+      <ChoiceBox fx:id="area_cb" layoutX="166.0" layoutY="98.0" value="Area" />
+      <TextField fx:id="index_army" layoutX="166.0" layoutY="149.0" text="Starting Level" />
+      <TextField fx:id="end_level" layoutX="166.0" layoutY="251.0" text="Ending Unit" />
+      <TextField fx:id="num_unit" layoutX="166.0" layoutY="200.0" text="Number of Unit" />
+      <Button layoutX="201.0" layoutY="289.0" mnemonicParsing="false" onAction="#onSubmit" text="Submit Upgrade" />
+   </children>
+</AnchorPane>
