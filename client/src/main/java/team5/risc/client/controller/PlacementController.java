@@ -10,7 +10,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -18,6 +20,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import team5.risc.client.Client;
+import team5.risc.client.DisplayUtil;
 
 public class PlacementController {
     @FXML
@@ -26,17 +29,21 @@ public class PlacementController {
     @FXML
     Label label;
 
-    @FXML 
+    @FXML
     private AnchorPane ap;
 
     String unit_num = null;
     String area_name = null;
 
     Client client;
-    int region_index = 0;
-    
+    int region_index;
+
     public void setClient(Client c) {
         client = c;
+    }
+
+    public void setRegionIndex(int index) {
+        region_index = index;
     }
 
     @FXML
@@ -44,31 +51,83 @@ public class PlacementController {
         unit_num = placement_number.getText();
         Object source = ae.getSource();
         Button btn = (Button) source;
-        if (region_index >= client.getRegions().size()) {
-            //Goto Action Page
-            System.out.println("Go to action phase");
+        client.getRiscServer().writeInt(Integer.parseInt(unit_num)); // send int
+        String result = client.getRiscServer().readUTF();
+        if (result.equals("Success")) {
+            System.out.println("Successfully placed unit!\n");
             Stage window = (Stage) btn.getScene().getWindow();
-            URL xmlResource = getClass().getResource("/ui/action.fxml"); 
-            if (xmlResource == null) {
-                System.out.print("No resource found");
-                return;
-            }
-            FXMLLoader loader = new FXMLLoader(xmlResource);
-            StackPane gp = loader.load();
-            ActionController actionController = loader.<ActionController>getController();
-            actionController.setClient(client);
-            window.setScene(new Scene(gp, 640, 480));
 
-        } else {
-            client.getRiscServer().writeInt(Integer.parseInt(unit_num)); // send int
-            String result = client.getRiscServer().readUTF();
-            Stage window = (Stage) btn.getScene().getWindow();
-            if (result.equals("Success")) {
-                System.out.println("Successfully placed unit!\n");
-                //Next area page by modify area name;
-                ++region_index;
-                
-                URL xmlResource = getClass().getResource("/ui/placement.fxml"); 
+            if (region_index == client.getRegions().size()) {
+                // Goto Action(Map) Page
+                System.out.println("Go to action phase");
+                URL xmlResource = getClass().getResource("/ui/map.fxml");
+                if (xmlResource == null) {
+                    System.out.print("No resource found");
+                    return;
+                }
+                FXMLLoader loader = new FXMLLoader(xmlResource);
+                AnchorPane gp = loader.load();
+                ActionController actionController = loader.<ActionController>getController();
+                actionController.setClient(client);
+
+                // Read the map string info
+                String map_str = client.getRiscServer().readUTF();
+                System.out.println(map_str);
+
+                // TODO: DISPLAY MAP
+                // actionController.label = parse_map_str()
+
+                // get winner status of game
+                String game_status = client.getRiscServer().readUTF();
+                System.out.println(game_status);
+
+                DisplayUtil.displayAlertAndWait(client.getID() + ":" + game_status);
+
+                if (!game_status.equals("No winner")) {
+                    client.getRiscServer().close();
+                    return;
+                }
+
+                // get status of player from server
+                String pl_status = client.getRiscServer().readUTF();
+
+                if (pl_status.equals("Loser")) {
+                    // String user_opt = user_in.getLoser();
+                    // TODO:Temporarily hardcode it
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Duplicate");
+                    alert.setHeaderText("This folder already exists");
+                    alert.setContentText(
+                            "Do you want to continue?");
+
+                    // Boolean cont = false;
+                    Button show = new Button("Continue");
+                    show.setOnAction(e -> {
+                        // try {
+                        // cont = true;
+                        // } catch (IOException ee) {
+                        // ee.printStackTrace();
+                        // }
+                    });
+                    alert.setGraphic(show);
+
+                    String user_opt;
+                    boolean isPresent = alert.showAndWait().filter(ButtonType.OK::equals).isPresent();
+                    if (isPresent) {
+                        user_opt = "watch";
+                    } else {
+                        user_opt = "exit";
+                    }
+                    System.out.println("user_opt:" + user_opt);
+                    client.getRiscServer().writeUTF(user_opt);
+                    if (user_opt.equals("exit")) {
+                        return;
+                    }
+                }
+                window.setScene(new Scene(gp, 640, 480));
+            } else {
+                // Goto Placement Page
+                URL xmlResource = getClass().getResource("/ui/placement.fxml");
                 if (xmlResource == null) {
                     System.out.print("No resource found");
                     return;
@@ -79,16 +138,15 @@ public class PlacementController {
                 PlacementController pc = loader.<PlacementController>getController();
                 pc.label.setText(area);
                 pc.setClient(client);
+                pc.setRegionIndex(region_index + 1);
                 window.setScene(new Scene(gp, 640, 480));
-            } else {
-                System.out.println(result + "\n");
-                //Remain the same area page
             }
+        } else {
+            // Remain the same area page TODO
+            System.out.println(result + "\n");
         }
 
         return;
     }
-
-
 
 }
