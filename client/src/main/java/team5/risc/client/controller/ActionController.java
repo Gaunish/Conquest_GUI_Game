@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -16,6 +17,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import team5.risc.client.Client;
 import team5.risc.client.DisplayUtil;
@@ -97,18 +99,37 @@ public class ActionController {
         client.getRiscServer().writeUTF("Done");
         DisplayUtil.displayAlertAndWait("Done with player " + client.getID() + "wait for others");
 
+        URL xmlResource = getClass().getResource("/ui/map.fxml");
+        if (xmlResource == null) {
+            System.out.print("No resource found");
+            return;
+        }
+        FXMLLoader loader = new FXMLLoader(xmlResource);
+        AnchorPane gp = loader.load();
+        ActionController actionController = loader.<ActionController>getController();
+        actionController.setClient(client);
+
         // Read the map string info
         String map_str = client.getRiscServer().readUTF();
         System.out.println(map_str);
-
-        // TODO: DISPLAY MAP
-        // actionController.label = parse_map_str()
+        String[] components = map_str.split("\n\n");
+        int index = 0;
+        for (Node node : gp.getChildren()) {
+            if (node instanceof VBox) {
+                String[] lines = components[index].split("\n");
+                for (int i = 0; i <= 12; ++i) {
+                    ((VBox) node).getChildren().add(new Label(lines[i]));
+                    System.out.println(lines[i]);
+                }
+                ++index;
+            }
+        }
 
         // get winner status of game
         String game_status = client.getRiscServer().readUTF();
         System.out.println(game_status);
 
-        DisplayUtil.displayAlertAndWait(game_status);
+        DisplayUtil.displayAlertAndWait("Player " + client.getID() + ":" + game_status);
 
         if (!game_status.equals("No winner")) {
             client.getRiscServer().close();
@@ -128,15 +149,15 @@ public class ActionController {
                     "Do you want to continue?");
 
             // Boolean cont = false;
-            Button show = new Button("Continue");
-            show.setOnAction(e -> {
-                // try {
-                // cont = true;
-                // } catch (IOException ee) {
-                // ee.printStackTrace();
-                // }
-            });
-            alert.setGraphic(show);
+            // Button show = new Button("Continue");
+            // show.setOnAction(e -> {
+            // // try {
+            // // cont = true;
+            // // } catch (IOException ee) {
+            // // ee.printStackTrace();
+            // // }
+            // });
+            // alert.setGraphic(show);
 
             String user_opt;
             boolean isPresent = alert.showAndWait().filter(ButtonType.OK::equals).isPresent();
@@ -152,7 +173,8 @@ public class ActionController {
             }
             return;
         }
-
+        Stage window = (Stage) ((Button) ae.getSource()).getScene().getWindow();
+        window.setScene(new Scene(gp, 600, 800));
         return;
     }
 }

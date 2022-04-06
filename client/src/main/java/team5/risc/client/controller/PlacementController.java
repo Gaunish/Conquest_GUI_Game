@@ -2,6 +2,10 @@ package team5.risc.client.controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.sound.midi.SysexMessage;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -17,6 +21,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import team5.risc.client.Client;
@@ -74,8 +79,19 @@ public class PlacementController {
                 String map_str = client.getRiscServer().readUTF();
                 System.out.println(map_str);
 
-                // TODO: DISPLAY MAP
-                // actionController.label = parse_map_str()
+                String[] components = map_str.split("\n\n");
+                int index = 0;
+                for (Node node : gp.getChildren()) {
+                    if (node instanceof VBox) {
+                        String[] lines = components[index].split("\n");
+                        for (int i = 0; i <= 12; ++i) {
+                            ((VBox) node).getChildren().add(new Label(lines[i]));
+                            System.out.println(lines[i]);
+                        }
+
+                        ++index;
+                    }
+                }
 
                 // get winner status of game
                 String game_status = client.getRiscServer().readUTF();
@@ -96,20 +112,20 @@ public class PlacementController {
                     // TODO:Temporarily hardcode it
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setTitle("Duplicate");
-                    alert.setHeaderText("This folder already exists");
+                    alert.setHeaderText("You lose your game");
                     alert.setContentText(
                             "Do you want to continue?");
 
                     // Boolean cont = false;
-                    Button show = new Button("Continue");
-                    show.setOnAction(e -> {
-                        // try {
-                        // cont = true;
-                        // } catch (IOException ee) {
-                        // ee.printStackTrace();
-                        // }
-                    });
-                    alert.setGraphic(show);
+                    // Button show = new Button("Continue");
+                    // show.setOnAction(e -> {
+                    // // try {
+                    // // cont = true;
+                    // // } catch (IOException ee) {
+                    // // ee.printStackTrace();
+                    // // }
+                    // });
+                    // alert.setGraphic(show);
 
                     String user_opt;
                     boolean isPresent = alert.showAndWait().filter(ButtonType.OK::equals).isPresent();
@@ -124,7 +140,7 @@ public class PlacementController {
                         return;
                     }
                 }
-                window.setScene(new Scene(gp, 640, 480));
+                window.setScene(new Scene(gp, 600, 800));
             } else {
                 // Goto Placement Page
                 URL xmlResource = getClass().getResource("/ui/placement.fxml");
