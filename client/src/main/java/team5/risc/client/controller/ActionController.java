@@ -37,7 +37,7 @@ public class ActionController {
 
         URL xmlResource = getClass().getResource("/ui/move.fxml");
         if (xmlResource == null) {
-            System.out.print("No resource found");
+            System.out.print("No fxml resource found");
             return;
         }
         FXMLLoader loader = new FXMLLoader(xmlResource);
@@ -98,10 +98,15 @@ public class ActionController {
     public void onDone(ActionEvent ae) throws IOException {
         client.getRiscServer().writeUTF("Done");
         DisplayUtil.displayAlertAndWait("Done with player " + client.getID() + "wait for others");
-
+        Stage window = (Stage) ((Button) ae.getSource()).getScene().getWindow();
+        openMapPage(window);
+        
+        return;
+    }
+    public void openMapPage(Stage window) throws IOException{
         URL xmlResource = getClass().getResource("/ui/map.fxml");
         if (xmlResource == null) {
-            System.out.print("No resource found");
+            System.out.print("No fxml resource found");
             return;
         }
         FXMLLoader loader = new FXMLLoader(xmlResource);
@@ -112,6 +117,7 @@ public class ActionController {
         // Read the map string info
         String map_str = client.getRiscServer().readUTF();
         System.out.println(map_str);
+
         String[] components = map_str.split("\n\n");
         int index = 0;
         for (Node node : gp.getChildren()) {
@@ -171,10 +177,8 @@ public class ActionController {
             if (user_opt.equals("exit")) {
                 return;
             }
-            return;
+            return; // ?? TODO
         }
-        Stage window = (Stage) ((Button) ae.getSource()).getScene().getWindow();
         window.setScene(new Scene(gp, 600, 800));
-        return;
     }
 }
