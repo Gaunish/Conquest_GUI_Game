@@ -97,26 +97,10 @@ public class PlacementController implements Initializable {
             return;
         }
         FXMLLoader loader = new FXMLLoader(xmlResource);
+        ActionController actionController = new ActionController(client);
+        loader.setController(actionController);
+
         AnchorPane gp = loader.load();
-        ActionController actionController = loader.<ActionController>getController();
-        actionController.setClient(client);
-
-        // Read the map string info
-        String map_str = client.getRiscServer().readUTF();
-        System.out.println(map_str);
-
-        String[] components = map_str.split("\n\n");
-        int index = 0;
-        for (Node node : gp.getChildren()) {
-            if (node instanceof VBox) {
-                String[] lines = components[index].split("\n");
-                for (int i = 0; i <= 12; ++i) {
-                    ((VBox) node).getChildren().add(new Label(lines[i]));
-                    System.out.println(lines[i]);
-                }
-                ++index;
-            }
-        }
 
         // get winner status of game
         String game_status = client.getRiscServer().readUTF();

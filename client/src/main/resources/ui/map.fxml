@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="800.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team5.risc.client.controller.ActionController">
+<AnchorPane fx:id="gp" prefHeight="800.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Button layoutX="341.0" layoutY="584.0" mnemonicParsing="false" onAction="#onAttack" text="Attack" />
       <Button layoutX="427.0" layoutY="584.0" mnemonicParsing="false" onAction="#onMove" text="Move" />

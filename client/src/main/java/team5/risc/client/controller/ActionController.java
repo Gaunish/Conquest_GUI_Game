@@ -2,12 +2,14 @@ package team5.risc.client.controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -22,12 +24,46 @@ import javafx.stage.Stage;
 import team5.risc.client.Client;
 import team5.risc.client.DisplayUtil;
 
-public class ActionController {
+public class ActionController implements Initializable {
 
     Client client;
 
-    public void setClient(Client c) {
-        client = c;
+    public ActionController(Client c) {
+        this.client = c;
+    }
+    // public void setClient(Client c) {
+    // client = c;
+    // }
+
+    @FXML
+    public AnchorPane gp;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        System.out.print("init start!!!\n");
+        // Read the map string info
+        String map_str=null;
+        try {
+            map_str = client.getRiscServer().readUTF();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        System.out.println(map_str);
+
+        String[] components = map_str.split("\n\n");
+        int index = 0;
+        for (Node node : gp.getChildren()) {
+            if (node instanceof VBox) {
+                String[] lines = components[index].split("\n");
+                for (int i = 0; i <= 12; ++i) {
+                    ((VBox) node).getChildren().add(new Label(lines[i]));
+                    System.out.println(lines[i]);
+                }
+                ++index;
+            }
+        }
+        System.out.print("init end!!!\n");
     }
 
     @FXML
@@ -100,37 +136,22 @@ public class ActionController {
         DisplayUtil.displayAlertAndWait("Done with player " + client.getID() + "wait for others");
         Stage window = (Stage) ((Button) ae.getSource()).getScene().getWindow();
         openMapPage(window);
-        
+
         return;
     }
-    public void openMapPage(Stage window) throws IOException{
+
+    public void openMapPage(Stage window) throws IOException {
         URL xmlResource = getClass().getResource("/ui/map.fxml");
         if (xmlResource == null) {
             System.out.print("No fxml resource found");
             return;
         }
         FXMLLoader loader = new FXMLLoader(xmlResource);
+        ActionController actionController = new ActionController(client);
+        loader.setController(actionController);
+
         AnchorPane gp = loader.load();
-        ActionController actionController = loader.<ActionController>getController();
-        actionController.setClient(client);
-
-        // Read the map string info
-        String map_str = client.getRiscServer().readUTF();
-        System.out.println(map_str);
-
-        String[] components = map_str.split("\n\n");
-        int index = 0;
-        for (Node node : gp.getChildren()) {
-            if (node instanceof VBox) {
-                String[] lines = components[index].split("\n");
-                for (int i = 0; i <= 12; ++i) {
-                    ((VBox) node).getChildren().add(new Label(lines[i]));
-                    System.out.println(lines[i]);
-                }
-                ++index;
-            }
-        }
-
+ 
         // get winner status of game
         String game_status = client.getRiscServer().readUTF();
         System.out.println(game_status);
