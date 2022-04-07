@@ -36,9 +36,14 @@ public class AttackController {
 
     Client client;
 
-    public void setClient(Client c) {
-        client = c;
+    public AttackController(Client c) {
+        this.client = c;
     }
+
+
+    // public void setClient(Client c) {
+    //     client = c;
+    // }
 
     @FXML
     public void onSubmit(ActionEvent ae) throws IOException {

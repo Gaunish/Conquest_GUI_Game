@@ -73,7 +73,7 @@ public class ActionController implements Initializable {
     }
 
     @FXML
-    public void checkGameStatus() throws IOException{
+    public void checkGameStatus() throws IOException {
         // get winner status of game
         String game_status = client.getRiscServer().readUTF();
         System.out.println(game_status);
@@ -134,14 +134,10 @@ public class ActionController implements Initializable {
             return;
         }
         FXMLLoader loader = new FXMLLoader(xmlResource);
-        AnchorPane movePane = loader.load();
-        MoveController moveController = loader.<MoveController>getController();
-        moveController.setClient(client);
+        MoveController moveController = new MoveController(client);
+        loader.setController(moveController);
 
-        moveController.source_cb.setItems(
-                FXCollections.observableArrayList(client.getRegions()));
-        moveController.destination_cb.setItems(
-                FXCollections.observableArrayList(client.getRegions()));
+        AnchorPane movePane = loader.load();
 
         Stage secondStage = new Stage();
         Scene secondScene = new Scene(movePane, 600, 500);
@@ -157,12 +153,11 @@ public class ActionController implements Initializable {
             return;
         }
         FXMLLoader loader = new FXMLLoader(xmlResource);
-        AnchorPane upgradePane = loader.load();
-        UpgradeController upgradeController = loader.<UpgradeController>getController();
-        upgradeController.setClient(client);
-        upgradeController.area_cb.setItems(
-                FXCollections.observableArrayList(client.getRegions()));
+        UpgradeController upgradeController = new UpgradeController(client);
+        loader.setController(upgradeController);
 
+        AnchorPane upgradePane = loader.load();
+      
         Stage secondStage = new Stage();
         Scene secondScene = new Scene(upgradePane, 600, 500);
         secondStage.setScene(secondScene);
@@ -177,9 +172,11 @@ public class ActionController implements Initializable {
             return;
         }
         FXMLLoader loader = new FXMLLoader(xmlResource);
+        AttackController attackController = new AttackController(client);
+        loader.setController(attackController);
+
         AnchorPane attackPane = loader.load();
-        AttackController attackController = loader.<AttackController>getController();
-        attackController.setClient(client);
+ 
         Stage secondStage = new Stage();
         Scene secondScene = new Scene(attackPane, 600, 500);
         secondStage.setScene(secondScene);
