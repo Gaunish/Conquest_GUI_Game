@@ -29,7 +29,7 @@ import javafx.stage.Window;
 import team5.risc.client.Client;
 import team5.risc.client.DisplayUtil;
 
-public class PlacementController implements Initializable {
+public class PlacementController extends UIController implements Initializable {
 
     String unit_num = null;
     String area_name = null;
@@ -86,37 +86,20 @@ public class PlacementController implements Initializable {
             // Remain the same area page TODO
             System.out.println(result + "\n");
         }
-
         return;
     }
 
     public void openMapPage(Stage window) throws IOException {
-        URL xmlResource = getClass().getResource("/ui/map.fxml");
-        if (xmlResource == null) {
-            System.out.print("No fxml resource found");
-            return;
-        }
-        FXMLLoader loader = new FXMLLoader(xmlResource);
+        String ui_path = "/ui/map.fxml";
         ActionController actionController = new ActionController(client);
-        loader.setController(actionController);
+        openNewPage(ui_path, actionController, window);;
 
-        AnchorPane gp = loader.load();
-        window.setScene(new Scene(gp, 600, 800));
     }
 
     public void openPlacementPage(Stage window, int region_index) throws IOException {
-        URL xmlResource = getClass().getResource("/ui/placement.fxml");
-        if (xmlResource == null) {
-            System.out.print("No resource found");
-            return;
-        }
-
-        FXMLLoader loader = new FXMLLoader(xmlResource);
         PlacementController placementController = new PlacementController(client, region_index);
-        loader.setController(placementController);
-        StackPane gp = loader.load();
-
-        window.setScene(new Scene(gp, 640, 480));
+        String ui_path = "/ui/placement.fxml";
+        openNewPage(ui_path, placementController, window);
     }
 
 }

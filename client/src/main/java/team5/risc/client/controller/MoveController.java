@@ -18,7 +18,7 @@ import team5.risc.client.Client;
 import team5.risc.client.DisplayUtil;
 import team5.risc.common.MoveAction;
 
-public class MoveController implements Initializable {
+public class MoveController  extends UIController implements Initializable {
     @FXML
     ChoiceBox<String> source_cb;
 

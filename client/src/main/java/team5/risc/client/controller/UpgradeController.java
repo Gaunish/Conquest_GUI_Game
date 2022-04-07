@@ -19,7 +19,7 @@ import team5.risc.client.DisplayUtil;
 import team5.risc.common.MoveAction;
 import team5.risc.common.UpgradeAction;
 
-public class UpgradeController implements Initializable{
+public class UpgradeController  extends UIController implements Initializable{
     @FXML
     ChoiceBox<String> area_cb;
 

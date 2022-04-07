@@ -15,7 +15,7 @@ import team5.risc.client.DisplayUtil;
 import team5.risc.common.AttackAction;
 import team5.risc.common.MoveAction;
 
-public class AttackController {
+public class AttackController extends UIController {
     // @FXML
     // TextField sourceNode;
 
@@ -39,11 +39,6 @@ public class AttackController {
     public AttackController(Client c) {
         this.client = c;
     }
-
-
-    // public void setClient(Client c) {
-    //     client = c;
-    // }
 
     @FXML
     public void onSubmit(ActionEvent ae) throws IOException {

@@ -24,16 +24,13 @@ import javafx.stage.Stage;
 import team5.risc.client.Client;
 import team5.risc.client.DisplayUtil;
 
-public class ActionController implements Initializable {
+public class ActionController extends UIController implements Initializable {
 
     Client client;
 
     public ActionController(Client c) {
         this.client = c;
     }
-    // public void setClient(Client c) {
-    // client = c;
-    // }
 
     @FXML
     public AnchorPane gp;
@@ -125,62 +122,32 @@ public class ActionController implements Initializable {
 
     @FXML
     public void onMove(ActionEvent ae) throws IOException {
-        // MoveAction m = user_in.getMove(id);
-        // System.out.println("Recieved move "+m.source+" "+m.destination);
-
-        URL xmlResource = getClass().getResource("/ui/move.fxml");
-        if (xmlResource == null) {
-            System.out.print("No fxml resource found");
-            return;
-        }
-        FXMLLoader loader = new FXMLLoader(xmlResource);
-        MoveController moveController = new MoveController(client);
-        loader.setController(moveController);
-
-        AnchorPane movePane = loader.load();
-
         Stage secondStage = new Stage();
-        Scene secondScene = new Scene(movePane, 600, 500);
-        secondStage.setScene(secondScene);
+        String ui_path = "/ui/move.fxml";
+        MoveController moveController = new MoveController(client);
+        openNewPage(ui_path, moveController, secondStage);
         secondStage.show();
     }
 
     @FXML
     public void onUpgrade(ActionEvent ae) throws IOException {
-        URL xmlResource = getClass().getResource("/ui/upgrade.fxml");
-        if (xmlResource == null) {
-            System.out.print("No resource found");
-            return;
-        }
-        FXMLLoader loader = new FXMLLoader(xmlResource);
-        UpgradeController upgradeController = new UpgradeController(client);
-        loader.setController(upgradeController);
-
-        AnchorPane upgradePane = loader.load();
-      
         Stage secondStage = new Stage();
-        Scene secondScene = new Scene(upgradePane, 600, 500);
-        secondStage.setScene(secondScene);
+        String ui_path = "/ui/upgrade.fxml";
+        UpgradeController upgradeController = new UpgradeController(client);
+        openNewPage(ui_path, upgradeController, secondStage);
         secondStage.show();
     }
 
     @FXML
     public void onAttack(ActionEvent ae) throws IOException {
-        URL xmlResource = getClass().getResource("/ui/attack.fxml");
-        if (xmlResource == null) {
-            System.out.print("No resource found");
-            return;
-        }
-        FXMLLoader loader = new FXMLLoader(xmlResource);
-        AttackController attackController = new AttackController(client);
-        loader.setController(attackController);
-
-        AnchorPane attackPane = loader.load();
- 
         Stage secondStage = new Stage();
-        Scene secondScene = new Scene(attackPane, 600, 500);
-        secondStage.setScene(secondScene);
+        // Scene secondScene = new Scene(attackPane, 600, 500);
+
+        String ui_path = "/ui/attack.fxml";
+        AttackController attackController = new AttackController(client);
+        openNewPage(ui_path, attackController, secondStage);
         secondStage.show();
+
     }
 
     @FXML
@@ -194,16 +161,10 @@ public class ActionController implements Initializable {
     }
 
     public void openMapPage(Stage window) throws IOException {
-        URL xmlResource = getClass().getResource("/ui/map.fxml");
-        if (xmlResource == null) {
-            System.out.print("No fxml resource found");
-            return;
-        }
-        FXMLLoader loader = new FXMLLoader(xmlResource);
-        ActionController actionController = new ActionController(client);
-        loader.setController(actionController);
+        // window.setScene(new Scene(gp, 600, 800));
 
-        AnchorPane gp = loader.load();
-        window.setScene(new Scene(gp, 600, 800));
+        String ui_path = "/ui/map.fxml";
+        ActionController actionController = new ActionController(client);
+        openNewPage(ui_path, actionController, window);
     }
 }

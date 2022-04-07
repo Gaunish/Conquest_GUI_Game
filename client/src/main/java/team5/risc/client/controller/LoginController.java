@@ -20,7 +20,7 @@ import team5.risc.client.Client;
 import team5.risc.client.DisplayUtil;
 import team5.risc.client.RISCServer;
 
-public class LoginController {
+public class LoginController extends UIController{
     @FXML
     TextField currentUsername;
 
@@ -43,7 +43,8 @@ public class LoginController {
 
             if (userName.equals("") && passWord.equals("")) {
                 client.getRegionPhase();
-                openPlacementPage(btn);
+                Stage window = (Stage) btn.getScene().getWindow();
+                openPlacementPage(window);
 
             } else {
                 // Alert
@@ -55,20 +56,10 @@ public class LoginController {
         }
     }
 
-    public void openPlacementPage(Button btn) throws IOException {
-        Stage window = (Stage) btn.getScene().getWindow();
-
-        URL xmlResource = getClass().getResource("/ui/placement.fxml");
-        if (xmlResource == null) {
-            System.out.print("No fxml resource found");
-            return;
-        }
-        FXMLLoader loader = new FXMLLoader(xmlResource);
+    public void openPlacementPage(Stage window) throws IOException {
         PlacementController placementController = new PlacementController(client, 1);
-        loader.setController(placementController);
-
-        StackPane gp = loader.load();
-        window.setScene(new Scene(gp, 640, 480));
+        String ui_path = "/ui/placement.fxml";
+        openNewPage(ui_path, placementController, window);
     }
 
 }
