@@ -41,7 +41,7 @@ public class LoginController {
             String userName = currentUsername.getText();
             String passWord = currentPassword.getText();
 
-            if (userName.equals("abc") && passWord.equals("123")) {
+            if (userName.equals("") && passWord.equals("")) {
                 client.getRegionPhase();
                 openPlacementPage(btn);
 
@@ -49,34 +49,25 @@ public class LoginController {
                 // Alert
                 DisplayUtil.displayAlertAndWait("Login failed");
             }
-        } 
-        else {
+        } else {
             throw new IllegalArgumentException(
                     "Invalid source " + source + " for ActionEvent");
         }
     }
-    public void openPlacementPage(Button btn) throws IOException{
+
+    public void openPlacementPage(Button btn) throws IOException {
         Stage window = (Stage) btn.getScene().getWindow();
+
         URL xmlResource = getClass().getResource("/ui/placement.fxml");
         if (xmlResource == null) {
-            System.out.print("No xml resource found");
+            System.out.print("No fxml resource found");
             return;
         }
         FXMLLoader loader = new FXMLLoader(xmlResource);
-        StackPane gp = loader.load();
-        PlacementController placementController = loader.<PlacementController>getController();
-        placementController.setClient(client);
-        placementController.setRegionIndex(1);
+        PlacementController placementController = new PlacementController(client, 1);
+        loader.setController(placementController);
 
-        String area = client.getRiscServer().readUTF();
-        for (Node node : gp.getChildren()) {
-            AnchorPane anchor = (AnchorPane) node;
-            for (Node node2 : anchor.getChildren()) {
-                if (node2 instanceof Label) {
-                    ((Label) node2).setText(area);
-                }
-            }
-        }
+        StackPane gp = loader.load();
         window.setScene(new Scene(gp, 640, 480));
     }
 

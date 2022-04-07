@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.sound.midi.SysexMessage;
 
@@ -11,6 +12,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -27,7 +29,19 @@ import javafx.stage.Window;
 import team5.risc.client.Client;
 import team5.risc.client.DisplayUtil;
 
-public class PlacementController {
+public class PlacementController implements Initializable {
+
+    String unit_num = null;
+    String area_name = null;
+
+    Client client;
+    int region_index;
+
+    public PlacementController(Client c, int index) {
+        this.region_index = index;
+        this.client = c;
+    }
+
     @FXML
     TextField placement_number;
 
@@ -37,18 +51,16 @@ public class PlacementController {
     @FXML
     private AnchorPane ap;
 
-    String unit_num = null;
-    String area_name = null;
-
-    Client client;
-    int region_index;
-
-    public void setClient(Client c) {
-        client = c;
-    }
-
-    public void setRegionIndex(int index) {
-        region_index = index;
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        String area = "null";
+        try {
+            area = client.getRiscServer().readUTF();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        label.setText(area);
     }
 
     @FXML
@@ -64,12 +76,11 @@ public class PlacementController {
 
             if (region_index == client.getRegions().size()) {
                 // Goto Map page
-                openMapPage(window);
-            } 
-            else {
-                // Goto Placement Page
                 System.out.println("Go to action phase");
-                openPlacementPage(window, region_index+1);
+                openMapPage(window);
+            } else {
+                // Goto Placement Page
+                openPlacementPage(window, region_index + 1);
             }
         } else {
             // Remain the same area page TODO
@@ -78,7 +89,8 @@ public class PlacementController {
 
         return;
     }
-    public void openMapPage(Stage window) throws IOException{
+
+    public void openMapPage(Stage window) throws IOException {
         URL xmlResource = getClass().getResource("/ui/map.fxml");
         if (xmlResource == null) {
             System.out.print("No fxml resource found");
@@ -156,20 +168,19 @@ public class PlacementController {
         window.setScene(new Scene(gp, 600, 800));
     }
 
-    public void openPlacementPage(Stage window, int region_index) throws IOException{
-                        URL xmlResource = getClass().getResource("/ui/placement.fxml");
-                if (xmlResource == null) {
-                    System.out.print("No resource found");
-                    return;
-                }
-                String area = client.getRiscServer().readUTF();
-                FXMLLoader loader = new FXMLLoader(xmlResource);
-                StackPane gp = loader.load();
-                PlacementController pc = loader.<PlacementController>getController();
-                pc.label.setText(area);
-                pc.setClient(client);
-                pc.setRegionIndex(region_index);
-                window.setScene(new Scene(gp, 640, 480));
+    public void openPlacementPage(Stage window, int region_index) throws IOException {
+        URL xmlResource = getClass().getResource("/ui/placement.fxml");
+        if (xmlResource == null) {
+            System.out.print("No resource found");
+            return;
+        }
+
+        FXMLLoader loader = new FXMLLoader(xmlResource);
+        PlacementController placementController = new PlacementController(client, region_index);
+        loader.setController(placementController);
+        StackPane gp = loader.load();
+
+        window.setScene(new Scene(gp, 640, 480));
     }
 
 }
