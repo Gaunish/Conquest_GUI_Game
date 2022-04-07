@@ -6,8 +6,8 @@ public class Resources {
     private int tot_food, tot_tech;
     
     public Resources(){
-        tot_food = 0;
-        tot_tech = 0;
+        tot_food = 100;
+        tot_tech = 100;
     }
 
     //Method to increment total food/tech

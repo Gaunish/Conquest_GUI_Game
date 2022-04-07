@@ -29,7 +29,7 @@ public class Map implements Serializable {
     this.areas = new ArrayList<AreaNode>();
     // this.name2areas = new HashMap<>();
     for (int i = 0; i < num_area; i++) {
-      AreaNode areaNode = new AreaNode("area" + i, -1);
+      AreaNode areaNode = new AreaNode("area" + i, 2, 3, 1);
       this.areas.add(areaNode);
       // this.name2areas.put("area" + i, areaNode);
     }
@@ -130,20 +130,21 @@ public class Map implements Serializable {
     HashSet<String> currentSet = new HashSet<>();
     HashMap<String, Integer> node2Distance = new HashMap<>();
     int player_id = sourceNode.getOwnerId();
-    currentSet.add(sourceNode.getName());
-    node2Distance.put(sourceNode.getName(), 0); 
+    // currentSet.add(sourceNode.getName());
+    node2Distance.put(sourceNode.getName(), 0);
 
     while (true) {
       int shortest_cost = 1000000;
       String shortest_name = "";
-      for (HashMap.Entry<String,Integer> entry : node2Distance.entrySet()) {
-        if (!currentSet.contains(entry.getKey()) && 
+      for (HashMap.Entry<String, Integer> entry : node2Distance.entrySet()) {
+        if (!currentSet.contains(entry.getKey()) &&
             entry.getValue() < shortest_cost) {
-              shortest_name = entry.getKey();
-              shortest_cost = entry.getValue();
+          shortest_name = entry.getKey();
+          shortest_cost = entry.getValue();
         }
       }
-      if (shortest_name.equals("")) return -1;
+      if (shortest_name.equals(""))
+        return -1;
       if (shortest_name.equals(destinationNode.getName())) {
         return num_unit * shortest_cost;
       }
@@ -151,15 +152,13 @@ public class Map implements Serializable {
       currentSet.add(shortest_name);
       for (String neighbor : getAreaNodeByName(shortest_name).getNeighborsName()) {
         if (getAreaNodeByName(neighbor).getOwnerId() != player_id)
-            continue;
+          continue;
 
-        if (!node2Distance.containsKey(neighbor) || 
-          node2Distance.get(neighbor) > shortest_cost + getAreaNodeByName(neighbor).getFood()
-        ) {
+        if (!node2Distance.containsKey(neighbor) ||
+            node2Distance.get(neighbor) > shortest_cost + getAreaNodeByName(neighbor).getFood()) {
           node2Distance.put(
-            neighbor,
-            shortest_cost + getAreaNodeByName(neighbor).getFood()
-          );
+              neighbor,
+              shortest_cost + getAreaNodeByName(neighbor).getFood());
         }
       }
     }

@@ -18,6 +18,15 @@ public class TextDisplayMap implements Display {
     return display_str;
   }
 
+  public String levelDisplay(Map m) {
+    String txt = new String();
+    ArrayList<Region> regions = m.getRegions();
+    for(Region r : regions){
+      txt += r.strDisplay();
+    }
+    return txt;
+  }
+
   private String getRegion(int id, ArrayList<AreaNode> areas) {
     String out = "";
     out += "Player " + id + ":\n";

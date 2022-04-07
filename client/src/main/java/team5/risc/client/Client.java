@@ -79,14 +79,14 @@ public class Client {
      */
 
     /*
-     * ------------------------------------------------ 
+     * ------------------------------------------------
      * Protocol 1:
-     * ------------------------------------------------ 
+     * ------------------------------------------------
      * Client first sends a string
      * explaining which action it is going to send ->
      * 
-     * 1) Move for MoveAction 
-     * 2) Attack for AttackAction 
+     * 1) Move for MoveAction
+     * 2) Attack for AttackAction
      * 3) Done for DoneAction
      * 4) Upgrade for UpgradeAction
      * ------------------------------------------------
@@ -120,7 +120,7 @@ public class Client {
         String user_opt = user_in.getLoser();
         riscServer.writeUTF(user_opt);
 
-        if(user_opt.equals("exit")){
+        if (user_opt.equals("exit")) {
           break;
         }
 
@@ -161,11 +161,12 @@ public class Client {
           // write "Upgrade"
           riscServer.writeUTF("Upgrade");
 
-          //Get area to upgrade
+          // Get area to upgrade
           String area_in = user_in.getArea();
           UpgradeAction u = user_in.getUpgrade(id, area_in);
           riscServer.writeObject(u);
-          System.out.println(u.toString());
+          String response = riscServer.readUTF();
+          print_action(response);
         }
 
         // Check if input (D)one
@@ -201,7 +202,7 @@ public class Client {
       Client client = new Client(riscServer, user_in);
       client.run();
     } else if (args[2].equals("gui")) {
-      Application.launch(GUIClient.class, "");
+      Application.launch(GUIClient.class, args);
     } else {
       throw new UnsupportedOperationException("Unsupported operation");
     }
