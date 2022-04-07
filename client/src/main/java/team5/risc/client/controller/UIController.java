@@ -24,7 +24,7 @@ public abstract class UIController {
         loader.setController(new_controller);
 
         AnchorPane gp = loader.load();
-        window.setScene(new Scene(gp, 640, 480));
+        window.setScene(new Scene(gp, 600, 500));
     }
 
 }
