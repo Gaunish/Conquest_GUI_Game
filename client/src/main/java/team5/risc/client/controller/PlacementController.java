@@ -101,54 +101,6 @@ public class PlacementController implements Initializable {
         loader.setController(actionController);
 
         AnchorPane gp = loader.load();
-
-        // get winner status of game
-        String game_status = client.getRiscServer().readUTF();
-        System.out.println(game_status);
-
-        DisplayUtil.displayAlertAndWait("Player " + client.getID() + ":" + game_status);
-
-        if (!game_status.equals("No winner")) {
-            client.getRiscServer().close();
-            return;
-        }
-
-        // get status of player from server
-        String pl_status = client.getRiscServer().readUTF();
-
-        if (pl_status.equals("Loser")) {
-            // String user_opt = user_in.getLoser();
-            // TODO:Temporarily hardcode it
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Duplicate");
-            alert.setHeaderText("You lose your game");
-            alert.setContentText(
-                    "Do you want to continue?");
-
-            // Boolean cont = false;
-            // Button show = new Button("Continue");
-            // show.setOnAction(e -> {
-            // // try {
-            // // cont = true;
-            // // } catch (IOException ee) {
-            // // ee.printStackTrace();
-            // // }
-            // });
-            // alert.setGraphic(show);
-
-            String user_opt;
-            boolean isPresent = alert.showAndWait().filter(ButtonType.OK::equals).isPresent();
-            if (isPresent) {
-                user_opt = "watch";
-            } else {
-                user_opt = "exit";
-            }
-            System.out.println("user_opt:" + user_opt);
-            client.getRiscServer().writeUTF(user_opt);
-            if (user_opt.equals("exit")) {
-                return;
-            }
-        }
         window.setScene(new Scene(gp, 600, 800));
     }
 
