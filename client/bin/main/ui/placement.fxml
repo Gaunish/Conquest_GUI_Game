@@ -39,7 +39,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team5.risc.client.controller.PlacementController">
+<AnchorPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"> 
    <children>
       <AnchorPane fx:id="ap">
          <!-- <children>
@@ -61,4 +61,4 @@
          </children> -->
       </AnchorPane>
    </children>
-</StackPane>
+</AnchorPane>

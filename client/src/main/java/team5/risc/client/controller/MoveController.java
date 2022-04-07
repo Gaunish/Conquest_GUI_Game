@@ -1,9 +1,13 @@
 package team5.risc.client.controller;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -14,7 +18,7 @@ import team5.risc.client.Client;
 import team5.risc.client.DisplayUtil;
 import team5.risc.common.MoveAction;
 
-public class MoveController {
+public class MoveController  extends UIController implements Initializable {
     @FXML
     ChoiceBox<String> source_cb;
 
@@ -29,8 +33,16 @@ public class MoveController {
 
     Client client;
 
-    public void setClient(Client c) {
-        client = c;
+    public MoveController(Client c) {
+        this.client = c;
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        this.source_cb.setItems(
+                FXCollections.observableArrayList(client.getRegions()));
+        this.destination_cb.setItems(
+                FXCollections.observableArrayList(client.getRegions()));
     }
 
     @FXML

@@ -2,12 +2,14 @@ package team5.risc.client.controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -22,96 +24,30 @@ import javafx.stage.Stage;
 import team5.risc.client.Client;
 import team5.risc.client.DisplayUtil;
 
-public class ActionController {
+public class ActionController extends UIController implements Initializable {
 
     Client client;
 
-    public void setClient(Client c) {
-        client = c;
+    public ActionController(Client c) {
+        this.client = c;
     }
 
     @FXML
-    public void onMove(ActionEvent ae) throws IOException {
-        // MoveAction m = user_in.getMove(id);
-        // System.out.println("Recieved move "+m.source+" "+m.destination);
+    public AnchorPane gp;
 
-        URL xmlResource = getClass().getResource("/ui/move.fxml");
-        if (xmlResource == null) {
-            System.out.print("No resource found");
-            return;
-        }
-        FXMLLoader loader = new FXMLLoader(xmlResource);
-        AnchorPane movePane = loader.load();
-        MoveController moveController = loader.<MoveController>getController();
-        moveController.setClient(client);
-
-        moveController.setClient(client);
-        moveController.source_cb.setItems(
-                FXCollections.observableArrayList(client.getRegions()));
-        moveController.destination_cb.setItems(
-                FXCollections.observableArrayList(client.getRegions()));
-
-        Stage secondStage = new Stage();
-        Scene secondScene = new Scene(movePane, 600, 500);
-        secondStage.setScene(secondScene);
-        secondStage.show();
-    }
-
-    @FXML
-    public void onUpgrade(ActionEvent ae) throws IOException {
-        URL xmlResource = getClass().getResource("/ui/upgrade.fxml");
-        if (xmlResource == null) {
-            System.out.print("No resource found");
-            return;
-        }
-        FXMLLoader loader = new FXMLLoader(xmlResource);
-        AnchorPane upgradePane = loader.load();
-        UpgradeController upgradeController = loader.<UpgradeController>getController();
-        upgradeController.setClient(client);
-        upgradeController.area_cb.setItems(
-                FXCollections.observableArrayList(client.getRegions()));
-
-        Stage secondStage = new Stage();
-        Scene secondScene = new Scene(upgradePane, 600, 500);
-        secondStage.setScene(secondScene);
-        secondStage.show();
-    }
-
-    @FXML
-    public void onAttack(ActionEvent ae) throws IOException {
-        URL xmlResource = getClass().getResource("/ui/attack.fxml");
-        if (xmlResource == null) {
-            System.out.print("No resource found");
-            return;
-        }
-        FXMLLoader loader = new FXMLLoader(xmlResource);
-        AnchorPane attackPane = loader.load();
-        AttackController attackController = loader.<AttackController>getController();
-        attackController.setClient(client);
-        Stage secondStage = new Stage();
-        Scene secondScene = new Scene(attackPane, 600, 500);
-        secondStage.setScene(secondScene);
-        secondStage.show();
-    }
-
-    @FXML
-    public void onDone(ActionEvent ae) throws IOException {
-        client.getRiscServer().writeUTF("Done");
-        DisplayUtil.displayAlertAndWait("Done with player " + client.getID() + "wait for others");
-
-        URL xmlResource = getClass().getResource("/ui/map.fxml");
-        if (xmlResource == null) {
-            System.out.print("No resource found");
-            return;
-        }
-        FXMLLoader loader = new FXMLLoader(xmlResource);
-        AnchorPane gp = loader.load();
-        ActionController actionController = loader.<ActionController>getController();
-        actionController.setClient(client);
-
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        System.out.print("init start!!!\n");
         // Read the map string info
-        String map_str = client.getRiscServer().readUTF();
+        String map_str = null;
+        try {
+            map_str = client.getRiscServer().readUTF();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         System.out.println(map_str);
+
         String[] components = map_str.split("\n\n");
         int index = 0;
         for (Node node : gp.getChildren()) {
@@ -124,7 +60,17 @@ public class ActionController {
                 ++index;
             }
         }
+        try {
+            checkGameStatus();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        System.out.print("init end!!!\n");
+    }
 
+    @FXML
+    public void checkGameStatus() throws IOException {
         // get winner status of game
         String game_status = client.getRiscServer().readUTF();
         System.out.println(game_status);
@@ -144,7 +90,7 @@ public class ActionController {
             // TODO:Temporarily hardcode it
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Duplicate");
-            alert.setHeaderText("This folder already exists");
+            alert.setHeaderText("You lose your game");
             alert.setContentText(
                     "Do you want to continue?");
 
@@ -171,10 +117,54 @@ public class ActionController {
             if (user_opt.equals("exit")) {
                 return;
             }
-            return;
         }
+    }
+
+    @FXML
+    public void onMove(ActionEvent ae) throws IOException {
+        Stage secondStage = new Stage();
+        String ui_path = "/ui/move.fxml";
+        MoveController moveController = new MoveController(client);
+        openNewPage(ui_path, moveController, secondStage);
+        secondStage.show();
+    }
+
+    @FXML
+    public void onUpgrade(ActionEvent ae) throws IOException {
+        Stage secondStage = new Stage();
+        String ui_path = "/ui/upgrade.fxml";
+        UpgradeController upgradeController = new UpgradeController(client);
+        openNewPage(ui_path, upgradeController, secondStage);
+        secondStage.show();
+    }
+
+    @FXML
+    public void onAttack(ActionEvent ae) throws IOException {
+        Stage secondStage = new Stage();
+        // Scene secondScene = new Scene(attackPane, 600, 500);
+
+        String ui_path = "/ui/attack.fxml";
+        AttackController attackController = new AttackController(client);
+        openNewPage(ui_path, attackController, secondStage);
+        secondStage.show();
+
+    }
+
+    @FXML
+    public void onDone(ActionEvent ae) throws IOException {
+        client.getRiscServer().writeUTF("Done");
+        DisplayUtil.displayAlertAndWait("Done with player " + client.getID() + "wait for others");
         Stage window = (Stage) ((Button) ae.getSource()).getScene().getWindow();
-        window.setScene(new Scene(gp, 600, 800));
+        openMapPage(window);
+
         return;
+    }
+
+    public void openMapPage(Stage window) throws IOException {
+        // window.setScene(new Scene(gp, 600, 800));
+
+        String ui_path = "/ui/map.fxml";
+        ActionController actionController = new ActionController(client);
+        openNewPage(ui_path, actionController, window);
     }
 }

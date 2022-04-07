@@ -15,7 +15,7 @@ import team5.risc.client.DisplayUtil;
 import team5.risc.common.AttackAction;
 import team5.risc.common.MoveAction;
 
-public class AttackController {
+public class AttackController extends UIController {
     // @FXML
     // TextField sourceNode;
 
@@ -36,8 +36,8 @@ public class AttackController {
 
     Client client;
 
-    public void setClient(Client c) {
-        client = c;
+    public AttackController(Client c) {
+        this.client = c;
     }
 
     @FXML

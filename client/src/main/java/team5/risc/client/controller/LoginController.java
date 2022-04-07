@@ -20,7 +20,7 @@ import team5.risc.client.Client;
 import team5.risc.client.DisplayUtil;
 import team5.risc.client.RISCServer;
 
-public class LoginController {
+public class LoginController extends UIController{
     @FXML
     TextField currentUsername;
 
@@ -34,58 +34,32 @@ public class LoginController {
     }
 
     @FXML
-    public void onSubmit(ActionEvent ae) throws IOException {
+    public void onSubmit(ActionEvent ae) throws IOException, ClassNotFoundException {
         Object source = ae.getSource();
         if (source instanceof Button) {
             Button btn = (Button) source;
             String userName = currentUsername.getText();
             String passWord = currentPassword.getText();
 
-            if (userName.equals("abc") && passWord.equals("123")) {
-                try {
-                    client.getRegionPhase();
-                } catch (ClassNotFoundException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-
+            if (userName.equals("") && passWord.equals("")) {
+                client.getRegionPhase();
                 Stage window = (Stage) btn.getScene().getWindow();
-                URL xmlResource = getClass().getResource("/ui/placement.fxml");
-                if (xmlResource == null) {
-                    System.out.print("No resource found");
-                    return;
-                }
-                FXMLLoader loader = new FXMLLoader(xmlResource);
-                StackPane gp = loader.load();
-                PlacementController placementController = loader.<PlacementController>getController();
-                placementController.setClient(client);
-                placementController.setRegionIndex(1);
-
-                String area = client.getRiscServer().readUTF();
-                for (Node node : gp.getChildren()) {
-                    AnchorPane anchor = (AnchorPane) node;
-                    for (Node node2 : anchor.getChildren()) {
-                        if (node2 instanceof Label) {
-                            ((Label) node2).setText(area);
-                        }
-                    }
-                }
-                window.setScene(new Scene(gp, 640, 480));
+                openPlacementPage(window);
 
             } else {
                 // Alert
                 DisplayUtil.displayAlertAndWait("Login failed");
-
-                // Stage secondStage = new Stage();
-                // Label label = new Label("Login failed");
-                // StackPane secondPane = new StackPane(label);
-                // Scene secondScene = new Scene(secondPane, 300, 200);
-                // secondStage.setScene(secondScene);
-                // secondStage.show();
             }
         } else {
             throw new IllegalArgumentException(
                     "Invalid source " + source + " for ActionEvent");
         }
     }
+
+    public void openPlacementPage(Stage window) throws IOException {
+        PlacementController placementController = new PlacementController(client, 1);
+        String ui_path = "/ui/placement.fxml";
+        openNewPage(ui_path, placementController, window);
+    }
+
 }
