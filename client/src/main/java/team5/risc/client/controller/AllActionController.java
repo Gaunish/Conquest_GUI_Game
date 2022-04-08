@@ -157,6 +157,7 @@ public class AllActionController extends UIController implements Initializable {
                 }
             }
         }
+        // System.out.println("index::"+components[index]);
 
         // TODO: get food, tech from map
         int food_num = 100;
