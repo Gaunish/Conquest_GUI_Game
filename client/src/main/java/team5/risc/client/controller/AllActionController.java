@@ -23,6 +23,8 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -30,6 +32,9 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import team5.risc.client.Client;
 import team5.risc.client.DisplayUtil;
+import team5.risc.common.AttackAction;
+import team5.risc.common.MoveAction;
+import team5.risc.common.UpgradeAction;
 
 public class AllActionController extends UIController implements Initializable {
 
@@ -76,6 +81,8 @@ public class AllActionController extends UIController implements Initializable {
 
     public Button done;
 
+    public TabPane tabs;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         updateMapInfo();
@@ -113,6 +120,7 @@ public class AllActionController extends UIController implements Initializable {
         int tech_num = 100;
         food.setText(" " + food_num);
         tech.setText(" " + tech_num);
+        log.setText("please input your action");
     }
 
     @FXML
@@ -195,7 +203,90 @@ public class AllActionController extends UIController implements Initializable {
     }
 
     @FXML
-    public void onMove(ActionEvent ae) throws IOException {
+    public void onUpgrade(ActionEvent ae) throws IOException {
+        client.getRiscServer().writeUTF("Upgrade");
+        UpgradeAction upgrade = new UpgradeAction(
+                client.getID(),
+                up_src.getValue().toString(),
+                up_st_level.getValue(),
+                up_num.getValue(),
+                up_ed_level.getValue());
 
+        client.getRiscServer().writeObject(upgrade);
+
+        // TODO: Server side validation on
+        // String response = client.getRiscServer().readUTF();
+
+        String alert_string;
+        // if (response.equals("correct"))
+        // alert_string = "Action executed successfully!\n";
+        // else
+        // alert_string = "Error: " + response + "\n";
+        alert_string = "Successfully upgrade!";
+        log.setText(alert_string);
+    }
+
+    @FXML
+    public void onMove(ActionEvent ae) throws IOException {
+        client.getRiscServer().writeUTF("Move");
+        MoveAction move = new MoveAction(
+            client.getID(),
+            move_src.getValue().toString(),
+            move_dst.getValue().toString(),
+            move_level.getValue(),
+            move_num.getValue());
+
+        client.getRiscServer().writeObject(move);
+        String response = client.getRiscServer().readUTF();
+        String alert_string;
+        if (response.equals("correct"))
+            alert_string = "Action executed successfully!\n";
+        else
+            alert_string = "Error: " + response + "\n";
+        log.setText(alert_string);
+    }
+
+    @FXML
+    public void onAttack(ActionEvent ae) throws IOException {
+        client.getRiscServer().writeUTF("Attack");
+        AttackAction attack = new AttackAction(
+            client.getID(),
+            att_src.getValue().toString(),
+            att_dst.getValue().toString(),
+            att_level.getValue(),
+            att_num.getValue());
+
+        client.getRiscServer().writeObject(attack);
+        String response = client.getRiscServer().readUTF();
+        String alert_string;
+        if (response.equals("correct"))
+            alert_string = "Action executed successfully!\n";
+        else
+            alert_string = "Error: " + response + "\n";
+        log.setText(alert_string);
+    }
+
+    @FXML
+    public void onDone(ActionEvent ae) throws IOException {
+        // System.out.print("Done with sending action, please wait\n");
+        log.setText("Done with sending action, please wait");// + client.getID() + "wait for others");
+        // log.paintImmediately(log.getVisibleRect());
+        // System.out.print("updated log\n");
+        tabs.setDisable(true);
+        client.getRiscServer().writeUTF("Done");
+        Stage window = (Stage) ((Button) ae.getSource()).getScene().getWindow();
+        openMapPage(window);
+        return;
+    }
+
+    public void openMapPage(Stage window) throws IOException {
+        String ui_path = "/ui/allaction.fxml";
+        AllActionController allActionController = new AllActionController(client);
+        openNewPage(ui_path, allActionController, window);
+    }
+
+    @FXML
+    public void resetLog(){
+        log.setText("please input your action");
     }
 }

@@ -43,14 +43,14 @@ public class AttackController extends UIController {
     @FXML
     public void onSubmit(ActionEvent ae) throws IOException {
         client.getRiscServer().writeUTF("Attack");
-        AttackAction move = new AttackAction(
+        AttackAction attack = new AttackAction(
                 client.getID(),
                 source_node.getText(),
                 destination_node.getText(),
                 Integer.parseInt(level.getText()),
                 Integer.parseInt(num_unit.getText()));
 
-        client.getRiscServer().writeObject(move);
+        client.getRiscServer().writeObject(attack);
         String response = client.getRiscServer().readUTF();
 
         String alert_string;

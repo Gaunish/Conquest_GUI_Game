@@ -99,7 +99,7 @@
                     <items>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                            <children>
-                              <TabPane prefHeight="298.0" prefWidth="226.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <TabPane fx:id="tabs" prefHeight="298.0" prefWidth="226.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <tabs>
                                   <Tab fx:id="upgrade_tab" text="Upgrade">
                                        <content>
@@ -123,7 +123,7 @@
                                                 <Label text="Starting Level" GridPane.rowIndex="1" />
                                                 <Label text="Ending Level" GridPane.rowIndex="2" />
                                                 <Label text="Number of Unit" GridPane.rowIndex="3" />
-                                                <Button fx:id="up_submit" mnemonicParsing="false" prefHeight="25.0" prefWidth="95.0" text="Submit" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                <Button fx:id="up_submit" mnemonicParsing="false" onAction="#onUpgrade" onMouseExited="#resetLog" prefHeight="25.0" prefWidth="95.0" text="Submit" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                                 <Spinner fx:id="up_num" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                              </children>
                                              <padding>
@@ -153,7 +153,7 @@
                                                 <Label text="Destination Node" GridPane.rowIndex="1" />
                                                 <Label text="Level of Unit" GridPane.rowIndex="2" />
                                                 <Label text="Number of Unit" GridPane.rowIndex="3" />
-                                                <Button fx:id="move_submit" mnemonicParsing="false" prefHeight="25.0" prefWidth="95.0" text="Submit" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                <Button fx:id="move_submit" mnemonicParsing="false" onAction="#onMove" onMouseExited="#resetLog" prefHeight="25.0" prefWidth="95.0" text="Submit" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                                 <Spinner fx:id="move_num" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                              </children>
                                              <padding>
@@ -183,7 +183,7 @@
                                                 <Label text="Destination Node" GridPane.rowIndex="1" />
                                                 <Label text="Level of Unit" GridPane.rowIndex="2" />
                                                 <Label text="Number of Unit" GridPane.rowIndex="3" />
-                                                <Button fx:id="att_submit" mnemonicParsing="false" prefHeight="25.0" prefWidth="95.0" text="Submit" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                <Button fx:id="att_submit" mnemonicParsing="false" onAction="#onAttack" onMouseExited="#resetLog" prefHeight="25.0" prefWidth="95.0" text="Submit" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                                 <Spinner fx:id="att_num" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                              </children>
                                              <padding>
@@ -198,7 +198,7 @@
                         </AnchorPane>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                            <children>
-                              <Button fx:id="done" layoutX="73.0" layoutY="20.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="81.0" text="Done" />
+                              <Button fx:id="done" layoutX="73.0" layoutY="20.0" mnemonicParsing="false" onAction="#onDone" prefHeight="32.0" prefWidth="81.0" text="Done" />
                            </children>
                         </AnchorPane>
                     </items>
