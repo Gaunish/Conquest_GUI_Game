@@ -276,6 +276,8 @@ public class AllActionController extends UIController implements Initializable {
         // log.paintImmediately(log.getVisibleRect());
         // System.out.print("updated log\n");
         tabs.setDisable(true);
+        done.setDisable(true);
+        DisplayUtil.displayAlertAndWait("Done with sending action, please wait");
         client.getRiscServer().writeUTF("Done");
         Stage window = (Stage) ((Button) ae.getSource()).getScene().getWindow();
         System.out.print("278!!!\n");
