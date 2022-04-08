@@ -52,6 +52,7 @@ public class AllActionController extends UIController implements Initializable {
         for (int i = 0; i < 6; i++) {
             areaList.add("area" + i);
         }
+        System.out.print("constructor!!!\n");
     }
 
     public GridPane map;
@@ -85,6 +86,8 @@ public class AllActionController extends UIController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        System.out.print("start init!!!\n");
+
         updateMapInfo();
         try {
             updatePlayerInfo();
@@ -94,7 +97,7 @@ public class AllActionController extends UIController implements Initializable {
         updateUpgradeTab();
         updateMoveTab();
         updateAttackTab();
-
+        System.out.print("init done!!!\n");
     }
 
     @FXML
@@ -120,7 +123,7 @@ public class AllActionController extends UIController implements Initializable {
         int tech_num = 100;
         food.setText(" " + food_num);
         tech.setText(" " + tech_num);
-        log.setText("please input your action");
+        log.setText("Welcome");
     }
 
     @FXML
@@ -275,7 +278,10 @@ public class AllActionController extends UIController implements Initializable {
         tabs.setDisable(true);
         client.getRiscServer().writeUTF("Done");
         Stage window = (Stage) ((Button) ae.getSource()).getScene().getWindow();
+        System.out.print("278!!!\n");
         openMapPage(window);
+        System.out.print("280!!!\n");
+
 
         // updateMapInfo();
         // try {
@@ -293,6 +299,7 @@ public class AllActionController extends UIController implements Initializable {
         String ui_path = "/ui/allaction.fxml";
         AllActionController allActionController = new AllActionController(client);
         openNewPage(ui_path, allActionController, window);
+        
     }
 
     @FXML
