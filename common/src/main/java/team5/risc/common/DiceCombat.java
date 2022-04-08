@@ -28,8 +28,8 @@ public class DiceCombat implements Combat {
       }
 
       // get dice roll for both
-      int roll_attack = getRandom();
-      int roll_defend = getRandom();
+      int roll_attack = getRandom() + attacker.getBonus();
+      int roll_defend = getRandom() + defender.getBonus();
 
       if (roll_defend < roll_attack) {
         // Defender loses round

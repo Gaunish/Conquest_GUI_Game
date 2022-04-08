@@ -134,13 +134,29 @@ public class AreaNode implements Serializable {
     return defender.get(lvl).getUnitNum();
   }
 
+  public void setOwner(int id){
+    for(Army a : defender){
+      a.setOwner(id);
+    }
+  }
+
   public void setDefender(Army new_defender) {
-    setDefender(new_defender, 0);
+    setDefender(new_defender, new_defender.getLevel());
+    setOwner(new_defender.getOwnerId());
   }
 
   //set given lvl defender
   public void setDefender(Army new_defender, int lvl) {
     defender.set(lvl, new_defender);
+  }
+
+  public boolean hasLost(){
+    for(Army a : defender){
+      if(a.getUnitNum() > 0){
+        return false;
+      }
+    }
+    return true;
   }
 
   public Army getDefender() {
@@ -152,6 +168,61 @@ public class AreaNode implements Serializable {
     return defender.get(lvl);
   }
 
+  //Get highest/lowest bonus defender
+  public Army getBonusDefender(boolean pos){
+    if(pos){
+      for(int i = no_level - 1; i >= 0; i--){
+        System.out.println(name + " " + i);
+        Army a = getDefender(i);
+        if(a.getUnitNum() > 0){
+          return a;
+        }
+      }
+    }
+    else{
+      for(int i = 0; i < no_level; i++){
+        Army a = getDefender(i);
+        if (a.getUnitNum() > 0) {
+          return a;
+        }
+      }
+    }
+    return null;
+  }
+
+  // Get highest/lowest bonus attacker
+  public Army getBonusEnemy(boolean pos){
+    if(pos){
+      Army max = null;
+      int max_lvl = -1;
+      for(Army a : enemies){
+        if(a.getLevel() > max_lvl){
+          max_lvl = a.getLevel();
+          max = a;
+          if(max_lvl == 6){
+            break;
+          }
+        }
+      }
+      enemies.remove(max);
+      return max;
+    }
+    else{
+      Army min = null;
+      int min_lvl = 7;
+      for (Army a : enemies) {
+        if (a.getLevel() < min_lvl) {
+          min_lvl = a.getLevel();
+          min = a;
+          if (min_lvl == 0) {
+            break;
+          }
+        }
+      }
+      enemies.remove(min);
+      return min;
+    }
+  }
   public Army getDefenderByIndex(int idex){
     return defender.get(idex);
   }
@@ -183,7 +254,10 @@ public class AreaNode implements Serializable {
     while (it.hasNext()) {
       Army cur_enemy = it.next();
       if (cur_enemy.getOwnerId() == to_add.getOwnerId() && cur_enemy.getLevel() == to_add.getLevel()) {
-        cur_enemy.mergeArmy(to_add);
+        try{
+          cur_enemy.mergeArmy(to_add);
+        }
+        catch(Exception e){}
         return;
       }
     }

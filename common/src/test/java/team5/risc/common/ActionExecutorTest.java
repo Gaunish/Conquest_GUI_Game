@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 public class ActionExecutorTest {
-  @Test
+ /* @Test
   public void test_move_execute() {
     Map map = new Map();
     MoveAction m = new MoveAction(1, "area1", "area4", 3);
@@ -48,6 +48,6 @@ public class ActionExecutorTest {
     assertEquals("1: [area4, area7]", map.getRegions().get(1).toString());
     e.addUnitToAllArea(1, map);
     assertEquals(1, map.getAreaNodeByName("area6").getDefenderUnit());
-  }
+  }*/
 
 }

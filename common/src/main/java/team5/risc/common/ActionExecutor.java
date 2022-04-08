@@ -1,5 +1,6 @@
 package team5.risc.common;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 
 public class ActionExecutor {
@@ -46,32 +47,54 @@ public class ActionExecutor {
   }
 
   public void resolveAllCombat(Map map, Combat c) {
+    ArrayList<Army> winners = new ArrayList<Army>();
+    
     for (AreaNode area : map.getAreas()) {
+      boolean pos = true;
       while (!area.noEnemyLeft()) {
-        Army defender = area.getDefender();
-        Army attacker = area.popFirstEnemy();
-        combatExecute(defender, attacker, map, area, c);
+        Army defender = area.getBonusDefender(!pos);
+        Army attacker = area.getBonusEnemy(pos);
+        
+        // Do combat, get winner
+        Army winner = c.doCombat(defender, attacker);
+        if (winner.getOwnerId() == attacker.getOwnerId()) {
+          winners.add(winner);
+        }
+        if(area.noEnemyLeft()){
+          combatExecute(defender, attacker, winner, winners, map, area, c);
+        }
+        pos = !pos;
       }
     }
   }
 
-  public void combatExecute(Army defender, Army attacker, Map map, AreaNode dest, Combat c) {
+  public void combatExecute(Army defender, Army attacker, Army winner, ArrayList<Army> winners, Map map, AreaNode dest, Combat c) {
 
     // Do combat, get winner
     // Combat c = new DiceCombat(20, 1);
-    Army winner = c.doCombat(defender, attacker);
 
     // Print winner
     // System.out.println("Combat winner : " + winner.getOwnerId());
 
     // Update region, areaNode, if attacker wins
     if (winner.getOwnerId() == attacker.getOwnerId()) {
-      // Update areaNode
-      dest.setDefender(winner);
+      //check if defending areaNode is empty
+      if(!dest.hasLost()){
+        dest.setDefender(defender);
+        return;
+      } 
 
       // Update regions
       map.getRegions().get(defender.getOwnerId()).removeArea(dest);
       map.getRegions().get(attacker.getOwnerId()).addArea(dest);
+
+      // Update areaNode
+      for(Army a : winners){
+        dest.setDefender(a);
+      }
+    }
+    else{
+      dest.setDefender(defender);
     }
   }
 
