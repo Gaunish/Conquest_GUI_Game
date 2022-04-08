@@ -276,7 +276,17 @@ public class AllActionController extends UIController implements Initializable {
         client.getRiscServer().writeUTF("Done");
         Stage window = (Stage) ((Button) ae.getSource()).getScene().getWindow();
         openMapPage(window);
-        return;
+
+        // updateMapInfo();
+        // try {
+        //     updatePlayerInfo();
+        // } catch (IOException e) {
+        //     e.printStackTrace();
+        // }
+        // updateUpgradeTab();
+        // updateMoveTab();
+        // updateAttackTab();
+
     }
 
     public void openMapPage(Stage window) throws IOException {
