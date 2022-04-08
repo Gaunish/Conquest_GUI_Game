@@ -90,9 +90,10 @@ public class PlacementController extends UIController implements Initializable {
     }
 
     public void openMapPage(Stage window) throws IOException {
-        String ui_path = "/ui/map.fxml";
-        ActionController actionController = new ActionController(client);
-        openNewPage(ui_path, actionController, window);;
+        // String ui_path = "/ui/map.fxml";
+        String ui_path = "/ui/allaction.fxml";
+        AllActionController allActionController = new AllActionController(client);
+        openNewPage(ui_path, allActionController, window);;
 
     }
 
