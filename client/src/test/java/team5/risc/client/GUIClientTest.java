@@ -8,9 +8,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import java.net.URL;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.api.FxToolkit;
@@ -41,6 +39,8 @@ public class GUIClientTest extends ApplicationTest {
 
     @Test
     public void testEnglishInput() {
+        clickOn("#currentUsername");
+        write("abc");
         clickOn("#Button");
         Platform.exit();
         System.exit(0);
