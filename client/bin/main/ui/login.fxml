@@ -39,22 +39,22 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team5.risc.client.controller.LoginController">
+<StackPane xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team5.risc.client.controller.LoginController">
    <children>
-      <AnchorPane>
+      <AnchorPane minHeight="200.0" prefWidth="500.0">
          <!-- <children>
             <VBox prefHeight="400.0" prefWidth="640.0"> -->
               <!-- <children>
                 <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS"> -->
                   <children>
-                    <Label alignment="CENTER" layoutX="106.0" layoutY="22.0" prefHeight="99.0" prefWidth="139.0" style="&#10;" text="Log In" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false">
+                    <Label alignment="CENTER" contentDisplay="CENTER" layoutX="106.0" layoutY="22.0" prefHeight="99.0" prefWidth="139.0" style="&#10;" text="Log In" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="20.0">
                       <font>
                         <Font size="49.0" />
                       </font>
                     </Label>
-                        <Button layoutX="274.0" layoutY="296.0" mnemonicParsing="false" onAction="#onSubmit" text="Submit" />
-                        <TextField fx:id="currentUsername" layoutX="96.0" layoutY="135.0" promptText="Type the username" />
-                        <TextField fx:id="currentPassword" layoutX="96.0" layoutY="195.0" promptText="Type the password" />
+                        <Button layoutX="274.0" layoutY="296.0" mnemonicParsing="false" onAction="#onSubmit" prefHeight="33.0" prefWidth="300.0" text="Submit" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="250.0" />
+                        <TextField fx:id="currentUsername" layoutX="96.0" layoutY="135.0" promptText="Type the username" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="150.0" />
+                        <TextField fx:id="currentPassword" layoutX="96.0" layoutY="195.0" promptText="Type the password" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="200.0" />
                   <!-- </children>
                 </AnchorPane> -->
               </children>
