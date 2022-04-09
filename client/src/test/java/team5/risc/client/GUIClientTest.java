@@ -15,7 +15,7 @@ import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit5.ApplicationTest;
 
 public class GUIClientTest extends ApplicationTest {
-    @Override
+   /* @Override
     public void start(Stage stage) throws Exception {
         URL xmlResource = getClass().getResource("/ui/login.fxml");
         FXMLLoader loader = new FXMLLoader(xmlResource);
@@ -44,6 +44,6 @@ public class GUIClientTest extends ApplicationTest {
         clickOn("#Button");
         Platform.exit();
         System.exit(0);
-    }
+    }*/
     
 }
