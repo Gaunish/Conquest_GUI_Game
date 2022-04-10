@@ -8,13 +8,14 @@ import javax.swing.text.DefaultStyledDocument.ElementSpec;
 
 public class LevelArmy implements Army, Serializable{
     private int level, no, bonus;
-    private List<Integer> cost;
+    private List<Integer> cost, bonusList;
     private int owner_id;
 
     public LevelArmy(int owner_id, int no, int level){
         this.owner_id = owner_id; // owner_id -1 means this area has no owner
         this.level = level;
         this.no = no;
+        initBonus();
         setBonus();
         initCost();
     }
@@ -23,13 +24,19 @@ public class LevelArmy implements Army, Serializable{
         this.owner_id = owner_id; // owner_id -1 means this area has no owner
         this.level = 0;
         this.no = no;
+        initBonus();
         setBonus();
         initCost();
     }
 
-     public void setOwner(int id){
+    public void setOwner(int id){
         this.owner_id = id;
-     }
+    }
+
+    //init bonus list
+    public void initBonus(){
+        bonusList = Arrays.asList(0, 1, 3, 5, 8, 11, 15);
+    }
 
     //init cost list
     public void initCost(){
@@ -53,12 +60,7 @@ public class LevelArmy implements Army, Serializable{
 
     //Set bonus according to level
     public void setBonus(){
-        if(level > 0 && level <= 3){
-            bonus = level*2 - 1;
-        }
-        else{
-            bonus = (level*2) + (level % 2);
-        }
+        bonus = bonusList.get(level);
     }
 
     public String getName(){
