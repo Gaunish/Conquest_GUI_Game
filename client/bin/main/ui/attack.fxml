@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.ChoiceBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <!-- <TextField fx:id="sourceNode" layoutX="166.0" layoutY="98.0" text="Source Area" />
+      <TextField fx:id="destinationNode" layoutX="166.0" layoutY="149.0" text="Destination Area" /> -->
+      <TextField fx:id="source_node" text="Source Node" layoutX="166.0" layoutY="98.0" />
+      <TextField fx:id="destination_node" text="Destination Node" layoutX="166.0" layoutY="149.0" />
+      <TextField fx:id="num_unit" layoutX="166.0" layoutY="200.0" text="Number of Unit" />
+      <Button layoutX="201.0" layoutY="289.0" mnemonicParsing="false" onAction="#onSubmit" text="Submit Move" />
+      <TextField fx:id="level" layoutX="166.0" layoutY="251.0" text="Level of Unit" />
+   </children>
+</AnchorPane>

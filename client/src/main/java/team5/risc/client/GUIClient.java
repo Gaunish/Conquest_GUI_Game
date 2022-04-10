@@ -15,6 +15,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -38,12 +39,12 @@ public class GUIClient extends Application {
         }
 
         FXMLLoader loader = new FXMLLoader(xmlResource);
-        StackPane gp = loader.load();
+        AnchorPane gp = loader.load();
 
         LoginController loginController = loader.<LoginController>getController();
         loginController.setClient(client);
 
-        Scene scene = new Scene(gp, 640, 480);
+        Scene scene = new Scene(gp, 600, 500);
         stage.setScene(scene);
 
         stage.show();

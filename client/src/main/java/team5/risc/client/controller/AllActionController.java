@@ -61,7 +61,6 @@ public class AllActionController extends UIController implements Initializable {
         for (int i = 0; i < 6; i++) {
             areaList.add("area" + i);
         }
-        System.out.print("constructor!!!\n");
     }
 
     public GridPane map;
@@ -98,8 +97,6 @@ public class AllActionController extends UIController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.print("start init!!!\n");
-
         updateMapInfo();
         try {
             updatePlayerInfo();
@@ -109,7 +106,6 @@ public class AllActionController extends UIController implements Initializable {
         updateUpgradeTab();
         updateMoveTab();
         updateAttackTab();
-        System.out.print("init done!!!\n");
     }
 
     @FXML
@@ -138,20 +134,13 @@ public class AllActionController extends UIController implements Initializable {
                             ((Control) node).setTooltip(new Tooltip());
                         ((Control) node).getTooltip().setText(components[i]);
 
-                        Color c = Color.web("#EE5F4F");
                         if (player_id == 0) {
                             System.out.println("player 0 win one area");
-                            c = Color.web("#EE5F4F");
                             node.setStyle("-fx-background-color: #EE5F4F");
                         } else {
                             System.out.println("player 1 win one area");
-                            c = Color.web("#4291D5");
                             node.setStyle("-fx-background-color: #4291D5");
                         }
-                        // ((Region) node).setBackground(
-                        // new Background(new BackgroundFill(c,
-                        // new CornerRadii(5.0),
-                        // new Insets(-5.0))));
 
                     }
                 }
@@ -159,19 +148,16 @@ public class AllActionController extends UIController implements Initializable {
         }
         // System.out.println("index::"+components[index]);
 
-        // TODO: get food, tech from map
         String twoline = components[6].substring(1);
-        System.out.println("index::"+twoline);
-        System.out.println("index::"+twoline.split("\n")[0]);
-        System.out.println("index::"+twoline.split("\n")[1]);
+        System.out.println("index::" + twoline);
+        System.out.println("index::" + twoline.split("\n")[0]);
+        System.out.println("index::" + twoline.split("\n")[1]);
 
         int food_num = Integer.parseInt(twoline.split("\n")[0].split(": ")[1]);
         int tech_num = Integer.parseInt(twoline.split("\n")[1].split(": ")[1]);
 
-        System.out.println("index::"+food_num);
-        System.out.println("index::"+tech_num);
-        // int food_num = 100;
-        // int tech_num = 100;
+        System.out.println("index::" + food_num);
+        System.out.println("index::" + tech_num);
         food.setText(" " + food_num);
         tech.setText(" " + tech_num);
         log.setText("Welcome");
@@ -329,29 +315,14 @@ public class AllActionController extends UIController implements Initializable {
 
     @FXML
     public void onDone(ActionEvent ae) throws IOException {
-        // System.out.print("Done with sending action, please wait\n");
         log.setText("Done with sending action, please wait");// + client.getID() + "wait for others");
         // log.paintImmediately(log.getVisibleRect());
-        // System.out.print("updated log\n");
         tabs.setDisable(true);
         done.setDisable(true);
         DisplayUtil.displayAlertAndWait("Done with sending action, please wait");
         client.getRiscServer().writeUTF("Done");
         Stage window = (Stage) ((Button) ae.getSource()).getScene().getWindow();
-        System.out.print("278!!!\n");
         openMapPage(window);
-        System.out.print("280!!!\n");
-
-        // updateMapInfo();
-        // try {
-        // updatePlayerInfo();
-        // } catch (IOException e) {
-        // e.printStackTrace();
-        // }
-        // updateUpgradeTab();
-        // updateMoveTab();
-        // updateAttackTab();
-
     }
 
     public void openMapPage(Stage window) throws IOException {

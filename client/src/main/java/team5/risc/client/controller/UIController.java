@@ -22,11 +22,8 @@ public abstract class UIController {
         FXMLLoader loader = new FXMLLoader(xmlResource);
         // PlacementController placementController = new PlacementController(client, 1);
         loader.setController(new_controller);
-        System.out.print("25!!!\n");
         AnchorPane gp = loader.load(); // run initialize
-        System.out.print("27!!!\n");
         window.setScene(new Scene(gp, 600, 500));
-        System.out.print("29!!!\n");
     }
 
 }

@@ -20,12 +20,15 @@ import team5.risc.client.Client;
 import team5.risc.client.DisplayUtil;
 import team5.risc.client.RISCServer;
 
-public class LoginController extends UIController{
+public class LoginController extends UIController {
     @FXML
     TextField currentUsername;
 
     @FXML
     TextField currentPassword;
+
+    @FXML
+    Label login_log;
 
     Client client;
 
@@ -48,7 +51,8 @@ public class LoginController extends UIController{
 
             } else {
                 // Alert
-                DisplayUtil.displayAlertAndWait("Login failed");
+                // DisplayUtil.displayAlertAndWait("Login failed");
+                login_log.setText("Login failed! Just press Submit to join game.");
             }
         } else {
             throw new IllegalArgumentException(
