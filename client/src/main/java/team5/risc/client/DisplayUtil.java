@@ -10,7 +10,7 @@ public class DisplayUtil {
     public static void displayAlertAndWait(String alert) {
         Stage thirdStage = new Stage();
         StackPane thirdPane = new StackPane(new Label(alert));
-        Scene thirdScene = new Scene(thirdPane, 600, 200);
+        Scene thirdScene = new Scene(thirdPane, 300, 150);
         thirdStage.setScene(thirdScene);
         thirdStage.showAndWait();
     }

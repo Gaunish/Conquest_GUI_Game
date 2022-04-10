@@ -79,7 +79,8 @@ public class PlacementController extends UIController implements Initializable {
             Stage window = (Stage) btn.getScene().getWindow();
 
             if (region_index == client.getRegions().size()) {
-                // Goto Map page
+                // Goto Map
+                DisplayUtil.displayAlertAndWait("Done with placing units.");
                 System.out.println("Go to action phase");
                 openMapPage(window);
             } else {

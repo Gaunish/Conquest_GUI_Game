@@ -211,7 +211,7 @@
                      <children>
                         <Label prefHeight="31.0" prefWidth="227.0" />
                         <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="31.0" prefWidth="203.0" text="You have 50 units in total" textAlignment="CENTER" />
-                                <Label fx:id="label" alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="209.0" style="&#10;" text="Placement" textAlignment="CENTER" wrapText="true">
+                                <Label fx:id="label" alignment="CENTER" contentDisplay="CENTER" lineSpacing="1.5" prefHeight="40.0" prefWidth="209.0" style="&#10;" text="Placement" textAlignment="CENTER" wrapText="true">
                                   <font>
                                     <Font size="12.0" />
                                   </font>
@@ -225,10 +225,14 @@
                         <Label prefHeight="32.0" prefWidth="203.0" />
                                     <Button fx:id="submit" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onSubmit" text="Submit" textAlignment="CENTER">
                            <VBox.margin>
-                              <Insets left="70.0" />
+                              <Insets left="75.0" />
                            </VBox.margin>
                         </Button>
-                        <Label fx:id="placement_log" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="203.0" textAlignment="CENTER" wrapText="true" />
+                        <Label fx:id="placement_log" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="203.0" textAlignment="CENTER" wrapText="true">
+                           <VBox.margin>
+                              <Insets top="15.0" />
+                           </VBox.margin>
+                        </Label>
                      </children>
                   </VBox>
                </children>
