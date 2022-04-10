@@ -25,7 +25,8 @@ dependencies {
     implementation 'com.google.guava:guava:30.1.1-jre'
     testImplementation 'org.mockito:mockito-inline:4.0.0'
     testImplementation 'org.mockito:mockito-junit-jupiter:4.0.0'
-    testImplementation "org.testfx:testfx-junit5:4.0.16-alpha"
+    testImplementation "org.testfx:testfx-core:4.0.16-alpha"
+    testImplementation "org.testfx:testfx-junit5:4.0.16-alpha"  
     testImplementation "org.testfx:openjfx-monocle:jdk-12.0.1+2"
 }
 
@@ -33,6 +34,7 @@ application {
     // Define the main class for the application.
     mainClass = 'team5.risc.client.Client'
 }
+
 tasks.named('test') {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()

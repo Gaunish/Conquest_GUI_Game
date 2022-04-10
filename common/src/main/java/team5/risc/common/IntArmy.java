@@ -15,6 +15,15 @@ public class IntArmy implements Army, Serializable {
     return owner_id;
   }
 
+  public void setOwner(int id){
+      this.owner_id = id;
+  }
+  
+  public int getBonus(){
+    return 0;
+  }
+
+
   public int getUnitNum() {
     return unit_num;
   }

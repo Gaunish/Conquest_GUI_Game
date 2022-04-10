@@ -19,6 +19,18 @@ public class LevelArmy implements Army, Serializable{
         initCost();
     }
 
+    public LevelArmy(int owner_id, int no){
+        this.owner_id = owner_id; // owner_id -1 means this area has no owner
+        this.level = 0;
+        this.no = no;
+        setBonus();
+        initCost();
+    }
+
+     public void setOwner(int id){
+        this.owner_id = id;
+     }
+
     //init cost list
     public void initCost(){
         cost = Arrays.asList(0, 3, 11, 30, 55, 90, 140);
@@ -32,16 +44,6 @@ public class LevelArmy implements Army, Serializable{
 
     public void inc_unit(int no){
         this.no += no;
-    }
-
-    //Subtract given no of units
-    //Returns true if valid
-    public boolean dec_unit(int no){
-        if(this.no >= no){
-            this.no -= no;
-            return true;
-        }
-        return false;
     }
 
     //Get cost to upgrade to specified level
@@ -103,6 +105,10 @@ public class LevelArmy implements Army, Serializable{
     @Override
     public Army deepCopy() {
         return new LevelArmy(owner_id, no, level);
+    }
+
+    public String toString() {
+        return "(" + owner_id + ": " + no + ")";
     }
 
 }

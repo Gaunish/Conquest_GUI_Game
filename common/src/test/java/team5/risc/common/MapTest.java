@@ -52,41 +52,28 @@ public class MapTest {
     assertEquals(map.toString(), ans);
   }
 
-  @Test
+ @Test
   public void test_win_lose() {
-    Map map = new Map();
+    Map map = new Map(true);
     ActionExecutor e = new ActionExecutor();
-    MoveAction m1 = new MoveAction(0, "area0", "area3", 10);
-    MoveAction m2 = new MoveAction(1, "area1", "area4", 13);
-    AttackAction a1 = new AttackAction(0, "area3", "area4", 22);
-
-    AttackAction a2 = new AttackAction(1, "area7", "area6", 3);
-    MoveAction m3 = new MoveAction(2, "area2", "area5", 6);
-    MoveAction m4 = new MoveAction(2, "area8", "area5", 3);
-    AttackAction a3 = new AttackAction(2, "area5", "area6", 12);
+    MoveAction m1 = new MoveAction(0, "area0", "area2", 10);
+    MoveAction m2 = new MoveAction(1, "area1", "area3", 1);
+    AttackAction a1 = new AttackAction(0, "area2", "area3", 32);
+    AttackAction a2 = new AttackAction(0, "area4", "area5", 22);
+    AttackAction a3 = new AttackAction(0, "area0", "area1", 22);
     e.execute(m1, map);
     e.execute(m2, map);
-    e.execute(m3, map);
-    e.execute(m4, map);
     e.execute(a1, map);
     e.execute(a2, map);
     e.execute(a3, map);
-    e.resolveAllCombat(map, new CompareCombat());
+    e.resolveAllCombat(map, new DiceCombat(6, 1));
 
-    AttackAction a4 = new AttackAction(2, "area5", "area7", 2);
-    e.execute(a4, map);
-    e.resolveAllCombat(map, new CompareCombat());
-
-    MoveAction m5 = new MoveAction(2, "area7", "area6", 2);
-    e.execute(m5, map);
-    AttackAction a5 = new AttackAction(2, "area6", "area1", 3);
-    e.execute(a5, map);
-    e.resolveAllCombat(map, new CompareCombat());
     assertEquals(true, map.is_loser(1));
     assertEquals(false, map.is_loser(0));
-    assertEquals(false, map.is_winner(2));
+    assertEquals(false, map.is_winner(1));
+    assertEquals(true, map.is_winner(0));
 
-    AttackAction a6 = new AttackAction(2, "area1", "area4", 3);
+    /*AttackAction a6 = new AttackAction(2, "area1", "area4", 3);
     e.execute(a6, map);
     e.resolveAllCombat(map, new CompareCombat());
 
@@ -97,7 +84,7 @@ public class MapTest {
     AttackAction a8 = new AttackAction(2, "area3", "area0", 2);
     e.execute(a8, map);
     e.resolveAllCombat(map, new CompareCombat());
-    assertEquals(true, map.is_winner(2));
+    assertEquals(true, map.is_winner(2));*/
 
     // System.out.println(map.toString());
     //  assertEquals(0, 1);

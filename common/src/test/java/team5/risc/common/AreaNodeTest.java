@@ -60,6 +60,8 @@ public class AreaNodeTest {
     Army e3 = new IntArmy(2, 1);
     Army e4 = new IntArmy(3, 0);
     a.setDefender(d);
+    assertEquals(d, a.getBonusDefender(true));
+    assertEquals(d, a.getBonusDefender(false));
     assertEquals(0, a.getOwnerId());
     assertEquals(a.noEnemyLeft(), true);
     a.addEnemy(e1);
@@ -90,6 +92,51 @@ public class AreaNodeTest {
     nei.add(b);
     nei.add(c);
     assertEquals(nei.equals(a.getNeighbors()), true);
+  }
+
+  @Test
+  public void test_evol2() {
+    AreaNode a = new AreaNode("area0", 10, 10, 1);
+
+    assertEquals(-1, a.costLevel(-1, 2));
+    assertEquals(50, a.costLevel(5, 6));
+    assertEquals(55, a.costLevel(0, 4));
+
+    a.increaseDefender(10);
+    a.increaseDefender(10, 5);
+    assertEquals(10, a.getDefenderUnit());
+    assertEquals(10, a.getDefenderUnit(5));
+
+    a.reduceDefender(5);
+    a.reduceDefender(5, 5);
+    assertEquals(5, a.getDefenderUnit());
+    assertEquals(5, a.getDefenderUnit(5));
+
+    a.upgradeArmy(0, 5, 5);
+    assertEquals(0, a.getDefenderUnit());
+    assertEquals(10, a.getDefenderUnit(5));
+
+    LevelArmy lvl = new LevelArmy(0, 5, 4);
+    a.setDefender(lvl, 4);
+    assertEquals(lvl, a.getDefender(4));
+    assertEquals(-1, a.getOwnerId());
+
+    LevelArmy lvl6 = new LevelArmy(0, 5, 6);
+    LevelArmy lvl0 = new LevelArmy(0, 5, 0);
+    a.setDefender(lvl6, 6);
+    a.setDefender(lvl0, 0);
+    assertEquals(lvl6, a.getBonusDefender(true));
+    assertEquals(lvl0, a.getBonusDefender(false));
+
+    LevelArmy lvl5e = new LevelArmy(1, 5, 5);
+    LevelArmy lvl1e = new LevelArmy(1, 5, 1);
+    a.addEnemy(lvl5e);
+    a.addEnemy(lvl1e);
+    assertEquals(lvl5e, a.getBonusEnemy(true));
+    assertEquals(lvl1e, a.getBonusEnemy(false));
+    assertEquals(a.toString(5), "area0:(-1: 10)\n[]");
+
+    assertEquals("Defender:\nLevel 0: 5 units\nLevel 1: 0 units\nLevel 2: 0 units\nLevel 3: 0 units\nLevel 4: 5 units\nLevel 5: 10 units\nLevel 6: 5 units\nFood production: 10\nTech production: 10\nSize: 1\n\n", a.displayRsrc());
   }
 
 }
