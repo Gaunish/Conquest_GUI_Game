@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 public class TextDisplayMap implements Display {
   private PrintStream out;
+  private String text;
+  private Map map;
 
   public TextDisplayMap(PrintStream output){
     this.out = output;
@@ -24,6 +26,8 @@ public class TextDisplayMap implements Display {
     for(Region r : regions){
       txt += r.strDisplay();
     }
+    map = m;
+    text = txt;
     return txt;
   }
 

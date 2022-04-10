@@ -44,4 +44,30 @@ public class ActionValidatorTest {
     assertEquals(null, v.isValid(m4, map));
   }
 
+  @Test
+  public void test_upgrade() {
+    Map map = new Map(true);
+    ActionValidator v = new ActionValidator();
+    UpgradeAction u = new UpgradeAction(0, "area1", 0, 1, 2);
+    assertEquals("Player 0 has no access to area1, which is owned by Player 1", v.isValid(u, map));
+
+    UpgradeAction u1 = new UpgradeAction(0, "area0", 0, 50, 1);
+    assertEquals("area0 only have 32 unit (level 0)", v.isValid(u1, map));
+
+    UpgradeAction u2 = new UpgradeAction(0, "area0", 1, 1, 2);
+    assertEquals("area0 only have 0 unit (level 1)", v.isValid(u2, map));
+
+    UpgradeAction u3 = new UpgradeAction(0, "area0", 0, 32, 5);
+    assertEquals("no enough tech", v.isValid(u3, map));
+
+    UpgradeAction u4 = new UpgradeAction(0, "area0", 0, 1, 9);
+    assertEquals("max tech level is 6", v.isValid(u4, map));
+
+    UpgradeAction u5 = new UpgradeAction(0, "area0", 0, 1, 0);
+    assertEquals("those units are already in level 0", v.isValid(u5, map));
+
+    UpgradeAction u6 = new UpgradeAction(0, "area0", 0, 10, 1);
+    assertEquals(null, v.isValid(u6, map));
+
+  }
 }

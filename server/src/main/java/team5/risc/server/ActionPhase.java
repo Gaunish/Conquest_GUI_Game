@@ -205,7 +205,10 @@ public class ActionPhase {
 
         // Send Map
         //System.out.println("Total_map : " + map_info);
-        dataOtream.writeUTF(map_info);
+        Region reg = map.getRegionById(index);
+        String map_buf = map_info;
+        map_buf += reg.getInfo();
+        dataOtream.writeUTF(map_buf);
 
         // check if there is a winner
         winner = check_winner(index);

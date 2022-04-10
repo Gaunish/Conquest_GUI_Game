@@ -101,13 +101,13 @@ public class ActionValidator {
     }
 
     // Check unit num with specific level
-    Army to_upgrade = sourceNode.getDefenderByIndex(a.index_army);
+    Army to_upgrade = sourceNode.getDefender(a.index_army);
     int cur_level = to_upgrade.getLevel();
     int act_unit_num = to_upgrade.getUnitNum();
     Region sourceRegion = map.getRegionById(sourceNode.getOwnerId());
 
     if (act_unit_num < a.no_units) {
-      return sourceNode.getName() + " only have " + act_unit_num + " unit (level " + cur_level + ")";
+      return sourceNode.getName() + " only have " + act_unit_num + " unit (level " + a.index_army + ")";
     }
 
     // check tech resource

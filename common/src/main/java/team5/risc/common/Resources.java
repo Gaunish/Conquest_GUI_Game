@@ -29,6 +29,7 @@ public class Resources {
     
     //Method to check if food < tot_food
     public boolean isFoodValid(int food){
+        //System.out.println(food);
         return (tot_food - food) >= 0;
     }
     
@@ -46,7 +47,7 @@ public class Resources {
     }
     
     public boolean subTech(int tech){
-        if(isFoodValid(tech)){
+        if(isTechValid(tech)){
             tot_tech -= tech;
             return true;
         }

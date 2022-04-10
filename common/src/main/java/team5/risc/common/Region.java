@@ -24,7 +24,7 @@ public class Region implements Serializable {
 
   public void setInitUnit(AreaNode the_area, int unit_num) throws RuntimeException {
     if (areas.contains(the_area)) {
-      the_area.setDefender(new IntArmy(this.owner_id, unit_num));
+      the_area.setDefender(new LevelArmy(this.owner_id, unit_num));
     } else {
       throw new UnsupportedOperationException("The area doesn't belong to this onwer");
     }
@@ -113,6 +113,13 @@ public class Region implements Serializable {
     for(AreaNode a : areas){
       txt += strDisplay(a);
     }
+    return txt;
+  }
+
+  public String getInfo(){
+    String txt = new String();
+    txt += "\nFood: " + resource.getFood() + "\n";
+    txt += "Tech: " + resource.getTech() + "\n";
     return txt;
   }
 }
