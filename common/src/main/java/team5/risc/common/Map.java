@@ -67,7 +67,39 @@ public class Map implements Serializable {
     regions.get(2).setInitUnit(getAreaNodeByName("area2"), 6);
     regions.get(2).setInitUnit(getAreaNodeByName("area5"), 5);
     regions.get(2).setInitUnit(getAreaNodeByName("area8"), 3);
-  }
+   }
+
+   //For testing
+   public Map(Boolean opt) {
+     this.areas = new ArrayList<AreaNode>();
+     // this.name2areas = new HashMap<>();
+     int num_area = 6;
+     for (int i = 0; i < num_area; i++) {
+       AreaNode areaNode = new AreaNode("area" + i, 10, 10, 1);
+       this.areas.add(areaNode);
+       // this.name2areas.put("area" + i, areaNode);
+     }
+     this.num_player = 2;
+     this.regions = new ArrayList<Region>();
+     generateInitRegions();
+     regions.get(0).setOwnerId(0);
+     regions.get(1).setOwnerId(1);
+     regions.get(0).setInitUnit(getAreaNodeByName("area0"), 32);
+     regions.get(0).setInitUnit(getAreaNodeByName("area2"), 22);
+     regions.get(0).setInitUnit(getAreaNodeByName("area4"), 22);
+
+     regions.get(1).setInitUnit(getAreaNodeByName("area1"), 1);
+     regions.get(1).setInitUnit(getAreaNodeByName("area3"), 1);
+     regions.get(1).setInitUnit(getAreaNodeByName("area5"), 1);
+
+     addPath(0, 1);
+     addPath(0, 2);
+     addPath(2, 4);
+     addPath(2, 3);
+     addPath(5, 4);
+     addPath(4, 2);
+     addPath(3, 1);
+   }
 
   public AreaNode getAreaNodeByName(String name) {
     for (AreaNode area : areas) {
@@ -181,6 +213,7 @@ public class Map implements Serializable {
     addPath(4, 1);
     addPath(1, 6);
     addPath(4, 6);
+
   }
 
   private void addPath(int area1_idx, int area2_idx) {

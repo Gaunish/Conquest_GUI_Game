@@ -27,13 +27,13 @@ dependencies {
     testImplementation 'org.mockito:mockito-junit-jupiter:4.0.0'
     testImplementation "org.testfx:testfx-core:4.0.16-alpha"
     testImplementation "org.testfx:testfx-junit5:4.0.16-alpha"  
-
 }
 
 application {
     // Define the main class for the application.
     mainClass = 'team5.risc.client.Client'
 }
+
 tasks.named('test') {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()

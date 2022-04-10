@@ -172,7 +172,7 @@ public class AreaNode implements Serializable {
   public Army getBonusDefender(boolean pos){
     if(pos){
       for(int i = no_level - 1; i >= 0; i--){
-        System.out.println(name + " " + i);
+        //System.out.println(name + " " + i);
         Army a = getDefender(i);
         if(a.getUnitNum() > 0){
           return a;
@@ -187,7 +187,7 @@ public class AreaNode implements Serializable {
         }
       }
     }
-    return null;
+    return getDefender();
   }
 
   // Get highest/lowest bonus attacker
