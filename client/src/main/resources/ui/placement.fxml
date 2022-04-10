@@ -247,7 +247,7 @@
                               <Insets left="75.0" />
                            </VBox.margin>
                         </Button>
-                        <Label fx:id="placement_log" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="203.0" textAlignment="CENTER" wrapText="true">
+                        <Label fx:id="placement_log" alignment="CENTER" contentDisplay="CENTER" prefHeight="63.0" prefWidth="203.0" textAlignment="CENTER" wrapText="true">
                            <VBox.margin>
                               <Insets top="15.0" />
                            </VBox.margin>
