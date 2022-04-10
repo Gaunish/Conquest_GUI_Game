@@ -193,7 +193,7 @@
                                                 <Label text="Number of Unit" GridPane.rowIndex="3" />
                                                 <Button fx:id="up_submit" mnemonicParsing="false" onAction="#onUpgrade" onMouseExited="#resetLog" prefHeight="25.0" prefWidth="95.0" text="Submit" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                                 <Spinner fx:id="up_num" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                                <Label fx:id="upgrade_log" prefHeight="17.0" prefWidth="95.0" GridPane.rowIndex="4" />
+                                                <Label fx:id="up_log" prefHeight="17.0" prefWidth="95.0" GridPane.rowIndex="4" />
                                              </children>
                                              <padding>
                                                 <Insets left="5.0" right="5.0" />
