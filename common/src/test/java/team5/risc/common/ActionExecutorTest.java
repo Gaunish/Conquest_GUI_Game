@@ -49,6 +49,18 @@ public class ActionExecutorTest {
     assertEquals("1: [area3, area5]", map.getRegions().get(1).toString());
     e.addUnitToAllArea(1, map);
     assertEquals(22, map.getAreaNodeByName("area0").getDefenderUnit());
+
+    Map map2 = new Map(true);
+    AreaNode a1 = map2.getAreaNodeByName("area1");
+    a1.setDefender(new LevelArmy(1, 5, 5), 5);
+    AttackAction e1 = new AttackAction(0, "area0", "area1", 10);
+    e.execute(e1, map2);
+    e.resolveAllCombat(map2, new CompareCombat());
+    assertEquals("0: [area0, area2, area4]", map2.getRegions().get(0).toString());
+    assertEquals("1: [area1, area3, area5]", map2.getRegions().get(1).toString());
+    assertEquals(0, a1.getDefenderUnit());
+    assertEquals(5, a1.getDefenderUnit(5));
+    assertEquals(1, a1.getOwnerId());
   }
 
   @Test
@@ -71,6 +83,10 @@ public class ActionExecutorTest {
     AttackAction a3 = new AttackAction(1, "area1", "area0", 1, 1);
     AttackAction a4 = new AttackAction(0, "area2", "area3", 0, 20);
     AttackAction a5 = new AttackAction(0, "area4", "area5", 0, 20);
+
+    AttackAction a_invalid = new AttackAction(0, "area0", "area1", 5, 4);
+    e.execute(a_invalid, map);
+  
 
     e.execute(a, map);
     e.execute(a2, map);

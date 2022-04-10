@@ -29,6 +29,13 @@ public class LevelArmy implements Army, Serializable{
         initCost();
     }
 
+    //Level Army for testing
+  public LevelArmy(boolean test, int owner_id, int no, int level){
+    this.no = no;
+    this.level = level;
+    this.owner_id = owner_id;
+  }
+
     public void setOwner(int id){
         this.owner_id = id;
     }

@@ -176,7 +176,7 @@ public class Map implements Serializable {
         }
       }
       if (shortest_name.equals(""))
-        return -1;
+      return -1;
       if (shortest_name.equals(destinationNode.getName())) {
         return num_unit * shortest_cost;
       }
