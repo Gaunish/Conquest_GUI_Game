@@ -9,6 +9,9 @@ public class MoveActionTest {
   public void test_init() {
     MoveAction m = new MoveAction(0, "area0", "area1", 10);
     assertEquals("area0->area1:10(0)", m.toString());
+
+    MoveAction m1 = new MoveAction(0, "area0", "area1", 5, 10);
+    assertEquals("area0->area1:10(5)", m1.toString());
   }
 
 }

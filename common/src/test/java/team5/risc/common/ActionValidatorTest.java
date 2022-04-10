@@ -26,8 +26,20 @@ public class ActionValidatorTest {
     assertEquals("area1 doesn't have enough (level 0) units to move", v.isValid(m3, map));
     MoveAction m4 = new MoveAction(1, "area1", "area7", 3);
     assertEquals("Unreachable", v.isValid(m4, map));
-    MoveAction m5 = new MoveAction(2, "area8", "area2", 3);
-    assertEquals(null, v.isValid(m5, map));
+    
+    MoveAction m5 = new MoveAction(1, "area10", "area7", 3);
+    assertEquals("Invalid source name", v.isValid(m5, map));
+
+    MoveAction m6 = new MoveAction(1, "area1", "area10", 3);
+    assertEquals("Invalid destination name", v.isValid(m6, map));
+
+    MoveAction m8 = new MoveAction(2, "area8", "area2", 3);
+    assertEquals(null, v.isValid(m8, map));
+
+    Map map2 = new Map(true);
+    MoveAction m_in = new MoveAction(0, "area0", "area4", 32);
+    assertEquals("Not enough food", v.isValid(m_in, map2));
+   
   }
 
   @Test
@@ -42,12 +54,31 @@ public class ActionValidatorTest {
     assertEquals("Unreachable", v.isValid(m3, map));
     AttackAction m4 = new AttackAction(2, "area8", "area7", 1);
     assertEquals(null, v.isValid(m4, map));
+
+    AttackAction m5 = new AttackAction(1, "area10", "area7", 3);
+    assertEquals("Invalid source name", v.isValid(m5, map));
+
+    AttackAction m6 = new AttackAction(1, "area1", "area10", 3);
+    assertEquals("Invalid destination name", v.isValid(m6, map));
+
+    Map map2 = new Map(true);
+    AttackAction m_in = new AttackAction(0, "area0", "area1", 200);
+    assertEquals("Not enough food for attacking", v.isValid(m_in, map2));
+
+    AttackAction m_in2 = new AttackAction(0, "area0", "area1", 52);
+    assertEquals("area0 doesn't have enough (level 0) units to move", v.isValid(m_in2, map2));
+   
+
   }
 
   @Test
   public void test_upgrade() {
     Map map = new Map(true);
     ActionValidator v = new ActionValidator();
+
+    UpgradeAction u_in = new UpgradeAction(0, "area10", 0, 1, 2);
+    assertEquals("Invalid source name", v.isValid(u_in, map));
+    
     UpgradeAction u = new UpgradeAction(0, "area1", 0, 1, 2);
     assertEquals("Player 0 has no access to area1, which is owned by Player 1", v.isValid(u, map));
 
