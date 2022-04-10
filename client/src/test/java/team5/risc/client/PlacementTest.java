@@ -49,7 +49,7 @@ public class PlacementTest extends ApplicationTest {
  
         URL xmlResource = getClass().getResource("/ui/login.fxml");
         FXMLLoader loader = new FXMLLoader(xmlResource);
-        StackPane gp = loader.load();
+        AnchorPane gp = loader.load();
 
         LoginController loginController = loader.<LoginController>getController();
         loginController.setClient(client);
