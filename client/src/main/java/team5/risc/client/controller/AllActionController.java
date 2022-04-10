@@ -53,6 +53,7 @@ public class AllActionController extends UIController implements Initializable {
     ArrayList<String> areaList;
     int client_id;
     ArrayList<String> ownArrayList;
+    ArrayList<String> enemyArrayList;
 
     public AllActionController(Client c) {
         this.client = c;
@@ -66,6 +67,7 @@ public class AllActionController extends UIController implements Initializable {
             areaList.add("area" + i);
         }
         this.ownArrayList = new ArrayList<String>();
+        this.enemyArrayList = new ArrayList<String>();
     }
 
     public GridPane map;
@@ -153,6 +155,11 @@ public class AllActionController extends UIController implements Initializable {
             }
         }
         Collections.sort(ownArrayList);
+        for (String name : areaList) {
+            if (!ownArrayList.contains(name)) {
+                enemyArrayList.add(name);
+            }
+        }
         // System.out.println("index::"+components[index]);
 
         String twoline = components[6].substring(1);
@@ -244,7 +251,7 @@ public class AllActionController extends UIController implements Initializable {
         att_src.setItems(
                 FXCollections.observableArrayList(ownArrayList));
         att_dst.setItems(
-                FXCollections.observableArrayList(areaList));
+                FXCollections.observableArrayList(enemyArrayList));
         att_level.setItems(
                 FXCollections.observableArrayList(levelList));
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 50);
