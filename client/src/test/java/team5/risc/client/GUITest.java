@@ -19,7 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import team5.risc.client.controller.LoginController;
-
+/*
 @ExtendWith(ApplicationExtension.class)
 class GUITest {
     StackPane gp;
@@ -28,7 +28,7 @@ class GUITest {
      *
      * @param stage - Will be injected by the test runner.
      */
-    @Start
+  /*  @Start
     private void start(Stage stage) {
         // button = new Button("click me!");
         // button.setId("myButton");
@@ -70,7 +70,7 @@ class GUITest {
         // FxAssert.verifyThat(robot.window("Login failed"), WindowMatchers.isShowing());
         // assertTrue(robot.window.popup_returner().isShowing());
     }
-
+*/
     // /**
     //  * @param robot - Will be injected by the test runner.
     //  */
@@ -98,4 +98,4 @@ class GUITest {
     //     // or (lookup by css class):
     //     FxAssert.verifyThat(".button", LabeledMatchers.hasText("clicked!"));
     // }
-}
+//}
