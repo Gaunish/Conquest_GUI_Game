@@ -20,6 +20,7 @@ public class RegionTest {
     assertEquals("a:(2: 5)\n[]", a.toString());
   }
 
+  @Test
   public void test_level() {
     Region r = new Region();
     AreaNode a = new AreaNode("area2", 10, 10, 1);
@@ -36,7 +37,7 @@ public class RegionTest {
     assertEquals(false, r.checkFoodEnough(110));
     assertEquals(false, r.checkTechEnough(110));
     assertEquals("area2\nOwner: Player2\n"+a.displayRsrc(), r.strDisplay());
-    assertEquals("\nFood: 119\nTech: 119\n", r.getInfo());
+    assertEquals("\nFood: 109\nTech: 109\n", r.getInfo());
   }
 
 }

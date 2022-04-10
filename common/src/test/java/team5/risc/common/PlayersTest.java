@@ -9,6 +9,8 @@ public class PlayersTest {
   public void test_lose_win() {
     Map map = new Map(true);
     Players p = new Players(2);
+    assertEquals(-1, p.get_winner(map, 2));
+
     ActionExecutor e = new ActionExecutor();
     MoveAction m1 = new MoveAction(0, "area0", "area2", 10);
     MoveAction m2 = new MoveAction(1, "area1", "area3", 1);
@@ -26,10 +28,13 @@ public class PlayersTest {
     e.execute(a3, map);
     e.resolveAllCombat(map, new CompareCombat());
 
+    assertEquals(0, p.get_winner(map, 2));
+    assertEquals(true, p.has_lost(map, 1));
     assertEquals(true, p.has_lost(map, 1));
     p.add_loser(1);
     assertEquals(false, p.has_lost(map, 0));
     assertEquals(false, p.has_won(map, 1));
+   
     assertEquals(true, p.has_won(map, 0));
     assertEquals(0, p.get_winner(map, 2));
   }

@@ -10,6 +10,7 @@ public class LevelArmyTest {
   @Test
   public void test_main() {
     LevelArmy a = new LevelArmy(0, 1);
+    assertEquals("Level 0", a.getName());
     assertEquals(a.getOwnerId(), 0);
     assertEquals(a.getUnitNum(), 1);
     a.removeUnit(1);

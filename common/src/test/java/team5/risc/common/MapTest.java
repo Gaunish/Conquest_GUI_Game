@@ -93,6 +93,8 @@ public class MapTest {
   @Test
   public void test_misc(){
     Map map = new Map();
+    assertEquals(-1, map.calculateMinimumFood(map.getAreaNodeByName("area0"), map.getAreaNodeByName("area8"), 10));
+    assertEquals(null, map.getRegionById(3));
     assertEquals(null, map.getAreaNodeByName("kkk"));
     assertEquals(3, map.getNumPlayer());
     

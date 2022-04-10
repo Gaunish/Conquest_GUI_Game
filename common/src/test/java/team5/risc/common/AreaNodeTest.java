@@ -59,6 +59,7 @@ public class AreaNodeTest {
     Army e2 = new IntArmy(1, 5);
     Army e3 = new IntArmy(2, 1);
     Army e4 = new IntArmy(3, 0);
+    Army e5 = new LevelArmy(3, 0, 6);
     a.setDefender(d);
     assertEquals(d, a.getBonusDefender(true));
     assertEquals(d, a.getBonusDefender(false));
@@ -77,6 +78,9 @@ public class AreaNodeTest {
     assertEquals(e3.equals(a.popFirstEnemy()), true);
     assertEquals(a.noEnemyLeft(), true);
     assertEquals(a.popFirstEnemy(), null);
+
+    a.addEnemy(e5);
+    assertEquals(e5, a.getBonusEnemy(true));
   }
 
   @Test
@@ -106,6 +110,7 @@ public class AreaNodeTest {
     a.increaseDefender(10, 5);
     assertEquals(10, a.getDefenderUnit());
     assertEquals(10, a.getDefenderUnit(5));
+    assertEquals(false, a.hasLost());
 
     a.reduceDefender(5);
     a.reduceDefender(5, 5);
@@ -128,6 +133,11 @@ public class AreaNodeTest {
     assertEquals(lvl6, a.getBonusDefender(true));
     assertEquals(lvl0, a.getBonusDefender(false));
 
+    LevelArmy lvl7e = new LevelArmy(true, 1, 5, 7);
+    a.addEnemy(lvl7e);
+    assertEquals(null, a.getBonusEnemy(false));
+    assertEquals(lvl7e, a.popFirstEnemy());
+    
     LevelArmy lvl5e = new LevelArmy(1, 5, 5);
     LevelArmy lvl1e = new LevelArmy(1, 5, 1);
     a.addEnemy(lvl5e);
