@@ -160,7 +160,6 @@ public class AllActionController extends UIController implements Initializable {
                 enemyArrayList.add(name);
             }
         }
-        // System.out.println("index::"+components[index]);
 
         String twoline = components[6].substring(1);
         System.out.println("index::" + twoline);
@@ -271,7 +270,6 @@ public class AllActionController extends UIController implements Initializable {
 
         client.getRiscServer().writeObject(upgrade);
 
-        // TODO: Server side validation on
         String response = client.getRiscServer().readUTF();
 
         String alert_string;
