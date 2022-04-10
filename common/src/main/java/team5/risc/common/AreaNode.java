@@ -235,7 +235,6 @@ public class AreaNode implements Serializable {
   public void reduceDefender(int reduce_num, int lvl) {
     Army def = defender.get(lvl); 
     def.removeUnit(reduce_num);
-    defender.set(lvl, def);
   }
 
   public void increaseDefender(int increase_num) {
@@ -246,7 +245,6 @@ public class AreaNode implements Serializable {
   public void increaseDefender(int increase_num, int lvl) {
     Army def = defender.get(lvl); 
     def.addUnit(increase_num);
-    defender.set(lvl, def);
   }
 
   public void addEnemy(Army to_add) {
