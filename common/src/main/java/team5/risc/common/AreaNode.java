@@ -83,6 +83,9 @@ public class AreaNode implements Serializable {
 
   //Method to calculate cost to upgrade 
   public int costLevel(int lvl, int new_lvl){
+    if(lvl < 0 || lvl >= no_level || new_lvl < 0 || new_lvl >= no_level){
+      return -1;
+    }
     return (cost.get(new_lvl) - cost.get(lvl));
   }
 
@@ -223,9 +226,6 @@ public class AreaNode implements Serializable {
       return min;
     }
   }
-  public Army getDefenderByIndex(int idex){
-    return defender.get(idex);
-  }
 
   public void reduceDefender(int reduce_num) {
     reduceDefender(reduce_num, 0);
@@ -308,9 +308,9 @@ public class AreaNode implements Serializable {
     String txt = new String();
     txt += "Defender:\n";
     txt += getDefenderText();
-    txt += "Food production: " + food_produce + "\n";
-    txt += "Tech production: " + tech_produce + "\n";
-    txt += "Size: " + size + "\n\n";
+    txt += "Food production: " + getFood() + "\n";
+    txt += "Tech production: " + getTech() + "\n";
+    txt += "Size: " + getSize() + "\n\n";
     return txt;
   }
 

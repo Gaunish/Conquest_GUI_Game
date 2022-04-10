@@ -18,7 +18,8 @@ public class IntArmyTest {
     a.addUnit(5);
     a.removeUnit(3);
     assertEquals(a.getUnitNum(), 2);
-
+    assertEquals(0, a.getBonus());
+    assertEquals(0, a.getLevel());
   }
 
   @Test

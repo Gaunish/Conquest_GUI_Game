@@ -46,16 +46,6 @@ public class LevelArmy implements Army, Serializable{
         this.no += no;
     }
 
-    //Subtract given no of units
-    //Returns true if valid
-    public boolean dec_unit(int no){
-        if(this.no >= no){
-            this.no -= no;
-            return true;
-        }
-        return false;
-    }
-
     //Get cost to upgrade to specified level
     public int cost(int lvl){
         return (cost.get(lvl) - cost.get(level));
