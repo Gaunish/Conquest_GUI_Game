@@ -177,10 +177,15 @@ public class AllActionController extends UIController implements Initializable {
         System.out.println(game_status);
 
         user_id.setText(" " + client.getID());
-        status.setText(game_status);
 
-        // has winner
-        if (!game_status.equals("No winner")) {
+        // doesn't has winner
+        if (game_status.equals("No winner")) {
+            status.setText(game_status);
+        } else { // has winner
+            status.setText("Game ends");
+            tabs.setDisable(true);
+            done.setDisable(true);
+            DisplayUtil.displayAlertAndWait(game_status);
             client.getRiscServer().close();
             return;
         }
