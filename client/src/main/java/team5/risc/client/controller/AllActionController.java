@@ -3,6 +3,7 @@ package team5.risc.client.controller;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -50,10 +51,13 @@ public class AllActionController extends UIController implements Initializable {
     Client client;
     ArrayList<Integer> levelList;
     ArrayList<String> areaList;
+    int client_id;
+    ArrayList<String> ownArrayList;
 
     public AllActionController(Client c) {
         this.client = c;
         this.levelList = new ArrayList<Integer>();
+        this.client_id = -1;
         for (Integer i = 0; i < 7; i++) {
             levelList.add(i);
         }
@@ -61,6 +65,7 @@ public class AllActionController extends UIController implements Initializable {
         for (int i = 0; i < 6; i++) {
             areaList.add("area" + i);
         }
+        this.ownArrayList = new ArrayList<String>();
     }
 
     public GridPane map;
@@ -110,6 +115,7 @@ public class AllActionController extends UIController implements Initializable {
 
     @FXML
     public void updateMapInfo() {
+        this.client_id = client.getID();
         String map_str = null;
         try {
             map_str = client.getRiscServer().readUTF();
@@ -126,26 +132,27 @@ public class AllActionController extends UIController implements Initializable {
                 if (node instanceof Label) {
                     String node_id = node.getId();
                     if (node_id.equals(area_name)) {
-                        System.out.println(node_id);
-                        System.out.println(player_id);
-                        String show_on_map = lines[0] + "\nPlayer" + player_id;
+                        if (player_id == client_id) {
+                            ownArrayList.add(area_name);
+                        }
+                        // System.out.println(node_id);
+                        // System.out.println(player_id);
+                        String show_on_map = lines[0] + "\nplayer" + player_id;
                         ((Label) node).setText(show_on_map);
                         if (((Control) node).getTooltip() == null)
                             ((Control) node).setTooltip(new Tooltip());
                         ((Control) node).getTooltip().setText(components[i]);
 
                         if (player_id == 0) {
-                            System.out.println("player 0 win one area");
                             node.setStyle("-fx-background-color: #EE5F4F");
                         } else {
-                            System.out.println("player 1 win one area");
                             node.setStyle("-fx-background-color: #4291D5");
                         }
-
                     }
                 }
             }
         }
+        Collections.sort(ownArrayList);
         // System.out.println("index::"+components[index]);
 
         String twoline = components[6].substring(1);
@@ -171,8 +178,6 @@ public class AllActionController extends UIController implements Initializable {
 
         user_id.setText(" " + client.getID());
         status.setText(game_status);
-        // DisplayUtil.displayAlertAndWait("Player " + client.getID() + ":" +
-        // game_status);
 
         // has winner
         if (!game_status.equals("No winner")) {
@@ -209,7 +214,7 @@ public class AllActionController extends UIController implements Initializable {
     @FXML
     public void updateUpgradeTab() {
         up_src.setItems(
-                FXCollections.observableArrayList(client.getRegions()));
+                FXCollections.observableArrayList(ownArrayList));
         up_st_level.setItems(FXCollections.observableArrayList(levelList));
         up_ed_level.setItems(FXCollections.observableArrayList(levelList));
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 50);
@@ -220,9 +225,9 @@ public class AllActionController extends UIController implements Initializable {
     @FXML
     public void updateMoveTab() {
         move_src.setItems(
-                FXCollections.observableArrayList(client.getRegions()));
+                FXCollections.observableArrayList(ownArrayList));
         move_dst.setItems(
-                FXCollections.observableArrayList(client.getRegions()));
+                FXCollections.observableArrayList(ownArrayList));
         move_level.setItems(FXCollections.observableArrayList(levelList));
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 50);
         valueFactory.setValue(0);
@@ -232,7 +237,7 @@ public class AllActionController extends UIController implements Initializable {
     @FXML
     public void updateAttackTab() {
         att_src.setItems(
-                FXCollections.observableArrayList(client.getRegions()));
+                FXCollections.observableArrayList(ownArrayList));
         att_dst.setItems(
                 FXCollections.observableArrayList(areaList));
         att_level.setItems(
@@ -258,12 +263,13 @@ public class AllActionController extends UIController implements Initializable {
         String response = client.getRiscServer().readUTF();
 
         String alert_string;
-        if (response.equals("correct"))
+        if (response.equals("correct")) {
             alert_string = "Action executed successfully!\n";
-        else
+            up_log.setText("Success");
+        } else {
             alert_string = "Error: " + response + "\n";
-        // alert_string = "Successfully upgrade!";
-        up_log.setText(alert_string);
+            up_log.setText("Error");
+        }
         log.setText(alert_string);
     }
 
