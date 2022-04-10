@@ -17,6 +17,8 @@ public class TextDisplayMapTest {
         + "5 units in area5 (next to: area2,area3,area8,area4,area6,area7)\n"
         + "3 units in area8 (next to: area2,area5,area7)\n";
     assertEquals(ans, txt.display(new Map()));
+
+    txt.levelDisplay(new Map());
   }
 
 }

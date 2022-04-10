@@ -20,4 +20,23 @@ public class RegionTest {
     assertEquals("a:(2: 5)\n[]", a.toString());
   }
 
+  public void test_level() {
+    Region r = new Region();
+    AreaNode a = new AreaNode("area2", 10, 10, 1);
+    r.setOwnerId(2);
+    r.addArea(a);
+    assertEquals(true, r.checkFoodEnough(100));
+
+    r.incFoodTech();
+    assertEquals(true, r.checkFoodEnough(110));
+    assertEquals(false, r.checkFoodEnough(111));
+    
+    r.subFood(1);
+    r.subTech(1);
+    assertEquals(false, r.checkFoodEnough(110));
+    assertEquals(false, r.checkTechEnough(110));
+    assertEquals("area2\nOwner: Player2\n"+a.displayRsrc(), r.strDisplay());
+    assertEquals("\nFood: 119\nTech: 119\n", r.getInfo());
+  }
+
 }

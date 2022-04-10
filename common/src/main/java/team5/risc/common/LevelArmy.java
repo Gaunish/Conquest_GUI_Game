@@ -49,9 +49,9 @@ public class LevelArmy implements Army, Serializable{
         setBonus();
     }
 
-    public void inc_unit(int no){
+    /*public void inc_unit(int no){
         this.no += no;
-    }
+    }*/
 
     //Get cost to upgrade to specified level
     public int cost(int lvl){
