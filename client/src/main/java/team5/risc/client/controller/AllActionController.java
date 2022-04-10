@@ -269,15 +269,15 @@ public class AllActionController extends UIController implements Initializable {
         client.getRiscServer().writeObject(upgrade);
 
         // TODO: Server side validation on
-        // String response = client.getRiscServer().readUTF();
+        String response = client.getRiscServer().readUTF();
 
         String alert_string;
-        // if (response.equals("correct"))
-        // alert_string = "Action executed successfully!\n";
-        // else
-        // alert_string = "Error: " + response + "\n";
-        alert_string = "Successfully upgrade!";
-        up_log.setText("Success");
+        if (response.equals("correct"))
+            alert_string = "Action executed successfully!\n";
+        else
+            alert_string = "Error: " + response + "\n";
+        // alert_string = "Successfully upgrade!";
+        up_log.setText(alert_string);
         log.setText(alert_string);
     }
 
