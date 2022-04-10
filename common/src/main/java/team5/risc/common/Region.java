@@ -118,8 +118,8 @@ public class Region implements Serializable {
 
   public String getInfo(){
     String txt = new String();
-    txt += "Food: " + resource.getFood() + "\n";
-    txt += "Tech: " + resource.getTech() + "\n\n";
+    txt += "\nFood: " + resource.getFood() + "\n";
+    txt += "Tech: " + resource.getTech() + "\n";
     return txt;
   }
 }
