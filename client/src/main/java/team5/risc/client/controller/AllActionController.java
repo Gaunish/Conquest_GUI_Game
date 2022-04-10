@@ -157,8 +157,19 @@ public class AllActionController extends UIController implements Initializable {
                 }
             }
         }
+        // System.out.println("index::"+components[index]);
 
         // TODO: get food, tech from map
+        String twoline = components[6].substring(1);
+        System.out.println("index::"+twoline);
+        System.out.println("index::"+twoline.split("\n")[0]);
+        System.out.println("index::"+twoline.split("\n")[1]);
+
+        int food1 = Integer.parseInt(twoline.split("\n")[0].split(": ")[1]);
+        int tech1 = Integer.parseInt(twoline.split("\n")[1].split(": ")[1]);
+
+        System.out.println("index::"+food1);
+        System.out.println("index::"+tech1);
         int food_num = 100;
         int tech_num = 100;
         food.setText(" " + food_num);

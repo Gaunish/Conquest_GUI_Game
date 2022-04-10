@@ -60,12 +60,12 @@ class GUITest {
         stage.toFront();
     }
 
-    @Test
-    void test_login(FxRobot robot) {
-        robot.clickOn("#currentUsername").write("123");
-        // robot.write("");
-        // robot.clickOn("#currentUsername").type("123");
-        robot.clickOn("#login_button");
+    // @Test
+    // void test_login(FxRobot robot) {
+    //     robot.clickOn("#currentUsername").write("123");
+    //     // robot.write("");
+    //     // robot.clickOn("#currentUsername").type("123");
+    //     robot.clickOn("#login_button");
 
         // FxAssert.verifyThat(robot.window("Login failed"), WindowMatchers.isShowing());
         // assertTrue(robot.window.popup_returner().isShowing());

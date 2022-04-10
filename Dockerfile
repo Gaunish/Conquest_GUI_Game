@@ -17,7 +17,8 @@ RUN apt-get update && apt-get -yq dist-upgrade \
      unzip \
      openjdk-17-jdk-headless \
      emacs-nox\
-     libpango1.0-dev
+     libpango1.0-dev\
+     libgl1-mesa-glx
 
 RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
     locale-gen
