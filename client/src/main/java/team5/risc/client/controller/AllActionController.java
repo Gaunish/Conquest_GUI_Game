@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import org.checkerframework.checker.units.qual.C;
 import org.checkerframework.common.subtyping.qual.Bottom;
 
 import javafx.collections.FXCollections;
@@ -14,21 +15,29 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import team5.risc.client.Client;
 import team5.risc.client.DisplayUtil;
@@ -67,18 +76,21 @@ public class AllActionController extends UIController implements Initializable {
     public ChoiceBox<Integer> up_ed_level;
     public Spinner<Integer> up_num;
     public Button up_submit;
+    public Label up_log;
 
     public ChoiceBox<String> move_src;
     public ChoiceBox<String> move_dst;
     public ChoiceBox<Integer> move_level;
     public Spinner<Integer> move_num;
     public Button move_submit;
+    public Label move_log;
 
     public ChoiceBox<String> att_src;
     public ChoiceBox<String> att_dst;
     public ChoiceBox<Integer> att_level;
     public Spinner<Integer> att_num;
     public Button att_submit;
+    public Label att_log;
 
     public Button done;
 
@@ -110,12 +122,40 @@ public class AllActionController extends UIController implements Initializable {
         }
         String[] components = map_str.split("\n\n");
 
-        int index = 0;
-        for (Node node : map.getChildren()) {
-            if (node instanceof Label) {
-                ((Label) node).setText(components[index]);
+        for (int i = 0; i < components.length; i++) {
+            String[] lines = components[i].split("\n");
+            String area_name = lines[0];
+            int player_id = Character.getNumericValue(lines[1].charAt(lines[1].length() - 1));
+            for (Node node : map.getChildren()) {
+                if (node instanceof Label) {
+                    String node_id = node.getId();
+                    if (node_id.equals(area_name)) {
+                        System.out.println(node_id);
+                        System.out.println(player_id);
+                        String show_on_map = lines[0] + "\nPlayer" + player_id;
+                        ((Label) node).setText(show_on_map);
+                        if (((Control) node).getTooltip() == null)
+                            ((Control) node).setTooltip(new Tooltip());
+                        ((Control) node).getTooltip().setText(components[i]);
+
+                        Color c = Color.web("#EE5F4F");
+                        if (player_id == 0) {
+                            System.out.println("player 0 win one area");
+                            c = Color.web("#EE5F4F");
+                            node.setStyle("-fx-background-color: #EE5F4F");
+                        } else {
+                            System.out.println("player 1 win one area");
+                            c = Color.web("#4291D5");
+                            node.setStyle("-fx-background-color: #4291D5");
+                        }
+                        // ((Region) node).setBackground(
+                        // new Background(new BackgroundFill(c,
+                        // new CornerRadii(5.0),
+                        // new Insets(-5.0))));
+
+                    }
+                }
             }
-            index += 1;
         }
 
         // TODO: get food, tech from map
@@ -226,6 +266,7 @@ public class AllActionController extends UIController implements Initializable {
         // else
         // alert_string = "Error: " + response + "\n";
         alert_string = "Successfully upgrade!";
+        up_log.setText("Success");
         log.setText(alert_string);
     }
 
@@ -233,19 +274,22 @@ public class AllActionController extends UIController implements Initializable {
     public void onMove(ActionEvent ae) throws IOException {
         client.getRiscServer().writeUTF("Move");
         MoveAction move = new MoveAction(
-            client.getID(),
-            move_src.getValue().toString(),
-            move_dst.getValue().toString(),
-            move_level.getValue(),
-            move_num.getValue());
+                client.getID(),
+                move_src.getValue().toString(),
+                move_dst.getValue().toString(),
+                move_level.getValue(),
+                move_num.getValue());
 
         client.getRiscServer().writeObject(move);
         String response = client.getRiscServer().readUTF();
         String alert_string;
-        if (response.equals("correct"))
+        if (response.equals("correct")) {
             alert_string = "Action executed successfully!\n";
-        else
+            move_log.setText("Success");
+        } else {
             alert_string = "Error: " + response + "\n";
+            move_log.setText("Error");
+        }
         log.setText(alert_string);
     }
 
@@ -253,19 +297,22 @@ public class AllActionController extends UIController implements Initializable {
     public void onAttack(ActionEvent ae) throws IOException {
         client.getRiscServer().writeUTF("Attack");
         AttackAction attack = new AttackAction(
-            client.getID(),
-            att_src.getValue().toString(),
-            att_dst.getValue().toString(),
-            att_level.getValue(),
-            att_num.getValue());
+                client.getID(),
+                att_src.getValue().toString(),
+                att_dst.getValue().toString(),
+                att_level.getValue(),
+                att_num.getValue());
 
         client.getRiscServer().writeObject(attack);
         String response = client.getRiscServer().readUTF();
         String alert_string;
-        if (response.equals("correct"))
+        if (response.equals("correct")) {
             alert_string = "Action executed successfully!\n";
-        else
+            att_log.setText("Success");
+        } else {
             alert_string = "Error: " + response + "\n";
+            att_log.setText("Error");
+        }
         log.setText(alert_string);
     }
 
@@ -284,12 +331,11 @@ public class AllActionController extends UIController implements Initializable {
         openMapPage(window);
         System.out.print("280!!!\n");
 
-
         // updateMapInfo();
         // try {
-        //     updatePlayerInfo();
+        // updatePlayerInfo();
         // } catch (IOException e) {
-        //     e.printStackTrace();
+        // e.printStackTrace();
         // }
         // updateUpgradeTab();
         // updateMoveTab();
@@ -301,11 +347,11 @@ public class AllActionController extends UIController implements Initializable {
         String ui_path = "/ui/allaction.fxml";
         AllActionController allActionController = new AllActionController(client);
         openNewPage(ui_path, allActionController, window);
-        
+
     }
 
     @FXML
-    public void resetLog(){
+    public void resetLog() {
         log.setText("please input your action");
     }
 }
