@@ -71,20 +71,20 @@ public class PlacementTest extends ApplicationTest {
         release(new MouseButton[] {});
     }
 
-    // @Test
-    // public void testEnglishInput() throws IOException {
-    //     clickOn("#Button");
-    //     clickOn("#placement_number");
-    //     write("1");
-    //     clickOn("#submit");
-    //     clickOn("#placement_number");
-    //     write("10");
-    //     clickOn("#submit");
-    //     //clickOn("#placement_number");
-    //     //write("20");
-    //     //clickOn("#submit");
-    //     Platform.exit();
-    //     System.exit(0);
-    // }
+    @Test
+    public void testEnglishInput() throws IOException {
+        clickOn("#Button");
+        clickOn("#placement_number");
+        write("1");
+        clickOn("#submit");
+        clickOn("#placement_number");
+        write("10");
+        clickOn("#submit");
+        //clickOn("#placement_number");
+        //write("20");
+        //clickOn("#submit");
+        Platform.exit();
+        System.exit(0);
+    }
     
 }
