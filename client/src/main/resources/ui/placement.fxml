@@ -37,6 +37,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -76,6 +77,9 @@
                                        <GridPane.margin>
                                           <Insets />
                                        </GridPane.margin>
+                                       <tooltip>
+                                          <Tooltip text="Food +2, Tech +3" />
+                                       </tooltip>
                                     </Label>
                                     <Label fx:id="area2" alignment="CENTER" prefHeight="200.0" prefWidth="125.0" style="-fx-background-color: #EE5F4F;" text="area2" textAlignment="CENTER" GridPane.columnIndex="2">
                                        <font>
@@ -84,6 +88,9 @@
                                        <GridPane.margin>
                                           <Insets />
                                        </GridPane.margin>
+                                       <tooltip>
+                                          <Tooltip text="Food +2, Tech +3" />
+                                       </tooltip>
                                     </Label>
                                     <Label fx:id="area4" alignment="CENTER" prefHeight="197.0" prefWidth="125.0" style="-fx-background-color: #EE5F4F;" text="area4" textAlignment="CENTER" GridPane.columnIndex="4">
                                        <font>
@@ -92,6 +99,9 @@
                                        <GridPane.margin>
                                           <Insets />
                                        </GridPane.margin>
+                                       <tooltip>
+                                          <Tooltip text="Food +2, Tech +3" />
+                                       </tooltip>
                                     </Label>
                                     <Label fx:id="area1" alignment="CENTER" prefHeight="200.0" prefWidth="126.0" style="-fx-background-color: #4291D5;" text="area1" textAlignment="CENTER" GridPane.rowIndex="2">
                                        <font>
@@ -100,6 +110,9 @@
                                        <GridPane.margin>
                                           <Insets />
                                        </GridPane.margin>
+                                       <tooltip>
+                                          <Tooltip text="Food +2, Tech +3" />
+                                       </tooltip>
                                     </Label>
                                     <Label fx:id="area3" alignment="CENTER" prefHeight="201.0" prefWidth="126.0" style="-fx-background-color: #4291D5;" text="area3" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="2">
                                        <font>
@@ -111,6 +124,9 @@
                                        <GridPane.margin>
                                           <Insets />
                                        </GridPane.margin>
+                                       <tooltip>
+                                          <Tooltip text="Food +2, Tech +3" />
+                                       </tooltip>
                                     </Label>
                                     <Label fx:id="area5" alignment="CENTER" prefHeight="199.0" prefWidth="125.0" style="-fx-background-color: #4291D5;" text="area5" textAlignment="CENTER" GridPane.columnIndex="4" GridPane.rowIndex="2">
                                        <font>
@@ -119,6 +135,9 @@
                                        <GridPane.margin>
                                           <Insets />
                                        </GridPane.margin>
+                                       <tooltip>
+                                          <Tooltip text="Food +2, Tech +3" />
+                                       </tooltip>
                                     </Label>
                                     <Line endX="20.0" strokeWidth="5.0" GridPane.columnIndex="1" />
                                     <Line endX="20.0" strokeWidth="5.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
