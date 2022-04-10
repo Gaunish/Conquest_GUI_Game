@@ -138,14 +138,14 @@ public class AllActionController extends UIController implements Initializable {
                             ((Control) node).setTooltip(new Tooltip());
                         ((Control) node).getTooltip().setText(components[i]);
 
-                        Color c = Color.web("#EE5F4F");
+                        // Color c = Color.web("#EE5F4F");
                         if (player_id == 0) {
                             System.out.println("player 0 win one area");
-                            c = Color.web("#EE5F4F");
+                            // c = Color.web("#EE5F4F");
                             node.setStyle("-fx-background-color: #EE5F4F");
                         } else {
                             System.out.println("player 1 win one area");
-                            c = Color.web("#4291D5");
+                            // c = Color.web("#4291D5");
                             node.setStyle("-fx-background-color: #4291D5");
                         }
                         // ((Region) node).setBackground(

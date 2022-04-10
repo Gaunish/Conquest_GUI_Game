@@ -49,6 +49,9 @@ public class PlacementController extends UIController implements Initializable {
     Label label;
 
     @FXML
+    Label placement_log;
+
+    @FXML
     private AnchorPane ap;
 
     @Override
@@ -71,6 +74,7 @@ public class PlacementController extends UIController implements Initializable {
         client.getRiscServer().writeInt(Integer.parseInt(unit_num)); // send int
         String result = client.getRiscServer().readUTF();
         if (result.equals("Success")) {
+            placement_log.setText(result);
             System.out.println("Successfully placed unit!\n");
             Stage window = (Stage) btn.getScene().getWindow();
 
@@ -85,6 +89,7 @@ public class PlacementController extends UIController implements Initializable {
         } else {
             // Remain the same area page TODO
             System.out.println(result + "\n");
+            placement_log.setText(result);
         }
         return;
     }
@@ -93,7 +98,8 @@ public class PlacementController extends UIController implements Initializable {
         // String ui_path = "/ui/map.fxml";
         String ui_path = "/ui/allaction.fxml";
         AllActionController allActionController = new AllActionController(client);
-        openNewPage(ui_path, allActionController, window);;
+        openNewPage(ui_path, allActionController, window);
+        ;
 
     }
 
