@@ -66,7 +66,7 @@ public class PlacementTest extends ApplicationTest {
 
     @AfterEach
     public void tearDown() throws Exception {
-        FxToolkit.hideStage();
+        //FxToolkit.hideStage();
         release(new KeyCode[] {});
         release(new MouseButton[] {});
     }
