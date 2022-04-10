@@ -116,7 +116,7 @@ public class ActionPhase {
       else{
         //Upgrade is valid, execute
         dataOtream.writeUTF("correct");
-        System.out.println(upgradeAction.toString());
+        //System.out.println(upgradeAction.toString());
         actionExecutor.execute(upgradeAction, map);
       }
     }
