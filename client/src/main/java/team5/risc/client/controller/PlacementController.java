@@ -69,6 +69,10 @@ public class PlacementController extends UIController implements Initializable {
     @FXML
     public void onSubmit(ActionEvent ae) throws IOException {
         unit_num = placement_number.getText();
+        if (!unit_num.matches("[0-9]+")) {
+            placement_log.setText("Please only input positive digits");
+            return;
+        }
         Object source = ae.getSource();
         Button btn = (Button) source;
         client.getRiscServer().writeInt(Integer.parseInt(unit_num)); // send int
