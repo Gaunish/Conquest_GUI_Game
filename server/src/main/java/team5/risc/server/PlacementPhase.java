@@ -77,12 +77,16 @@ public class PlacementPhase {
   }
 
   // Method to get one placement from a user
-  private void get_one_placement(int id, int total_units, String area, Region region, Map map) {
+  private void get_one_placement(int id, int total_units, String area, Region region, Map map) throws IOException {
     while (true) {
       int no = -1;
       try {
         // Get no units
         no = get_no_units();
+        if(no <= 0){
+          dataOutputStream.writeUTF("Invalid input");
+          continue;
+        }
 
         // System.out.println("no:" + no);
         // System.out.println("Recieved " + no + " for " + area + " by Player " + id);
@@ -97,6 +101,7 @@ public class PlacementPhase {
           continue;
         }
       } catch (Exception e) {
+        dataOutputStream.writeUTF(e.getMessage());
         System.out.println(e);
         continue;
       }
