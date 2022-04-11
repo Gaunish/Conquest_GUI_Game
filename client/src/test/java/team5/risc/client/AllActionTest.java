@@ -46,7 +46,7 @@ public class AllActionTest extends ApplicationTest {
         String food_tech_info = "Food: 100\nTech: 100\n\n";
         String map_info = area0 + area2 + area4 + area1 + area3 + area5 + food_tech_info;
         
-        Mockito.lenient().when(mockServer.readUTF()).thenReturn(map_info, "No winner", "No Lose");
+        Mockito.lenient().when(mockServer.readUTF()).thenReturn(map_info, "No winner", "No Lose", "correct", "correct", "correct");
 
         AllActionController allActionController 
             = new AllActionController(client);
@@ -67,7 +67,7 @@ public class AllActionTest extends ApplicationTest {
 
     @AfterEach
     public void tearDown() throws Exception {
-        //FxToolkit.hideStage();
+        // FxToolkit.hideStage();
         release(new KeyCode[] {});
         release(new MouseButton[] {});
     }
@@ -75,8 +75,11 @@ public class AllActionTest extends ApplicationTest {
     @Test
     public void TestAllAction() throws IOException {
         testMove();
-        // testAttack();
-        // testUpgrade();
+        testAttack();
+        testUpgrade();
+
+        Platform.exit();
+        System.exit(0);
     }
 
     public void testMove() throws IOException {
@@ -88,33 +91,74 @@ public class AllActionTest extends ApplicationTest {
         clickOn("#move_dst");
         type(KeyCode.DOWN);
         type(KeyCode.ENTER);
-        // type("area2");
+    
         clickOn("#move_tab");
         clickOn("#move_level"); 
         type(KeyCode.DOWN);
         type(KeyCode.ENTER);
-        // type("0");
+
         clickOn("#move_num");
         type(KeyCode.UP);
         type(KeyCode.UP);
         type(KeyCode.ENTER);
-        // type("1");
+
         clickOn("#move_submit");
 
-        Platform.exit();
-        System.exit(0);
+
     }
 
     public void testAttack() throws IOException {
      
-        // Platform.exit();
-        // System.exit(0);
+        clickOn("#attack_tab");
+        clickOn("#att_src");
+        type(KeyCode.DOWN);
+        type(KeyCode.ENTER);
+        clickOn("#attack_tab");
+        clickOn("#att_dst");
+        type(KeyCode.DOWN);
+        type(KeyCode.ENTER);
+    
+        clickOn("#attack_tab");
+        clickOn("#att_level"); 
+        type(KeyCode.DOWN);
+        type(KeyCode.ENTER);
+
+        clickOn("#att_num");
+        type(KeyCode.UP);
+        type(KeyCode.UP);
+        type(KeyCode.ENTER);
+
+        clickOn("#att_submit");
+
+        
     }
 
     public void testUpgrade() throws IOException {
        
-        // Platform.exit();
-        // System.exit(0);
+
+        clickOn("#upgrade_tab");
+        clickOn("#up_src");
+        type(KeyCode.DOWN);
+        type(KeyCode.ENTER);
+
+        clickOn("#upgrade_tab");
+        clickOn("#up_st_level");
+        type(KeyCode.DOWN);
+        type(KeyCode.ENTER);
+
+
+        clickOn("#upgrade_tab");
+        clickOn("#up_ed_level");
+        type(KeyCode.DOWN);
+        type(KeyCode.ENTER);
+    
+        clickOn("#upgrade_tab");
+        clickOn("#up_num");
+        type(KeyCode.UP);
+        type(KeyCode.UP);
+        type(KeyCode.ENTER);
+
+        clickOn("#up_submit");
     }
     
 }
