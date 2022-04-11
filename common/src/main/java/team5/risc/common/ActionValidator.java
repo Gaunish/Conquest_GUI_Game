@@ -106,6 +106,11 @@ public class ActionValidator {
     int act_unit_num = to_upgrade.getUnitNum();
     Region sourceRegion = map.getRegionById(sourceNode.getOwnerId());
 
+    // check level
+    if (a.new_lvl <= cur_level) {
+      return "those units are already in level " + cur_level;
+    }
+
     if (act_unit_num < a.no_units) {
       return sourceNode.getName() + " only have " + act_unit_num + " unit (level " + a.index_army + ")";
     }
@@ -122,9 +127,9 @@ public class ActionValidator {
     }
 
     // check level
-    if (a.new_lvl <= cur_level) {
+    /*if (a.new_lvl <= cur_level) {
       return "those units are already in level " + cur_level;
-    }
+    }*/
 
     return null;
   }
