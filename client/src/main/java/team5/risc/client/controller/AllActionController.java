@@ -125,7 +125,6 @@ public class AllActionController extends UIController implements Initializable {
             e.printStackTrace();
         }
         String[] components = map_str.split("\n\n");
-
         for (int i = 0; i < components.length; i++) {
             String[] lines = components[i].split("\n");
             String area_name = lines[0];
@@ -162,9 +161,6 @@ public class AllActionController extends UIController implements Initializable {
         }
 
         String twoline = components[6].substring(1);
-        System.out.println("index::" + twoline);
-        System.out.println("index::" + twoline.split("\n")[0]);
-        System.out.println("index::" + twoline.split("\n")[1]);
 
         int food_num = Integer.parseInt(twoline.split("\n")[0].split(": ")[1]);
         int tech_num = Integer.parseInt(twoline.split("\n")[1].split(": ")[1]);
