@@ -39,7 +39,7 @@ public class ActionValidator {
     Region sourceRegion = map.getRegionById(sourceNode.getOwnerId());
 
     int foodNeed = map.calculateMinimumFood(sourceNode, destinationNode, a.num_unit);
-    //System.out.println("FOOD NEEDED : " + foodNeed);
+    // System.out.println("FOOD NEEDED : " + foodNeed);
     if (!sourceRegion.checkFoodEnough(foodNeed)) {
       return "Not enough food";
     }
@@ -80,7 +80,7 @@ public class ActionValidator {
       return "Not enough food for attacking";
     }
 
-    //Check enough no of units for given level
+    // Check enough no of units for given level
     if (sourceNode.getDefenderUnit(a.lvl) < a.num_unit) {
       return sourceNode.getName() + " doesn't have enough (level " + a.lvl + ") units to move";
     }
@@ -102,7 +102,7 @@ public class ActionValidator {
 
     // Check unit num with specific level
     Army to_upgrade = sourceNode.getDefender(a.index_army);
-    int cur_level = to_upgrade.getLevel();
+    int cur_level = a.index_army; // to_upgrade.getLevel();
     int act_unit_num = to_upgrade.getUnitNum();
     Region sourceRegion = map.getRegionById(sourceNode.getOwnerId());
 
