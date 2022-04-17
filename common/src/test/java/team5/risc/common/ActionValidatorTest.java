@@ -99,6 +99,5 @@ public class ActionValidatorTest {
 
     UpgradeAction u6 = new UpgradeAction(0, "area0", 0, 10, 1);
     assertEquals(null, v.isValid(u6, map));
-
   }
 }
