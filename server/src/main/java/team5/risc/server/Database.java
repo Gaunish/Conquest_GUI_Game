@@ -25,6 +25,9 @@ public class Database {
             //System.exit(0);
         }
         System.out.println("Opened database successfully");
+        deleteDB();
+        initDB();
+        insertDB();
     }
 
     public ResultSet SelectStatement(String query){
@@ -52,5 +55,57 @@ public class Database {
         }
         return out;
     } 
+
+    public void initDB(){
+        String query1 = "CREATE TABLE MAP(AREA_ID INT PRIMARY KEY NOT NULL, OWNER_ID INT NOT NULL DEFAULT -1, lVL0 INT NOT NULL DEFAULT 0, LVL1 INT NOT NULL DEFAULT 0, LVL2 INT NOT NULL DEFAULT 0, LVL3 INT NOT NULL DEFAULT 0, LVL4 INT NOT NULL DEFAULT 0, LVL5 INT NOT NULL DEFAULT 0);";
+        executeStatement(query1, "failure");
+
+        //-1 Truck id means package has been delivered
+        //-1 user id means no owner
+        String query2 = "CREATE TABLE REGION(REGION_ID INT PRIMARY KEY NOT NULL, AREA0 BOOLEAN NOT NULL DEFAULT FALSE, AREA1 BOOLEAN NOT NULL DEFAULT FALSE, AREA2 BOOLEAN NOT NULL DEFAULT FALSE, AREA3 BOOLEAN NOT NULL DEFAULT FALSE, AREA4 BOOLEAN NOT NULL DEFAULT FALSE, AREA5 BOOLEAN NOT NULL DEFAULT FALSE);";// status can be pickup, loading, delivering, delivered
+        executeStatement(query2, "failure");
+
+        String query3 = "CREATE TABLE USER(USER_ID INT PRIMARY KEY NOT NULL, USERNAME VARCHAR(100) NOT NULL DEFAULT \'\', PASSWORD VARCHAR(50) NOT NULL DEFAULT \'\');"; 
+        executeStatement(query3, "failure");
+
+        String query4 = "CREATE TABLE PHASE(PHASE_NO INT DEFAULT 0);";
+        executeStatement(query4, "failure");
+    }
+
+    public void insertDB(){
+        for(int i = 0; i < 6; i++){
+            String query = "INSERT INTO MAP(AREA_ID) VALUES(" + i + ");";
+            executeStatement(query, "failure");
+        }
+
+        for(int i = 0; i < 2; i++){
+            String query = "INSERT INTO REGION(REGION_ID) VALUES(" + i + ");";
+            String query1 = "INSERT INTO USER(USER_ID) VALUES(" + i + ");";
+            executeStatement(query, "failure");
+            executeStatement(query1, "failure");
+        }
+
+        /* TEST CODE
+        String q = "SELECT * FROM MAP;";
+        ResultSet r = SelectStatement(q);
+        try{
+            while(r.next()){
+                System.out.println(r.getInt("AREA_ID"));
+            }
+        }
+        catch(Exception e){}*/
+    }
+
+    public void deleteDB(){
+        String query1 = "DROP TABLE IF EXISTS MAP;";
+        executeStatement(query1, "failure");
+        String query2 = "DROP TABLE IF EXISTS REGION;";
+        executeStatement(query2, "failure");
+        String query3 = "DROP TABLE IF EXISTS USER;";
+        executeStatement(query3, "failure");
+        String query4 = "DROP TABLE IF EXISTS PHASE;";
+        executeStatement(query4, "failure");
+    }  
+
 
 }
