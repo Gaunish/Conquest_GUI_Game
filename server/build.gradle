@@ -15,7 +15,7 @@ dependencies {
     implementation 'com.google.guava:guava:30.1.1-jre'
     testImplementation 'org.mockito:mockito-inline:4.0.0'
     testImplementation 'org.mockito:mockito-junit-jupiter:4.0.0'
-
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.3.3'
 }
 
 application {
