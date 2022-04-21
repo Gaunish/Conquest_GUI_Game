@@ -70,8 +70,8 @@ public class AreaView  implements Serializable {
         }
 
         txt += result.getName() + "\n";
-        txt += "Owner: Player" + area.getOwnerId() + "\n"; 
-        txt += area.displayRsrc();
+        txt += "Owner: Player" + result.getOwnerId() + "\n"; 
+        txt += result.displayRsrc();
         
         txt += getGrey();
         txt += getSpy();
