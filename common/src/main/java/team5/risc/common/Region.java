@@ -18,6 +18,10 @@ public class Region implements Serializable {
 
   }
 
+  public LinkedHashSet<AreaNode> getAreas(){
+    return areas;
+  }
+
   public void setOwnerId(int owner_id) {
     this.owner_id = owner_id;
   }

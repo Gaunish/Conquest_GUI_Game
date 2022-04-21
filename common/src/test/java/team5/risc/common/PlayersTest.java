@@ -10,6 +10,8 @@ public class PlayersTest {
     Map map = new Map(true);
     Players p = new Players(2);
     assertEquals(-1, p.get_winner(map, 2));
+    View view1 = new View();
+    View view2 = new View();
 
     ActionExecutor e = new ActionExecutor();
     MoveAction m1 = new MoveAction(0, "area0", "area2", 10);
@@ -18,15 +20,15 @@ public class PlayersTest {
     e.execute(m1, map);
     e.execute(m2, map);
     e.execute(a1, map);
-    e.resolveAllCombat(map, new CompareCombat());
+    e.resolveAllCombat(map, new CompareCombat(), view1, view2);
 
     AttackAction a2 = new AttackAction(0, "area3", "area5", 10);
     e.execute(a2, map);
-    e.resolveAllCombat(map, new CompareCombat());
+    e.resolveAllCombat(map, new CompareCombat(), view1, view2);
 
     AttackAction a3 = new AttackAction(0, "area3", "area1", 12);
     e.execute(a3, map);
-    e.resolveAllCombat(map, new CompareCombat());
+    e.resolveAllCombat(map, new CompareCombat(), view1, view2);
 
     assertEquals(0, p.get_winner(map, 2));
     assertEquals(true, p.has_lost(map, 1));

@@ -35,12 +35,14 @@ public class ActionExecutorTest {
     Map map = new Map(true);
     AttackAction m = new AttackAction(0, "area0", "area1", 10);
     AttackAction m2 = new AttackAction(1, "area1", "area0", 1);
+    View view1 = new View();
+    View view2 = new View();
 
     ActionExecutor e = new ActionExecutor();
     e.execute(m, map);
     e.execute(m2, map);
 
-    e.resolveAllCombat(map, new CompareCombat());
+    e.resolveAllCombat(map, new CompareCombat(), view1, view2);
     assertEquals(21, map.getAreaNodeByName("area0").getDefenderUnit());
     assertEquals(0, map.getAreaNodeByName("area0").getOwnerId());
     assertEquals(10, map.getAreaNodeByName("area1").getDefenderUnit());
@@ -55,7 +57,8 @@ public class ActionExecutorTest {
     a1.setDefender(new LevelArmy(1, 5, 5), 5);
     AttackAction e1 = new AttackAction(0, "area0", "area1", 10);
     e.execute(e1, map2);
-    e.resolveAllCombat(map2, new CompareCombat());
+
+    e.resolveAllCombat(map2, new CompareCombat(), view1, view2);
     assertEquals("0: [area0, area2, area4]", map2.getRegions().get(0).toString());
     assertEquals("1: [area1, area3, area5]", map2.getRegions().get(1).toString());
     assertEquals(0, a1.getDefenderUnit());
@@ -86,6 +89,8 @@ public class ActionExecutorTest {
 
     AttackAction a_invalid = new AttackAction(0, "area0", "area1", 5, 4);
     e.execute(a_invalid, map);
+    View view1 = new View();
+    View view2 = new View();
   
 
     e.execute(a, map);
@@ -93,7 +98,7 @@ public class ActionExecutorTest {
     e.execute(a3, map);
     e.execute(a4, map);
     e.execute(a5, map);
-    e.resolveAllCombat(map, new DiceCombat(20, 1));
+    e.resolveAllCombat(map, new DiceCombat(20, 1), view1, view2);
     assertEquals(true, map.is_winner(0));
 
   }
