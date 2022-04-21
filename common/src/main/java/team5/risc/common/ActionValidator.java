@@ -129,6 +129,53 @@ public class ActionValidator {
     return null;
   }
 
+  public String isValid(SpyAction a, Map map){
+    AreaNode src = map.getAreaNodeByName(a.src);
+    AreaNode dest = map.getAreaNodeByName(a.dest);
+
+    if(src == null){
+      return "invalid source name";
+    }
+
+    if(dest == null){
+      return "invalid destination name";
+    }
+
+    if(a.player_id != src.getOwnerId()){
+      return "src area doesn't belong to player";
+    }
+
+    if(a.player_id == dest.getOwnerId()){
+      return "destnation area belongs to you";
+    }
+
+    Region sourceRegion = map.getRegionById(src.getOwnerId());
+    if(!sourceRegion.checkTechEnough(a.cost)){
+      return "not enough tech for spy";
+    }
+
+    return null;
+  }
+
+  public String isValid(CloakAction a, Map map){
+    AreaNode area = map.getAreaNodeByName(a.area);
+
+    if(area == null){
+      return "invalid area name";
+    }
+
+    if(a.player_id != area.getOwnerId()){
+      return "area doesn't belong to player";
+    }
+
+    Region sourceRegion = map.getRegionById(area.getOwnerId());
+    if(!sourceRegion.checkTechEnough(a.cost)){
+      return "not enough tech for cloak";
+    }
+
+    return null;
+  }
+
   public Boolean checkReachable(AreaNode src, AreaNode dest, int player_id) {
     HashSet<String> visited = new HashSet<>();
     return dfs(src, dest, player_id, visited);
