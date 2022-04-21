@@ -1,6 +1,7 @@
 package team5.risc.common;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.PriorityQueue;
 import java.util.Queue;
@@ -75,16 +76,20 @@ public class ActionExecutor {
   public void setAction(SpyAction a, Map map, int turn){
     a.turn = turn;
     AreaNode src = map.getAreaNodeByName(a.src);
-    AreaNode dest = map.getAreaNodeByName(a.src);
+    AreaNode dest = map.getAreaNodeByName(a.dest);
+    src.reduceDefender(1);
     a.distance = getDistance(src, dest, map, a.player_id);
+    //System.out.println("Distance : " + a.distance);
   }
 
   private int getDistance(AreaNode src, AreaNode dest, Map map, int id){
-    Queue<AreaNode> visited = new PriorityQueue<>();
-    visited.add(src);
-    dist(src, dest, visited);
+    Queue<String> queue = new PriorityQueue<>();
+    HashSet<String> visited = new HashSet<>();
+    ArrayList<String> areas = dist(src, dest, map, queue, visited);
     int distance = 0;
-    for(AreaNode a : visited){
+    for(String area : areas){
+      //System.out.println("Name : " + area);
+      AreaNode a = map.getAreaNodeByName(area);
       if(a.getOwnerId() != id){
         distance++;
       }
@@ -92,31 +97,56 @@ public class ActionExecutor {
     return distance;
   }
 
-  private void dist(AreaNode src, AreaNode dest, Queue<AreaNode> visited){
-    while(!visited.isEmpty()){
-      for(int i = 0; i < visited.size(); i++){
-        AreaNode a = visited.remove();
+  private ArrayList<String> dist(AreaNode src, AreaNode dest, Map map, Queue<String> queue, HashSet<String> visited){
+    queue.add(src.getName());
+    visited.add(src.getName());
+    ArrayList<String> out = new ArrayList<>();
+    HashMap<String, String> mapping = new HashMap<>();
+
+    while(!queue.isEmpty()){
+        String name = queue.remove();
+        AreaNode a = map.getAreaNodeByName(name);
         if(a == dest){
-          return;
+          break;
         }
-      }
+
+        for(AreaNode neigbour : a.getNeighbors()){
+          if(!visited.contains(neigbour.getName())){
+            mapping.put(neigbour.getName(), name);
+            queue.add(neigbour.getName());
+            visited.add(neigbour.getName());
+          }
+        }
     }
+    String name = dest.getName();
+    while(name != src.getName()){
+      String parent = mapping.get(name);
+      //System.out.println(name);
+      out.add(parent);
+      name = parent;
+    }
+    return out;
   }
 
-  public void setAction(CloakAction a, Map map, int turn){
+  public void execute(CloakAction a, Map map, int turn){
     a.turn = turn;
-  }
-
-  public void execute(SpyAction a, Map map){
-    AreaNode area = map.getAreaNodeByName(a.src);
-    Region region = map.getRegionById(area.getOwnerId());
-    region.subTech(a.cost);
-  }
-
-  public void execute(CloakAction a, Map map){
     AreaNode area = map.getAreaNodeByName(a.area);
     Region region = map.getRegionById(area.getOwnerId());
     region.subTech(a.cost);
+    area.setCloaking(true);
+  }
+
+  public void execute(SpyAction a, Map map){
+    AreaNode src = map.getAreaNodeByName(a.src);
+    AreaNode dest = map.getAreaNodeByName(a.dest);
+    Region region = map.getRegionById(src.getOwnerId());
+    region.subTech(a.cost);
+    dest.setSpy(true);
+  }
+
+  public void removeCloak(CloakAction a, Map map){
+    AreaNode area = map.getAreaNodeByName(a.area);
+    area.setCloaking(false);
   }
 
   public void combatExecute(Army defender, Army attacker, Army winner, ArrayList<Army> winners, Map map, AreaNode dest, Combat c, View view1, View view2, AreaNode buffer) {
@@ -136,6 +166,8 @@ public class ActionExecutor {
       } 
 
       buffer.setOwner(attacker.getOwnerId());
+      dest.setCloaking(false);
+      dest.setSpy(false);
       view1.setBuffer(buffer);
       view2.setBuffer(buffer);
 

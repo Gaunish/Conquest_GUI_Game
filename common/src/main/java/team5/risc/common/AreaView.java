@@ -7,7 +7,7 @@ public class AreaView  implements Serializable {
     private AreaNode oldCopy;
     private int id;
     private Map map;
-    private boolean is_grey;
+    private boolean isReachable;
 
     public AreaView(AreaNode a, int id, Map m){
         this.area = a;
@@ -17,7 +17,7 @@ public class AreaView  implements Serializable {
     }
 
     public void setBuffer(AreaNode a){
-        if(oldCopy == null){
+        if(oldCopy == null && a.getOwnerId() != id){
             oldCopy = a;
         }
         else{
@@ -30,11 +30,11 @@ public class AreaView  implements Serializable {
     }
 
     public void setGrey(boolean isReachable){
-        is_grey = isReachable;
+        this.isReachable = isReachable;
     }
 
     public String getGrey(){
-        return "Reachable: " + is_grey + "\n"; 
+        return "Reachable: " + isReachable + "\n"; 
     }
 
     public String getSpy(){
@@ -53,9 +53,13 @@ public class AreaView  implements Serializable {
         return "Cloak: " + cloaking + "\n";
     }
 
+    public boolean isOld(){
+        return oldCopy != null && isReachable == false && area.getSpy() == false;
+    }
+
     public String getOld(){
         boolean out = false;
-        if(oldCopy != null){
+        if(isOld()){
             out = true;
         }
         return "Old: " + out + "\n";
@@ -65,7 +69,7 @@ public class AreaView  implements Serializable {
         String txt = new String();
         
         AreaNode result = area;
-        if(oldCopy != null){
+        if(isOld()){
             result = oldCopy;
         }
 

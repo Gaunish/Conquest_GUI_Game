@@ -7,7 +7,8 @@ public class SpyAction implements Action, Serializable {
     public String src, dest;
     public int turn, distance, cost;
 
-    public SpyAction(String src, String dest){
+    public SpyAction(int player_id, String src, String dest){
+        this.player_id = player_id;
         this.src = src;
         this.dest = dest;
         turn = -1;

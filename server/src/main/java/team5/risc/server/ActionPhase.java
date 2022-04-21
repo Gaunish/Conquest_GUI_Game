@@ -178,7 +178,7 @@ public class ActionPhase {
       } else {
         //spy is valid, set it
         dataOtream.writeUTF("correct");
-        actionExecutor.setAction(action, map, turn_no);
+        actionExecutor.execute(action, map, turn_no);
         cloaks.add(action);
       }
     }
@@ -236,7 +236,7 @@ public class ActionPhase {
       //String map_info = txt_map();
       String view1_str = view1.view();
       String view2_str = view2.view();
-      System.out.println(view1_str);
+      //System.out.println(view1_str);
 
       // attack list init
       ArrayList<AttackAction> attackActionList = new ArrayList<>();
@@ -320,9 +320,9 @@ public class ActionPhase {
 
       //update cloaks
       for(Iterator<CloakAction> i = cloaks.iterator(); i.hasNext();){
-        CloakAction spy = i.next();
-        if(spy.hasEnded(turn_no)){
-          actionExecutor.execute(spy, map);
+        CloakAction cloak = i.next();
+        if(cloak.hasEnded(turn_no)){
+          actionExecutor.removeCloak(cloak, map);
           i.remove();
         }
       }

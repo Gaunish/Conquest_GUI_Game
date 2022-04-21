@@ -64,8 +64,19 @@ public class AreaNode implements Serializable {
     AreaNode a = new AreaNode(this.name, this.food_produce, this.tech_produce, this.size);
     a.setSpy(spy);
     a.setCloaking(cloaking);
-    a.setDefender(defender);
-    a.setEnemies(enemies);
+
+    ArrayList<Army> def_copy = new ArrayList<>();
+    for(Army army : defender){
+      def_copy.add(army.deepCopy());
+    }
+
+    ArrayList<Army> enemy_copy = new ArrayList<>();
+    for(Army army : enemies){
+      enemy_copy.add(army.deepCopy());
+    }
+    
+    a.setDefender(def_copy);
+    a.setEnemies(enemy_copy);
     a.setNeighbor(neighbors);
     return a;
   }

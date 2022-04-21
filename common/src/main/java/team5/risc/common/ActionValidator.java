@@ -141,6 +141,10 @@ public class ActionValidator {
       return "invalid destination name";
     }
 
+    if(src.getDefenderUnit() != 1){
+      return "not enough units";
+    }
+
     if(a.player_id != src.getOwnerId()){
       return "src area doesn't belong to player";
     }
