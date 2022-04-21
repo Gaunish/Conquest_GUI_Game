@@ -134,8 +134,8 @@ public class Server {
    * @throws ClassNotFoundException
    */
   public static void main(String[] args) throws IOException, ClassNotFoundException {
-    Database db = new Database();
-    db.connectDB();
+    // Database db = new Database();
+    // db.connectDB();
     
     Server fs = new Server(Integer.parseInt(args[0]));
     fs.run(Integer.parseInt(args[1]));
