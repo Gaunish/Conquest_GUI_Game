@@ -17,6 +17,7 @@ public class AreaNode implements Serializable {
   private int tech_produce;
   private int size;
   private int no_level;
+  private boolean spy, cloaking;
   private List<Integer> cost;
 
   public AreaNode(String name) {
@@ -59,6 +60,27 @@ public class AreaNode implements Serializable {
     initLevelDefender(-1);
   }
 
+  public AreaNode deepCopy(){
+    AreaNode a = new AreaNode(this.name, this.food_produce, this.tech_produce, this.size);
+    a.setSpy(spy);
+    a.setCloaking(cloaking);
+
+    ArrayList<Army> def_copy = new ArrayList<>();
+    for(Army army : defender){
+      def_copy.add(army.deepCopy());
+    }
+
+    ArrayList<Army> enemy_copy = new ArrayList<>();
+    for(Army army : enemies){
+      enemy_copy.add(army.deepCopy());
+    }
+    
+    a.setDefender(def_copy);
+    a.setEnemies(enemy_copy);
+    a.setNeighbor(neighbors);
+    return a;
+  }
+
   //Method to init level defender list
   public void initLevelDefender(int owner_id){
     for(int lvl = 0; lvl < no_level; lvl++){
@@ -87,6 +109,18 @@ public class AreaNode implements Serializable {
       return -1;
     }
     return (cost.get(new_lvl) - cost.get(lvl));
+  }
+
+  public void setDefender(ArrayList<Army> defender){
+    this.defender = defender;
+  }
+ 
+  public void setEnemies(ArrayList<Army> enemies){
+    this.enemies = enemies;
+  }
+
+  public void setNeighbor(LinkedHashSet<AreaNode> neighbors){
+    this.neighbors = neighbors;
   }
 
   /*
@@ -122,6 +156,21 @@ public class AreaNode implements Serializable {
 
   public String getName() {
     return name;
+  }
+
+  public boolean getSpy(){
+    return spy;
+  }
+
+  public boolean getCloaking(){
+    return cloaking;
+  }
+
+  public void setSpy(boolean spy){
+    this.spy = spy;
+  }
+  public void setCloaking(boolean cloak){
+    this.cloaking = cloak;
   }
 
   public int getOwnerId() {
@@ -320,6 +369,10 @@ public class AreaNode implements Serializable {
       out += "Level " + i + ": " + a.getUnitNum() + " units\n";
     }
     return out;
+  }
+
+  public boolean isNeighbor(AreaNode a){
+    return neighbors.contains(a);
   }
 
   public void addNeighbor(AreaNode to_add) {

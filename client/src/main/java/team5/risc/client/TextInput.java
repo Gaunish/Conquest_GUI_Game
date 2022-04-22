@@ -48,7 +48,7 @@ public class TextInput implements Input{
 
   //Get move
   public String getAction(String name){
-    String prompt = "You are the "+ name +" , what would you like to do?\n(M)ove\n(A)ttack\n(U)pgrade\n(D)one\n";
+    String prompt = "You are the "+ name +" , what would you like to do?\n(M)ove\n(A)ttack\n(U)pgrade\n(D)one\n(S)py\n(C)loak\n";
  
     String user_in = "";
 
@@ -61,7 +61,7 @@ public class TextInput implements Input{
         //Get input
         user_in = in.nextLine();
         //out.print("input is:"+user_in);
-        if(!user_in.equals("M") && !user_in.equals("A") && !user_in.equals("D") && !user_in.equals("U")){
+        if(!user_in.equals("M") && !user_in.equals("A") && !user_in.equals("D") && !user_in.equals("U") && !user_in.equals("S") && !user_in.equals("C")){
           error_msg("Invalid Input");
           continue;
         }
@@ -109,6 +109,62 @@ public class TextInput implements Input{
 
     UpgradeAction upgrade = new UpgradeAction(id, area, index, no, new_lvl);
     return upgrade;
+  }
+
+  public SpyAction getSpy(int id){
+    String prompt = "Enter the source, destination\n";
+    String[] values;
+    while (true) {
+      try {
+        // print prompt
+        out.print(prompt);
+
+        // Get input
+        String user_in = in.nextLine();
+        values = user_in.split(" ");
+
+        // Invalid input 1
+        if (values.length != 2) {
+          error_msg("Invalid no of args");
+          continue;
+        }
+        break;
+      }
+      catch (Exception e) {
+        error_msg("Invalid input");
+        continue;
+      }
+    }
+    SpyAction a = new SpyAction(id, values[0], values[1]);
+    return a;
+  }
+
+  public CloakAction getCloak(int id){
+    String prompt = "Enter the area\n";
+    String[] values;
+    while (true) {
+      try {
+        // print prompt
+        out.print(prompt);
+
+        // Get input
+        String user_in = in.nextLine();
+        values = user_in.split(" ");
+
+        // Invalid input 1
+        if (values.length != 1) {
+          error_msg("Invalid no of args");
+          continue;
+        }
+        break;
+      }
+      catch (Exception e) {
+        error_msg("Invalid input");
+        continue;
+      }
+    }
+    CloakAction a = new CloakAction(id, values[0]);
+    return a;
   }
 
   private String[] getUpgradeValues(String prompt){

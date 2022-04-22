@@ -25,6 +25,47 @@ public class Map implements Serializable {
     // generateInitRegions();
   }
 
+  public Map(int num_area, int num_player, boolean opt) {
+    this.areas = new ArrayList<AreaNode>();
+    // this.name2areas = new HashMap<>();
+    for (int i = 0; i < num_area; i++) {
+      AreaNode areaNode = new AreaNode("area" + i, 2, 3, 1);
+      this.areas.add(areaNode);
+      // this.name2areas.put("area" + i, areaNode);
+    }
+    this.num_player = num_player;
+    ArrayList<String> path = new ArrayList<String>();
+
+    for(int i = 0; i < 9; i++){
+      int src = i;
+      int des = i + 3;
+      addPath(src, des);
+      path.add(src + "->" + des);
+      addPath(des, src);
+      path.add(des + "->" + src);
+    }
+
+    for(int i = 0; i < 4; i++){
+      for(int j = 0; j < 2; j++){
+        int src = (i*3) + j;
+        int des = (i*3) + j + 1;
+        addPath(src, des);
+        path.add(src + "->" + des);
+        addPath(des, src);
+        path.add(des + "->" + src);
+      }
+    }
+
+    this.regions = new ArrayList<Region>();
+    regions.add(new Region());
+    regions.add(new Region());
+
+    for(int i = 0; i < 6; i++){
+      regions.get(0).addArea(areas.get(i));
+      regions.get(1).addArea(areas.get(i + 6));
+    }
+  }
+
   public Map(int num_area, int num_player) {
     this.areas = new ArrayList<AreaNode>();
     // this.name2areas = new HashMap<>();
