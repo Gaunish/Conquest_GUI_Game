@@ -15,15 +15,15 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="500.0" maxWidth="600.0" minHeight="500.0" minWidth="600.0" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="500.0" maxWidth="600.0" minHeight="500.0" minWidth="600.0" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <SplitPane dividerPositions="0.65" layoutX="177.0" layoutY="113.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
         <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" >
                <children>
                   <SplitPane dividerPositions="0.6" orientation="VERTICAL" prefHeight="378.0" prefWidth="344.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <items>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: #E6F5C9;">
                            <children>
                               <GridPane fx:id="map" prefHeight="386.0" prefWidth="377.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <columnConstraints>
@@ -107,7 +107,7 @@
                               </GridPane>
                            </children>
                         </AnchorPane>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: #F4CAE4">
                            <children>
                               <GridPane layoutX="34.0" layoutY="29.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="1.0">
                                 <columnConstraints>
@@ -151,7 +151,7 @@
                                        </font></Label>
                                  </children>
                               </GridPane>
-                              <Label fx:id="log" alignment="TOP_LEFT" layoutX="4.0" layoutY="45.0" prefHeight="32.0" prefWidth="357.0" text="System Log" wrapText="true" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="144.0">
+                              <Label fx:id="log" alignment="TOP_LEFT" layoutX="4.0" layoutY="45.0" prefHeight="32.0" prefWidth="357.0" text="System Log" textFill="#e13a3a" wrapText="true" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="144.0">
                                  <font>
                                     <Font size="14.0" />
                                  </font></Label>
@@ -169,9 +169,9 @@
                            <children>
                               <TabPane fx:id="tabs" prefHeight="298.0" prefWidth="226.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <tabs>
-                                  <Tab fx:id="upgrade_tab" text="Upgrade">
+                                  <Tab fx:id="upgrade_tab" text="Upgrade" style="-fx-background-color: #B3E2CD">
                                        <content>
-                                          <GridPane>
+                                          <GridPane style="-fx-background-color: #B3E2CD">
                                              <columnConstraints>
                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -200,9 +200,9 @@
                                              </padding>
                                           </GridPane>
                                        </content></Tab>
-                                  <Tab fx:id="move_tab" text="Move">
+                                  <Tab fx:id="move_tab" text="Move" style="-fx-background-color: #FDCDAC">
                                        <content>
-                                          <GridPane>
+                                          <GridPane style="-fx-background-color: #FDCDAC">
                                              <columnConstraints>
                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -231,9 +231,9 @@
                                              </padding>
                                           </GridPane>
                                        </content></Tab>
-                                    <Tab fx:id="attack_tab" text="Attack">
+                                    <Tab fx:id="attack_tab" text="Attack" style="-fx-background-color: #CBD5E8">
                                        <content>
-                                          <GridPane>
+                                          <GridPane style="-fx-background-color: #CBD5E8">
                                             <columnConstraints>
                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -267,7 +267,7 @@
                               </TabPane>
                            </children>
                         </AnchorPane>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: #E6F5C9">
                            <children>
                               <Button fx:id="done" layoutX="60.0" layoutY="31.0" mnemonicParsing="false" onAction="#onDone" prefHeight="32.0" prefWidth="81.0" text="Done" />
                            </children>

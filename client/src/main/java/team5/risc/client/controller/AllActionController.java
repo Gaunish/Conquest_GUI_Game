@@ -1,5 +1,6 @@
 package team5.risc.client.controller;
 
+import java.nio.file.Paths;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -40,6 +41,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import java.io.File;
+
 import team5.risc.client.Client;
 import team5.risc.client.DisplayUtil;
 import team5.risc.common.AttackAction;
@@ -270,9 +273,11 @@ public class AllActionController extends UIController implements Initializable {
 
         String alert_string;
         if (response.equals("correct")) {
+            DisplayUtil.playSound("/sound/ring.wav");
             alert_string = "Action executed successfully!\n";
             up_log.setText("Success");
         } else {
+            DisplayUtil.playSound("/sound/alert.wav");
             alert_string = "Error: " + response + "\n";
             up_log.setText("Error");
         }
@@ -293,9 +298,11 @@ public class AllActionController extends UIController implements Initializable {
         String response = client.getRiscServer().readUTF();
         String alert_string;
         if (response.equals("correct")) {
+            DisplayUtil.playSound("/sound/ring.wav");
             alert_string = "Action executed successfully!\n";
             move_log.setText("Success");
         } else {
+            DisplayUtil.playSound("/sound/alert.wav");
             alert_string = "Error: " + response + "\n";
             move_log.setText("Error");
         }
@@ -305,6 +312,10 @@ public class AllActionController extends UIController implements Initializable {
     @FXML
     public void onAttack(ActionEvent ae) throws IOException {
         client.getRiscServer().writeUTF("Attack");
+
+        // AudioClip currentMusic = new AudioClip(Paths.get("/sound/ring.wav").toUri().toString());
+        // currentMusic.play();
+
         AttackAction attack = new AttackAction(
                 client.getID(),
                 att_src.getValue().toString(),
@@ -316,9 +327,11 @@ public class AllActionController extends UIController implements Initializable {
         String response = client.getRiscServer().readUTF();
         String alert_string;
         if (response.equals("correct")) {
+            DisplayUtil.playSound("/sound/ring.wav");
             alert_string = "Action executed successfully!\n";
             att_log.setText("Success");
         } else {
+            DisplayUtil.playSound("/sound/alert.wav");
             alert_string = "Error: " + response + "\n";
             att_log.setText("Error");
         }
@@ -329,11 +342,13 @@ public class AllActionController extends UIController implements Initializable {
     public void onDone(ActionEvent ae) throws IOException {
         log.setText("Done with sending action, please wait");// + client.getID() + "wait for others");
         // log.paintImmediately(log.getVisibleRect());
+
         tabs.setDisable(true);
         done.setDisable(true);
         DisplayUtil.displayAlertAndWait("Done with sending action, please wait");
         client.getRiscServer().writeUTF("Done");
         Stage window = (Stage) ((Button) ae.getSource()).getScene().getWindow();
+        DisplayUtil.playSound("/sound/ring.wav");
         openMapPage(window);
     }
 
