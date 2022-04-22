@@ -50,8 +50,6 @@ public class LoginController extends UIController {
                 openPlacementPage(window);
 
             } else {
-                // Alert
-                // DisplayUtil.displayAlertAndWait("Login failed");
                 login_log.setText("Login failed! Just press Submit to join game.");
             }
         } else {
