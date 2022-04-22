@@ -169,6 +169,22 @@ public class Client {
           print_action(response);
         }
 
+        else if(action.equals("S")){
+          riscServer.writeUTF("Spy");
+          SpyAction s = user_in.getSpy(id);
+          riscServer.writeObject(s);
+          String response = riscServer.readUTF();
+          print_action(response);
+        }
+
+        else if(action.equals("C")){
+          riscServer.writeUTF("Cloak");
+          CloakAction c = user_in.getCloak(id);
+          riscServer.writeObject(c);
+          String response = riscServer.readUTF();
+          print_action(response);
+        }
+
         // Check if input (D)one
         else if (action.equals("D")) {
           // write "Done"

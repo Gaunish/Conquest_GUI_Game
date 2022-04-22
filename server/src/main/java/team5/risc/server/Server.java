@@ -54,15 +54,18 @@ public class Server {
   public void run(int num_player) throws IOException, ClassNotFoundException {
     // Accept phase
     // Map map = new Map(2 * num_player, num_player);
-    Map map = new Map(3*num_player,num_player);
+    Map map = new Map(6*num_player,num_player, true);
     Players players = new Players(num_player);
-
+    
+    View view1 = new View(map.getRegionById(0), map.getRegionById(1), 0, map, 12);
+    View view2 = new View(map.getRegionById(1), map.getRegionById(0), 1, map, 12);
+ 
     //Accept client connection
     server_sock.AcceptConnection(num_player, serverSocket, clientSocketSet);
     System.out.println("All players are connected, let's start the game!");
 
     // initial units assigned by server
-    total_units = 50;
+    total_units = 120;
 
     //Add client streams to the list
     server_sock.init(clientSocketSet);
@@ -103,7 +106,7 @@ public class Server {
      * will tell client if there is any winner - 1) No Winner OR 2) Player i has won
      */
 
-      ActionPhase play_game = new ActionPhase();
+      ActionPhase play_game = new ActionPhase(view1, view2);
       play_game.doAction(map, num_player, server_sock, players);
       System.out.println("Game has ended, Thanks for Playing!");
 
@@ -134,6 +137,9 @@ public class Server {
    * @throws ClassNotFoundException
    */
   public static void main(String[] args) throws IOException, ClassNotFoundException {
+    // Database db = new Database();
+    // db.connectDB();
+    
     Server fs = new Server(Integer.parseInt(args[0]));
     fs.run(Integer.parseInt(args[1]));
   }

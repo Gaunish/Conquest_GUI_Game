@@ -17,5 +17,9 @@ public interface Input {
 
   public String getArea();
 
+  public SpyAction getSpy(int id);
+
+  public CloakAction getCloak(int id);
+
   public UpgradeAction getUpgrade(int id, String area);
 }

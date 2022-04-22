@@ -1,6 +1,7 @@
 package team5.risc.client.controller;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -21,6 +22,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.scene.media.AudioClip;
 import team5.risc.client.Client;
 import team5.risc.client.DisplayUtil;
 
@@ -140,6 +142,8 @@ public class ActionController extends UIController implements Initializable {
 
     @FXML
     public void onAttack(ActionEvent ae) throws IOException {
+
+
         Stage secondStage = new Stage();
         // Scene secondScene = new Scene(attackPane, 600, 500);
 

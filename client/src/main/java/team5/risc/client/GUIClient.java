@@ -19,8 +19,21 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.Media;
+import java.io.File;
+
 public class GUIClient extends Application {
 
+    public MediaPlayer mediaPlayer; 
+    public void backgroundMusic() {
+        Media sound = new Media(getClass().getResource("/sound/background.wav").toExternalForm());
+        MediaPlayer mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.play();
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+    }
+
+    
     @Override
     public void start(Stage stage) throws IOException {
         Parameters parameters = getParameters();
@@ -31,6 +44,8 @@ public class GUIClient extends Application {
                 Integer.parseInt(rawArguments.get(1)));
 
         Client client = new Client(riscServer, null);
+
+        backgroundMusic();
 
         URL xmlResource = getClass().getResource("/ui/login.fxml");
         if (xmlResource == null) {
