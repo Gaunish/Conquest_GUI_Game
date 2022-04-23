@@ -38,6 +38,7 @@ public class ViewTest {
         r2 = m.getRegionById(1);
         view1 = new View(r1, r2, 0, m, 12);
         view2 = new View(r2, r1, 1, m, 12);
+        View view3 = new View();
 
         assertEquals(10, view1.getId(m.getAreaNodeByName("area10")));
         a0 = view1.getAreaView(m.getAreaNodeByName("area0"));
