@@ -49,8 +49,8 @@ public class LoginController extends UIController implements Initializable {
         TranslateTransition translate = new TranslateTransition();
         translate.setByX(-150);
         translate.setDuration(Duration.millis(20000));
-        translate.setCycleCount(5);
-        // translate.setAutoReverse(true);
+        translate.setCycleCount(50);
+        translate.setAutoReverse(true);
         translate.setNode(background);
         translate.play();
     }

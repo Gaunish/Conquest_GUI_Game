@@ -1,6 +1,7 @@
 .area {
     -fx-border-color: black;
     -fx-border-width: 2;
+    -fx-opacity: 0.75;
 }
 
 
@@ -18,11 +19,11 @@
 }
 
 .player0 {
-    -fx-background-color: #EE5F4F;
+    -fx-background-color: #8C251A;
 }
 
 .player1 {
-    -fx-background-color: #4291D5;
+    -fx-background-color: #1A3D8C;
 }
 
 .area0 {
@@ -75,4 +76,12 @@
 
 .tooltip {
     -fx-show-delay: 100ms;
+}
+
+
+.split-pane-divider {
+    -fx-padding: 0;
+    -fx-border-width: 0;
+
+
 }

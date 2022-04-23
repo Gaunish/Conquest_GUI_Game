@@ -186,9 +186,9 @@ public class AllActionController extends UIController implements Initializable {
                         ((Control) node).getTooltip().setText(area_info);
 
                         if (player_id == 0) {
-                            node.setStyle("-fx-background-color: #EE5F4F");
+                            node.setStyle("-fx-background-color: #8C251A");
                         } else {
-                            node.setStyle("-fx-background-color: #4291D5");
+                            node.setStyle("-fx-background-color: #1A3D8C");
                         }
                     }
                 }
