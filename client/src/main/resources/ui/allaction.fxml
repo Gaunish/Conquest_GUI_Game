@@ -25,7 +25,7 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="436.0" prefWidth="188.0">
                <children>
-                  <ImageView fitHeight="530.0" fitWidth="445.0" layoutX="-178.0" opacity="0.75" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="530.0" fitWidth="445.0" layoutX="-178.0" opacity="0.8" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../image/mapbackground.png.jpg" />
                      </image>
@@ -45,17 +45,17 @@
                      <children>
                         <Label fx:id="user_id" text="Player ">
                            <font>
-                              <Font size="18.0" />
+                              <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
                         <Label text="Food:" GridPane.rowIndex="1">
                            <font>
-                              <Font size="18.0" />
+                              <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
                         <Label fx:id="food" alignment="CENTER" contentDisplay="CENTER" text="100" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <font>
-                              <Font size="18.0" />
+                              <Font name="System Bold" size="18.0" />
                            </font>
                            <padding>
                               <Insets left="10.0" />
@@ -63,12 +63,12 @@
                         </Label>
                         <Label text="Technology:" GridPane.rowIndex="3">
                            <font>
-                              <Font size="18.0" />
+                              <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
                         <Label fx:id="tech" alignment="CENTER" contentDisplay="CENTER" text="100" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <font>
-                              <Font size="18.0" />
+                              <Font name="System Bold" size="18.0" />
                            </font>
                            <padding>
                               <Insets left="10.0" />
@@ -83,12 +83,12 @@
                   </GridPane>
                   <Label fx:id="log" alignment="TOP_LEFT" layoutX="6.0" layoutY="356.0" prefHeight="94.0" prefWidth="146.0" text="System Log" textFill="#e13a3a" wrapText="true">
                      <font>
-                        <Font size="18.0" />
+                        <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
                   <Label fx:id="status" layoutX="11.0" layoutY="459.0" prefHeight="32.0" prefWidth="136.0" text="no winner" wrapText="true">
                      <font>
-                        <Font size="18.0" />
+                        <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
                   <Button fx:id="avatar" alignment="CENTER" contentDisplay="CENTER" layoutX="19.0" layoutY="14.0" maxHeight="150.0" maxWidth="150.0" minHeight="150.0" minWidth="150.0" mnemonicParsing="false" prefHeight="150.0" prefWidth="150.0" style="-fx-background-radius: 100;" textAlignment="CENTER" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">

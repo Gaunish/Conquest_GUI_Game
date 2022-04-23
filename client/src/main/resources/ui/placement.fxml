@@ -52,7 +52,7 @@
          <items>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="488.0" prefWidth="223.0">
                <children>
-                  <ImageView fitHeight="530.0" fitWidth="445.0" layoutX="-178.0" opacity="0.75" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="530.0" fitWidth="445.0" layoutX="-178.0" opacity="0.8" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../image/mapbackground.png.jpg" />
                      </image>
@@ -64,7 +64,7 @@
                   </Button>
                   <Label fx:id="user_id" layoutX="14.0" layoutY="182.0" prefHeight="25.0" prefWidth="150.0" text="Player" textAlignment="CENTER" AnchorPane.leftAnchor="10.0">
                      <font>
-                        <Font size="18.0" />
+                        <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
                </children>
