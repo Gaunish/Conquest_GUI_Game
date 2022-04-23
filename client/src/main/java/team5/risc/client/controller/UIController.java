@@ -23,7 +23,7 @@ public abstract class UIController {
         // PlacementController placementController = new PlacementController(client, 1);
         loader.setController(new_controller);
         AnchorPane gp = loader.load(); // run initialize
-        window.setScene(new Scene(gp, 600, 500));
+        window.setScene(new Scene(gp, 800, 500));
     }
 
 }

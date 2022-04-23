@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
@@ -11,271 +12,352 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="500.0" maxWidth="600.0" minHeight="500.0" minWidth="600.0" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="500.0" maxWidth="800.0" minHeight="500.0" minWidth="800.0" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <SplitPane dividerPositions="0.65" layoutX="177.0" layoutY="113.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+      <SplitPane dividerPositions="0.23934837092731828" prefHeight="500.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" >
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="436.0" prefWidth="188.0">
                <children>
-                  <SplitPane dividerPositions="0.6" orientation="VERTICAL" prefHeight="378.0" prefWidth="344.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                    <items>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: #E6F5C9;">
+                  <GridPane prefHeight="311.0" prefWidth="188.0" AnchorPane.bottomAnchor="187.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="136.0" minWidth="95.0" prefWidth="108.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="0.0" prefWidth="80.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="Player:">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="user_id" text="id" GridPane.columnIndex="1">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label text="Food:" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="food" text="0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label text="Technology:" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="tech" text="0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="log" alignment="TOP_LEFT" prefHeight="32.0" prefWidth="357.0" text="System Log" textFill="#e13a3a" wrapText="true" GridPane.rowIndex="3">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="status" prefHeight="47.0" prefWidth="230.0" text="no winner" wrapText="true" GridPane.rowIndex="4">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </GridPane>
+               </children>
+            </AnchorPane>
+            <SplitPane dividerPositions="0.7054380664652568" prefHeight="160.0" prefWidth="200.0">
+              <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" stylesheets="@areacss.css">
+                     <children>
+                        <Pane fx:id="map" prefHeight="120.0" prefWidth="120.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <GridPane fx:id="map" prefHeight="386.0" prefWidth="377.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="109.0" minWidth="109.0" prefWidth="109.0" />
-                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="109.0" minWidth="109.0" prefWidth="109.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="109.0" minWidth="109.0" prefWidth="109.0" />
-                                </columnConstraints>
-                                <rowConstraints>
-                                  <RowConstraints maxHeight="130.0" minHeight="130.0" prefHeight="130.0" vgrow="SOMETIMES" />
-                                  <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="130.0" minHeight="130.0" prefHeight="130.0" vgrow="SOMETIMES" />
-                                </rowConstraints>
-                                 <children>
-                                    <Label fx:id="area0" alignment="CENTER" contentDisplay="TOP" prefHeight="194.0" prefWidth="126.0" style="-fx-background-color: #EE5F4F;" text="area0" textAlignment="CENTER">
-                                       <font>
-                                          <Font size="24.0" />
-                                       </font>
-                                       <GridPane.margin>
-                                          <Insets />
-                                       </GridPane.margin></Label>
-                                    <Label fx:id="area2" alignment="CENTER" prefHeight="200.0" prefWidth="125.0" style="-fx-background-color: #EE5F4F;" text="area2" textAlignment="CENTER" GridPane.columnIndex="2">
-                                       <font>
-                                          <Font size="24.0" />
-                                       </font>
-                                       <GridPane.margin>
-                                          <Insets />
-                                       </GridPane.margin></Label>
-                                    <Label fx:id="area4" alignment="CENTER" prefHeight="197.0" prefWidth="125.0" style="-fx-background-color: #EE5F4F;" text="area4" textAlignment="CENTER" GridPane.columnIndex="4">
-                                       <font>
-                                          <Font size="24.0" />
-                                       </font>
-                                       <GridPane.margin>
-                                          <Insets />
-                                       </GridPane.margin></Label>
-                                    <Label fx:id="area1" alignment="CENTER" prefHeight="200.0" prefWidth="126.0" style="-fx-background-color: #4291D5;" text="area1" textAlignment="CENTER" GridPane.rowIndex="2">
-                                       <font>
-                                          <Font size="24.0" />
-                                       </font>
-                                       <GridPane.margin>
-                                          <Insets />
-                                       </GridPane.margin></Label>
-                                    <Label fx:id="area3" alignment="CENTER" prefHeight="201.0" prefWidth="126.0" style="-fx-background-color: #4291D5;" text="area3" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                                       <font>
-                                          <Font size="24.0" />
-                                       </font>
-                                       <opaqueInsets>
-                                          <Insets />
-                                       </opaqueInsets>
-                                       <GridPane.margin>
-                                          <Insets />
-                                       </GridPane.margin></Label>
-                                    <Label fx:id="area5" alignment="CENTER" prefHeight="199.0" prefWidth="125.0" style="-fx-background-color: #4291D5;" text="area5" textAlignment="CENTER" GridPane.columnIndex="4" GridPane.rowIndex="2">
-                                       <font>
-                                          <Font size="24.0" />
-                                       </font>
-                                       <GridPane.margin>
-                                          <Insets />
-                                       </GridPane.margin></Label>
-                                    <Line endX="20.0" strokeWidth="5.0" GridPane.columnIndex="1" />
-                                    <Line endX="20.0" strokeWidth="5.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                    <Line endX="20.0" strokeWidth="5.0" GridPane.columnIndex="3" />
-                                    <Line endX="20.0" strokeWidth="6.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                                    <Line endX="20.0" rotate="90.0" strokeWidth="5.0" GridPane.rowIndex="1">
-                                       <GridPane.margin>
-                                          <Insets left="40.0" />
-                                       </GridPane.margin>
-                                    </Line>
-                                    <Line endX="20.0" rotate="90.0" strokeWidth="5.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                                       <GridPane.margin>
-                                          <Insets left="40.0" />
-                                       </GridPane.margin>
-                                    </Line>
-                                    <Line endX="20.0" rotate="90.0" strokeWidth="5.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
-                                       <GridPane.margin>
-                                          <Insets left="40.0" />
-                                       </GridPane.margin>
-                                    </Line>
-                                 </children>
-                              </GridPane>
-                           </children>
-                        </AnchorPane>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: #F4CAE4">
-                           <children>
-                              <GridPane layoutX="34.0" layoutY="29.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="1.0">
-                                <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="110.0" minWidth="110.0" prefWidth="110.0" />
-                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="0.0" prefWidth="67.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="263.0" minWidth="180.0" prefWidth="196.0" />
-                                </columnConstraints>
-                                <rowConstraints>
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                </rowConstraints>
-                                 <children>
-                                    <Label text="Player:">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font></Label>
-                                    <Label fx:id="user_id" text="id" GridPane.columnIndex="1">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font></Label>
-                                    <Label fx:id="status" prefHeight="47.0" prefWidth="230.0" text="no winner" wrapText="true" GridPane.columnIndex="2">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font></Label>
-                                    <Label text="Food:" GridPane.rowIndex="1">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font></Label>
-                                    <Label fx:id="food" text="0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font></Label>
-                                    <Label text="Technology:" GridPane.rowIndex="2">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font></Label>
-                                    <Label fx:id="tech" text="0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font></Label>
-                                 </children>
-                              </GridPane>
-                              <Label fx:id="log" alignment="TOP_LEFT" layoutX="4.0" layoutY="45.0" prefHeight="32.0" prefWidth="357.0" text="System Log" textFill="#e13a3a" wrapText="true" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="144.0">
+                              <Label fx:id="area0" alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="39.0" prefHeight="120.0" prefWidth="120.0" text="area0" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                                 <styleClass>
+                                    <String fx:value="area0" />
+                                    <String fx:value="player0" />
+                                    <String fx:value="area" />
+                                 </styleClass>
                                  <font>
-                                    <Font size="14.0" />
-                                 </font></Label>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="area1" alignment="CENTER" contentDisplay="CENTER" layoutX="123.0" layoutY="21.0" prefHeight="120.0" prefWidth="122.0" text="area1" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                                 <styleClass>
+                                    <String fx:value="area1" />
+                                    <String fx:value="player0" />
+                                    <String fx:value="area" />
+                                 </styleClass>
+                              </Label>
+                              <Label fx:id="area2" alignment="CENTER" contentDisplay="CENTER" layoutX="231.0" layoutY="6.0" prefHeight="135.0" prefWidth="105.0" text="area2" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                                 <styleClass>
+                                    <String fx:value="area2" />
+                                    <String fx:value="player0" />
+                                    <String fx:value="area" />
+                                 </styleClass>
+                                 <padding>
+                                    <Insets top="9.0" />
+                                 </padding>
+                              </Label>
+                              <Label fx:id="area3" alignment="CENTER" contentDisplay="CENTER" layoutX="52.0" layoutY="145.0" prefHeight="119.0" prefWidth="120.0" text="area3" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <styleClass>
+                                    <String fx:value="area3" />
+                                    <String fx:value="player0" />
+                                    <String fx:value="area" />
+                                 </styleClass>
+                                 <padding>
+                                    <Insets bottom="17.0" />
+                                 </padding>
+                              </Label>
+                              <Label fx:id="area4" alignment="CENTER" contentDisplay="CENTER" layoutX="141.0" layoutY="128.0" prefHeight="136.0" prefWidth="105.0" text="area4" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                                 <styleClass>
+                                    <String fx:value="area4" />
+                                    <String fx:value="player0" />
+                                    <String fx:value="area" />
+                                 </styleClass>
+                              </Label>
+                              <Label fx:id="area5" alignment="CENTER" contentDisplay="CENTER" layoutX="232.0" layoutY="128.0" prefHeight="136.0" prefWidth="174.0" text="area5" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                                 <styleClass>
+                                    <String fx:value="area5" />
+                                    <String fx:value="player0" />
+                                    <String fx:value="area" />
+                                 </styleClass>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <padding>
+                                    <Insets right="60.0" />
+                                 </padding>
+                              </Label>
+                              <Label fx:id="area6" alignment="CENTER" contentDisplay="CENTER" layoutY="233.0" prefHeight="120.0" prefWidth="171.0" text="area6" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                                 <styleClass>
+                                    <String fx:value="area6" />
+                                    <String fx:value="player1" />
+                                    <String fx:value="area" />
+                                 </styleClass>
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="area7" alignment="CENTER" contentDisplay="CENTER" layoutX="121.0" layoutY="233.0" prefHeight="120.0" prefWidth="142.0" text="area7" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                                 <styleClass>
+                                    <String fx:value="area7" />
+                                    <String fx:value="player1" />
+                                    <String fx:value="area" />
+                                 </styleClass>
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets bottom="9.0" />
+                                 </padding>
+                              </Label>
+                              <Label fx:id="area8" alignment="CENTER" contentDisplay="CENTER" layoutX="213.0" layoutY="250.0" prefHeight="120.0" prefWidth="177.0" text="area8" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                                 <styleClass>
+                                    <String fx:value="area8" />
+                                    <String fx:value="player1" />
+                                    <String fx:value="area" />
+                                 </styleClass>
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets bottom="35.0" />
+                                 </padding>
+                              </Label>
+                              <Label fx:id="area9" alignment="CENTER" contentDisplay="CENTER" layoutX="13.0" layoutY="339.0" prefHeight="123.0" prefWidth="194.0" text="area9" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                                 <styleClass>
+                                    <String fx:value="area9" />
+                                    <String fx:value="player1" />
+                                    <String fx:value="area" />
+                                 </styleClass>
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets bottom="30.0" />
+                                 </padding>
+                              </Label>
+                              <Label fx:id="area10" alignment="CENTER" contentDisplay="CENTER" layoutX="139.0" layoutY="339.0" prefHeight="87.0" prefWidth="142.0" text="area10" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                                 <styleClass>
+                                    <String fx:value="area10" />
+                                    <String fx:value="player1" />
+                                    <String fx:value="area" />
+                                 </styleClass>
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets bottom="37.0" />
+                                 </padding>
+                              </Label>
+                              <Label fx:id="area11" alignment="CENTER" contentDisplay="CENTER" layoutX="266.0" layoutY="323.0" prefHeight="154.0" prefWidth="151.0" text="area11" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                                 <styleClass>
+                                    <String fx:value="area11" />
+                                    <String fx:value="player1" />
+                                    <String fx:value="area" />
+                                 </styleClass>
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets bottom="39.0" left="28.0" />
+                                 </padding>
+                              </Label>
                            </children>
-                        </AnchorPane>
-                    </items>
-                  </SplitPane>
-               </children>
-            </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-               <children>
-                  <SplitPane dividerPositions="0.8" orientation="VERTICAL" prefHeight="378.0" prefWidth="228.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                    <items>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-                           <children>
-                              <TabPane fx:id="tabs" prefHeight="298.0" prefWidth="226.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                <tabs>
-                                  <Tab fx:id="upgrade_tab" text="Upgrade" style="-fx-background-color: #B3E2CD">
-                                       <content>
-                                          <GridPane style="-fx-background-color: #B3E2CD">
-                                             <columnConstraints>
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                             </columnConstraints>
-                                             <rowConstraints>
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                             </rowConstraints>
-                                             <children>
-                                                <ChoiceBox fx:id="up_src" prefWidth="150.0" GridPane.columnIndex="1" />
-                                                <Label text="Source Node" />
-                                                <ChoiceBox fx:id="up_st_level" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                <ChoiceBox fx:id="up_ed_level" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                <Label text="Starting Level" GridPane.rowIndex="1" />
-                                                <Label text="Ending Level" GridPane.rowIndex="2" />
-                                                <Label text="Number of Unit" GridPane.rowIndex="3" />
-                                                <Button fx:id="up_submit" mnemonicParsing="false" onAction="#onUpgrade" onMouseExited="#resetLog" prefHeight="25.0" prefWidth="95.0" text="Submit" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                                <Spinner fx:id="up_num" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                                <Label fx:id="up_log" prefHeight="17.0" prefWidth="95.0" GridPane.rowIndex="4" />
-                                             </children>
-                                             <padding>
-                                                <Insets left="5.0" right="5.0" />
-                                             </padding>
-                                          </GridPane>
-                                       </content></Tab>
-                                  <Tab fx:id="move_tab" text="Move" style="-fx-background-color: #FDCDAC">
-                                       <content>
-                                          <GridPane style="-fx-background-color: #FDCDAC">
-                                             <columnConstraints>
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                             </columnConstraints>
-                                             <rowConstraints>
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                             </rowConstraints>
-                                             <children>
-                                                <ChoiceBox fx:id="move_src" prefWidth="150.0" GridPane.columnIndex="1" />
-                                                <Label text="Source Node" />
-                                                <ChoiceBox fx:id="move_dst" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                <ChoiceBox fx:id="move_level" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                <Label text="Destination Node" GridPane.rowIndex="1" />
-                                                <Label text="Level of Unit" GridPane.rowIndex="2" />
-                                                <Label text="Number of Unit" GridPane.rowIndex="3" />
-                                                <Button fx:id="move_submit" mnemonicParsing="false" onAction="#onMove" onMouseExited="#resetLog" prefHeight="25.0" prefWidth="95.0" text="Submit" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                                <Spinner fx:id="move_num" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                                <Label fx:id="move_log" prefHeight="17.0" prefWidth="95.0" GridPane.rowIndex="4" />
-                                             </children>
-                                             <padding>
-                                                <Insets left="5.0" right="5.0" />
-                                             </padding>
-                                          </GridPane>
-                                       </content></Tab>
-                                    <Tab fx:id="attack_tab" text="Attack" style="-fx-background-color: #CBD5E8">
-                                       <content>
-                                          <GridPane style="-fx-background-color: #CBD5E8">
-                                            <columnConstraints>
-                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                            </columnConstraints>
-                                            <rowConstraints>
-                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                            </rowConstraints>
-                                             <children>
-                                                <ChoiceBox fx:id="att_src" prefWidth="150.0" GridPane.columnIndex="1" />
-                                                <Label text="Source Node" />
-                                                <ChoiceBox fx:id="att_dst" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                <ChoiceBox fx:id="att_level" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                <Label text="Destination Node" GridPane.rowIndex="1" />
-                                                <Label text="Level of Unit" GridPane.rowIndex="2" />
-                                                <Label text="Number of Unit" GridPane.rowIndex="3" />
-                                                <Button fx:id="att_submit" mnemonicParsing="false" onAction="#onAttack" onMouseExited="#resetLog" prefHeight="25.0" prefWidth="95.0" text="Submit" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                                <Spinner fx:id="att_num" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                                <Label fx:id="att_log" prefHeight="17.0" prefWidth="97.0" GridPane.rowIndex="4" />
-                                             </children>
-                                             <padding>
-                                                <Insets left="5.0" right="5.0" />
-                                             </padding>
-                                          </GridPane>
-                                       </content>
-                                    </Tab>
-                                </tabs>
-                              </TabPane>
-                           </children>
-                        </AnchorPane>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: #E6F5C9">
-                           <children>
-                              <Button fx:id="done" layoutX="60.0" layoutY="31.0" mnemonicParsing="false" onAction="#onDone" prefHeight="32.0" prefWidth="81.0" text="Done" />
-                           </children>
-                        </AnchorPane>
-                    </items>
-                  </SplitPane>
-               </children>
-            </AnchorPane>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                     <children>
+                        <SplitPane dividerPositions="0.8" orientation="VERTICAL" prefHeight="378.0" prefWidth="228.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <items>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                 <children>
+                                    <TabPane fx:id="tabs" prefHeight="298.0" prefWidth="226.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                      <tabs>
+                                        <Tab fx:id="upgrade_tab" style="-fx-background-color: #B3E2CD" text="Upgrade">
+                                             <content>
+                                                <GridPane style="-fx-background-color: #B3E2CD">
+                                                   <columnConstraints>
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                   </columnConstraints>
+                                                   <rowConstraints>
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                   </rowConstraints>
+                                                   <children>
+                                                      <ChoiceBox fx:id="up_src" prefWidth="150.0" GridPane.columnIndex="1" />
+                                                      <Label text="Source Node" />
+                                                      <ChoiceBox fx:id="up_st_level" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                      <ChoiceBox fx:id="up_ed_level" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                      <Label text="Starting Level" GridPane.rowIndex="1" />
+                                                      <Label text="Ending Level" GridPane.rowIndex="2" />
+                                                      <Label text="Number of Unit" GridPane.rowIndex="3" />
+                                                      <Button fx:id="up_submit" mnemonicParsing="false" onAction="#onUpgrade" onMouseExited="#resetLog" prefHeight="25.0" prefWidth="95.0" text="Submit" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                      <Spinner fx:id="up_num" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                      <Label fx:id="up_log" prefHeight="17.0" prefWidth="95.0" GridPane.rowIndex="4" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="5.0" right="5.0" />
+                                                   </padding>
+                                                </GridPane>
+                                             </content>
+                                          </Tab>
+                                        <Tab fx:id="move_tab" style="-fx-background-color: #FDCDAC" text="Move">
+                                             <content>
+                                                <GridPane style="-fx-background-color: #FDCDAC">
+                                                   <columnConstraints>
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                   </columnConstraints>
+                                                   <rowConstraints>
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                   </rowConstraints>
+                                                   <children>
+                                                      <ChoiceBox fx:id="move_src" prefWidth="150.0" GridPane.columnIndex="1" />
+                                                      <Label text="Source Node" />
+                                                      <ChoiceBox fx:id="move_dst" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                      <ChoiceBox fx:id="move_level" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                      <Label text="Destination Node" GridPane.rowIndex="1" />
+                                                      <Label text="Level of Unit" GridPane.rowIndex="2" />
+                                                      <Label text="Number of Unit" GridPane.rowIndex="3" />
+                                                      <Button fx:id="move_submit" mnemonicParsing="false" onAction="#onMove" onMouseExited="#resetLog" prefHeight="25.0" prefWidth="95.0" text="Submit" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                      <Spinner fx:id="move_num" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                      <Label fx:id="move_log" prefHeight="17.0" prefWidth="95.0" GridPane.rowIndex="4" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="5.0" right="5.0" />
+                                                   </padding>
+                                                </GridPane>
+                                             </content>
+                                          </Tab>
+                                          <Tab fx:id="attack_tab" style="-fx-background-color: #CBD5E8" text="Attack">
+                                             <content>
+                                                <GridPane style="-fx-background-color: #CBD5E8">
+                                                  <columnConstraints>
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                  </columnConstraints>
+                                                  <rowConstraints>
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                  </rowConstraints>
+                                                   <children>
+                                                      <ChoiceBox fx:id="att_src" prefWidth="150.0" GridPane.columnIndex="1" />
+                                                      <Label text="Source Node" />
+                                                      <ChoiceBox fx:id="att_dst" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                      <ChoiceBox fx:id="att_level" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                      <Label text="Destination Node" GridPane.rowIndex="1" />
+                                                      <Label text="Level of Unit" GridPane.rowIndex="2" />
+                                                      <Label text="Number of Unit" GridPane.rowIndex="3" />
+                                                      <Button fx:id="att_submit" mnemonicParsing="false" onAction="#onAttack" onMouseExited="#resetLog" prefHeight="25.0" prefWidth="95.0" text="Submit" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                      <Spinner fx:id="att_num" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                      <Label fx:id="att_log" prefHeight="17.0" prefWidth="97.0" GridPane.rowIndex="4" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="5.0" right="5.0" />
+                                                   </padding>
+                                                </GridPane>
+                                             </content>
+                                          </Tab>
+                                      </tabs>
+                                    </TabPane>
+                                 </children>
+                              </AnchorPane>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: #E6F5C9">
+                                 <children>
+                                    <Button fx:id="done" layoutX="60.0" layoutY="31.0" mnemonicParsing="false" onAction="#onDone" prefHeight="32.0" prefWidth="81.0" text="Done" />
+                                 </children>
+                              </AnchorPane>
+                          </items>
+                        </SplitPane>
+                     </children>
+                  </AnchorPane>
+              </items>
+            </SplitPane>
         </items>
       </SplitPane>
    </children>
