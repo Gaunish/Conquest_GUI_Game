@@ -97,7 +97,7 @@ public class ActionExecutor {
     return distance;
   }
 
-  private ArrayList<String> dist(AreaNode src, AreaNode dest, Map map, Queue<String> queue, HashSet<String> visited){
+  public ArrayList<String> dist(AreaNode src, AreaNode dest, Map map, Queue<String> queue, HashSet<String> visited){
     queue.add(src.getName());
     visited.add(src.getName());
     ArrayList<String> out = new ArrayList<>();

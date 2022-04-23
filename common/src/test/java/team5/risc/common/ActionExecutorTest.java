@@ -3,6 +3,9 @@ package team5.risc.common;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
+import java.util.Queue;
+import java.util.HashSet;
+import java.util.PriorityQueue;
 
 public class ActionExecutorTest {
  @Test
@@ -137,14 +140,18 @@ public class ActionExecutorTest {
     Map map = new Map(12, 2, true);
     ActionExecutor e = new ActionExecutor();
 
-    assertEquals(5, e.getDistance(map.getAreaNodeByName("area0"), map.getAreaNodeByName("area11"), map, 0));
+    e.dist(map.getAreaNodeByName("area0"), map.getAreaNodeByName("area11"), map, new PriorityQueue<String>(), new HashSet<String>());
+
+    AreaNode area1 = map.getAreaNodeByName("area1");
+    area1.setOwner(0);
+    assertEquals(4, e.getDistance(map.getAreaNodeByName("area0"), map.getAreaNodeByName("area11"), map, 0));
     AreaNode area0 = map.getAreaNodeByName("area0");
     area0.increaseDefender(3);
 
     SpyAction a = new SpyAction(0, "area0", "area11");
     e.setAction(a, map, 15);
-    assertEquals(true, a.hasReached(21));
-    assertEquals(false, a.hasReached(20));
+    assertEquals(true, a.hasReached(20));
+    assertEquals(false, a.hasReached(19));
     assertEquals(2, area0.getDefenderUnit());
 
     AreaNode area11 =  map.getAreaNodeByName("area11");
