@@ -85,37 +85,42 @@
                      <children>
                         <Pane fx:id="map" prefHeight="120.0" prefWidth="120.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <Label fx:id="area0" alignment="CENTER" contentDisplay="TOP" layoutX="18.0" layoutY="39.0" prefHeight="120.0" prefWidth="120.0" text="area0" textAlignment="CENTER">
-                                 <font>
-                                    <Font size="24.0" />
-                                 </font>
+                              <Label fx:id="area0" alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="39.0" prefHeight="120.0" prefWidth="120.0" text="area0" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                                  <styleClass>
-                                    <String fx:value="areatest" />
                                     <String fx:value="area0" />
                                     <String fx:value="player0" />
+                                    <String fx:value="area" />
                                  </styleClass>
-                              </Label>
-                              <Label fx:id="area1" alignment="CENTER" layoutX="123.0" layoutY="21.0" prefHeight="120.0" prefWidth="122.0" text="area1" textAlignment="CENTER">
                                  <font>
-                                    <Font size="24.0" />
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="area1" alignment="CENTER" contentDisplay="CENTER" layoutX="123.0" layoutY="21.0" prefHeight="120.0" prefWidth="122.0" text="area1" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
                                  </font>
                                  <styleClass>
                                     <String fx:value="area1" />
                                     <String fx:value="player0" />
+                                    <String fx:value="area" />
                                  </styleClass>
                               </Label>
-                              <Label fx:id="area2" alignment="CENTER" layoutX="231.0" layoutY="6.0" prefHeight="135.0" prefWidth="105.0" text="area2" textAlignment="CENTER">
+                              <Label fx:id="area2" alignment="CENTER" contentDisplay="CENTER" layoutX="231.0" layoutY="6.0" prefHeight="135.0" prefWidth="105.0" text="area2" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                                  <font>
-                                    <Font size="24.0" />
+                                    <Font name="System Bold" size="18.0" />
                                  </font>
                                  <styleClass>
                                     <String fx:value="area2" />
                                     <String fx:value="player0" />
+                                    <String fx:value="area" />
                                  </styleClass>
+                                 <padding>
+                                    <Insets top="9.0" />
+                                 </padding>
                               </Label>
-                              <Label fx:id="area3" alignment="CENTER" layoutX="52.0" layoutY="145.0" prefHeight="119.0" prefWidth="120.0" text="area3" textAlignment="CENTER">
+                              <Label fx:id="area3" alignment="CENTER" contentDisplay="CENTER" layoutX="52.0" layoutY="145.0" prefHeight="119.0" prefWidth="120.0" text="area3" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                                  <font>
-                                    <Font size="24.0" />
+                                    <Font name="System Bold" size="18.0" />
                                  </font>
                                  <opaqueInsets>
                                     <Insets />
@@ -123,79 +128,112 @@
                                  <styleClass>
                                     <String fx:value="area3" />
                                     <String fx:value="player0" />
+                                    <String fx:value="area" />
                                  </styleClass>
+                                 <padding>
+                                    <Insets bottom="17.0" />
+                                 </padding>
                               </Label>
-                              <Label fx:id="area4" alignment="CENTER" layoutX="141.0" layoutY="128.0" prefHeight="136.0" prefWidth="105.0" text="area4" textAlignment="CENTER">
+                              <Label fx:id="area4" alignment="CENTER" contentDisplay="CENTER" layoutX="141.0" layoutY="128.0" prefHeight="136.0" prefWidth="105.0" text="area4" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                                  <font>
-                                    <Font size="24.0" />
+                                    <Font name="System Bold" size="18.0" />
                                  </font>
                                  <styleClass>
                                     <String fx:value="area4" />
                                     <String fx:value="player0" />
+                                    <String fx:value="area" />
                                  </styleClass>
                               </Label>
-                              <Label fx:id="area5" alignment="CENTER" layoutX="232.0" layoutY="128.0" prefHeight="136.0" prefWidth="175.0" text="area5" textAlignment="CENTER">
+                              <Label fx:id="area5" alignment="CENTER" contentDisplay="CENTER" layoutX="232.0" layoutY="128.0" prefHeight="136.0" prefWidth="174.0" text="area5" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                                  <font>
-                                    <Font size="24.0" />
+                                    <Font name="System Bold" size="18.0" />
                                  </font>
                                  <styleClass>
                                     <String fx:value="area5" />
                                     <String fx:value="player0" />
+                                    <String fx:value="area" />
                                  </styleClass>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <padding>
+                                    <Insets right="60.0" />
+                                 </padding>
                               </Label>
-                              <Label fx:id="area6" alignment="CENTER" contentDisplay="CENTER" layoutY="233.0" prefHeight="120.0" prefWidth="171.0" text="area6">
+                              <Label fx:id="area6" alignment="CENTER" contentDisplay="CENTER" layoutY="233.0" prefHeight="120.0" prefWidth="171.0" text="area6" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                                  <styleClass>
                                     <String fx:value="area6" />
                                     <String fx:value="player1" />
+                                    <String fx:value="area" />
                                  </styleClass>
                                  <font>
-                                    <Font size="24.0" />
+                                    <Font name="System Bold" size="18.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="area7" alignment="CENTER" contentDisplay="CENTER" layoutX="121.0" layoutY="233.0" prefHeight="120.0" prefWidth="142.0" text="area7">
+                              <Label fx:id="area7" alignment="CENTER" contentDisplay="CENTER" layoutX="121.0" layoutY="233.0" prefHeight="120.0" prefWidth="142.0" text="area7" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                                  <styleClass>
                                     <String fx:value="area7" />
                                     <String fx:value="player1" />
+                                    <String fx:value="area" />
                                  </styleClass>
                                  <font>
-                                    <Font size="24.0" />
+                                    <Font name="System Bold" size="18.0" />
                                  </font>
+                                 <padding>
+                                    <Insets bottom="9.0" />
+                                 </padding>
                               </Label>
-                              <Label fx:id="area8" alignment="CENTER" contentDisplay="CENTER" layoutX="213.0" layoutY="250.0" prefHeight="120.0" prefWidth="177.0" text="area8">
+                              <Label fx:id="area8" alignment="CENTER" contentDisplay="CENTER" layoutX="213.0" layoutY="250.0" prefHeight="120.0" prefWidth="177.0" text="area8" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                                  <styleClass>
                                     <String fx:value="area8" />
                                     <String fx:value="player1" />
+                                    <String fx:value="area" />
                                  </styleClass>
                                  <font>
-                                    <Font size="24.0" />
+                                    <Font name="System Bold" size="18.0" />
                                  </font>
+                                 <padding>
+                                    <Insets bottom="35.0" />
+                                 </padding>
                               </Label>
-                              <Label fx:id="area9" alignment="CENTER" contentDisplay="CENTER" layoutX="13.0" layoutY="339.0" prefHeight="123.0" prefWidth="194.0" text="area9">
+                              <Label fx:id="area9" alignment="CENTER" contentDisplay="CENTER" layoutX="13.0" layoutY="339.0" prefHeight="123.0" prefWidth="194.0" text="area9" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                                  <styleClass>
                                     <String fx:value="area9" />
                                     <String fx:value="player1" />
+                                    <String fx:value="area" />
                                  </styleClass>
                                  <font>
-                                    <Font size="24.0" />
+                                    <Font name="System Bold" size="18.0" />
                                  </font>
+                                 <padding>
+                                    <Insets bottom="30.0" />
+                                 </padding>
                               </Label>
-                              <Label fx:id="area10" alignment="CENTER" contentDisplay="CENTER" layoutX="139.0" layoutY="339.0" prefHeight="87.0" prefWidth="142.0" text="area10">
+                              <Label fx:id="area10" alignment="CENTER" contentDisplay="CENTER" layoutX="139.0" layoutY="339.0" prefHeight="87.0" prefWidth="142.0" text="area10" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                                  <styleClass>
                                     <String fx:value="area10" />
                                     <String fx:value="player1" />
+                                    <String fx:value="area" />
                                  </styleClass>
                                  <font>
-                                    <Font size="24.0" />
+                                    <Font name="System Bold" size="18.0" />
                                  </font>
+                                 <padding>
+                                    <Insets bottom="37.0" />
+                                 </padding>
                               </Label>
-                              <Label fx:id="area11" alignment="CENTER" contentDisplay="CENTER" layoutX="266.0" layoutY="323.0" prefHeight="154.0" prefWidth="151.0" text="area11">
+                              <Label fx:id="area11" alignment="CENTER" contentDisplay="CENTER" layoutX="266.0" layoutY="323.0" prefHeight="154.0" prefWidth="151.0" text="area11" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                                  <styleClass>
                                     <String fx:value="area11" />
                                     <String fx:value="player1" />
+                                    <String fx:value="area" />
                                  </styleClass>
                                  <font>
-                                    <Font size="24.0" />
+                                    <Font name="System Bold" size="18.0" />
                                  </font>
+                                 <padding>
+                                    <Insets bottom="39.0" left="28.0" />
+                                 </padding>
                               </Label>
                            </children>
                         </Pane>

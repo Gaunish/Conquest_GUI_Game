@@ -1,3 +1,21 @@
+.area {
+    -fx-border-color: black;
+    -fx-border-width: 2;
+}
+
+.area:pressed:hover {
+    -fx-scale-y: 0.9;
+    -fx-scale-x: 0.9;
+    -fx-border-color: white;
+}
+
+.area:hover {
+    -fx-scale-y: 1.2;
+    -fx-scale-x: 1.2;
+    -fx-border-color: white;
+    -fx-view-order: -1;
+}
+
 .player0 {
     -fx-background-color: #EE5F4F;
 }

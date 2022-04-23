@@ -130,9 +130,9 @@ public class AllActionController extends UIController implements Initializable {
         }
         String[] msg = map_str.split("\n\n\n");
         String map_info = msg[0];
-        System.out.println("map info:\n"+map_info);
+        // System.out.println("map info:\n"+map_info);
         String player_info = msg[1];
-        System.out.println("player info:\n"+player_info);
+        // System.out.println("player info:\n"+player_info);
         String[] components = map_info.split("\n\narea");
        
         for (int i = 0; i < components.length; i++) {
@@ -178,8 +178,8 @@ public class AllActionController extends UIController implements Initializable {
         int food_num = Integer.parseInt(twoline.split("\n")[0].split(": ")[1]);
         int tech_num = Integer.parseInt(twoline.split("\n")[1].split(": ")[1]);
 
-        System.out.println("index::" + food_num);
-        System.out.println("index::" + tech_num);
+        // System.out.println("index::" + food_num);
+        // System.out.println("index::" + tech_num);
         food.setText(" " + food_num);
         tech.setText(" " + tech_num);
         log.setText("Welcome");
