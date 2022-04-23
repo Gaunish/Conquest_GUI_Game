@@ -1,0 +1,28 @@
+.tab-pane {
+    -fx-tab-min-width: 50px;
+    -fx-tab-max-width: 50px;
+    -fx-tab-min-height: 60px;
+    -fx-tab-max-height: 60px;
+}
+
+.tab-pane .tab {
+    /* -fx-background-color: white; */
+
+}
+
+.tab *.tab-label {
+    -fx-alignment: TOP;
+    -fx-text-fill: black;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-rotate: 90;
+}
+
+.tab-pane .tab:selected {
+    -fx-background-color: #3c3c3c;
+}
+
+.tab:selected *.tab-label {
+    /* -fx-alignment: LEFT; */
+    -fx-text-fill: white;
+}
