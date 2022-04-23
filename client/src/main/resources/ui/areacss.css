@@ -83,3 +83,11 @@
     -fx-padding: 0;
     -fx-border-width: 0;
 }
+
+
+.outline_label .text {
+    -fx-fill: #8483bd;
+    -fx-stroke: white;
+    -fx-stroke-width: 2px;
+    -fx-font-size: 20px;
+}
