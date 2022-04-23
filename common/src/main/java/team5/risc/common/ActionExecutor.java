@@ -103,7 +103,7 @@ public class ActionExecutor {
     ArrayList<String> out = new ArrayList<>();
     HashMap<String, String> mapping = new HashMap<>();
 
-    while(!queue.isEmpty()){
+    while(true){
         String name = queue.remove();
         AreaNode a = map.getAreaNodeByName(name);
         if(a == dest){
