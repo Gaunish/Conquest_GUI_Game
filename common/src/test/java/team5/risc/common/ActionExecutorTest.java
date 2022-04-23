@@ -52,11 +52,18 @@ public class ActionExecutorTest {
     e.addUnitToAllArea(1, map);
     assertEquals(22, map.getAreaNodeByName("area0").getDefenderUnit());
 
+    assertEquals(false, view1.isOld("area0"));
+    assertEquals(false, view1.isOld("area1"));
+    assertEquals(false, view2.isOld("area0"));
+    assertEquals(true, view2.isOld("area1"));
+
     Map map2 = new Map(true);
     AreaNode a1 = map2.getAreaNodeByName("area1");
     a1.setDefender(new LevelArmy(1, 5, 5), 5);
     AttackAction e1 = new AttackAction(0, "area0", "area1", 10);
     e.execute(e1, map2);
+    view1 = new View(map.getRegionById(0), map.getRegionById(1), 0, map, 6);
+    view2 = new View(map.getRegionById(1), map.getRegionById(0), 1, map, 6);
 
     e.resolveAllCombat(map2, new CompareCombat(), view1, view2);
     assertEquals("0: [area0, area2, area4]", map2.getRegions().get(0).toString());
@@ -64,6 +71,11 @@ public class ActionExecutorTest {
     assertEquals(0, a1.getDefenderUnit());
     assertEquals(5, a1.getDefenderUnit(5));
     assertEquals(1, a1.getOwnerId());
+
+    assertEquals(false, view1.isOld("area0"));
+    assertEquals(false, view1.isOld("area1"));
+    assertEquals(false, view2.isOld("area0"));
+    assertEquals(false, view2.isOld("area1"));
   }
 
   @Test

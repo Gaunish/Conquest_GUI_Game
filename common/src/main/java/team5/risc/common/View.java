@@ -24,9 +24,14 @@ public class View implements Serializable {
         initAreas(no_areas);
     }
 
-    public void setBuffer(AreaNode buffer){
+    public int getId(AreaNode buffer){
         String name = buffer.getName();
         int id = Integer.parseInt(name.substring(4, name.length()));
+        return id;
+    }
+
+    public void setBuffer(AreaNode buffer){
+        int id = getId(buffer);
         AreaView view = areas.get(id);
         view.setBuffer(buffer);
     }
@@ -35,6 +40,14 @@ public class View implements Serializable {
         for(int i = 0; i < no_areas; i++){
             areas.add(new AreaView(map.getAreaNodeByName("area" + i), id, map));
         }
+    }
+
+    //for Testing
+    public boolean isOld(String areaName){
+        AreaNode area = map.getAreaNodeByName(areaName);
+        int id = getId(area);
+        AreaView view = areas.get(id);
+        return view.isOld();
     }
 
     public String view(){
