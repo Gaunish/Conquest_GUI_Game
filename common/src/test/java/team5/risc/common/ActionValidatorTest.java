@@ -2,6 +2,7 @@ package team5.risc.common;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.checkerframework.checker.units.qual.Area;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.provider.NullEnum;
 
@@ -99,5 +100,59 @@ public class ActionValidatorTest {
 
     UpgradeAction u6 = new UpgradeAction(0, "area0", 0, 10, 1);
     assertEquals(null, v.isValid(u6, map));
+  }
+
+  @Test
+  public void test_spy(){
+    Map map = new Map(true);
+    ActionValidator v = new ActionValidator();
+
+    SpyAction a1 = new SpyAction(0, "area6", "area1");
+    assertEquals("invalid source name", v.isValid(a1, map));
+
+    SpyAction a2 = new SpyAction(0, "area0", "area6");
+    assertEquals("invalid destination name", v.isValid(a2, map));
+
+    AreaNode area1 = map.getAreaNodeByName("area1");
+    area1.reduceDefender(1);
+    SpyAction a3 = new SpyAction(1, "area1", "area0");
+    assertEquals("not enough units", v.isValid(a3, map));
+
+    SpyAction a4 = new SpyAction(0, "area3", "area5");
+    assertEquals("src area doesn't belong to player", v.isValid(a4, map));
+
+    SpyAction a5 = new SpyAction(0, "area0", "area4");
+    assertEquals("destnation area belongs to you", v.isValid(a5, map));
+
+    Region r = map.getRegionById(0);
+    r.subTech(100);
+    SpyAction a6 = new SpyAction(0, "area0", "area1");
+    assertEquals("not enough tech for spy", v.isValid(a6, map));
+
+    SpyAction a7 = new SpyAction(1, "area3", "area0");
+    assertEquals(null, v.isValid(a7, map));
+
+  }
+
+  @Test
+  public void test_cloak() {
+    Map map = new Map(true);
+    ActionValidator v = new ActionValidator();
+
+    CloakAction a1 = new CloakAction(0, "area6");
+    assertEquals("invalid area name", v.isValid(a1, map));
+
+    CloakAction a2 = new CloakAction(0, "area1");
+    assertEquals("area doesn't belong to player", v.isValid(a2, map));
+
+    Region r = map.getRegionById(0);
+    r.subTech(100);
+
+    CloakAction a3 = new CloakAction(0, "area0");
+    assertEquals("not enough tech for cloak", v.isValid(a3, map));
+
+    CloakAction a4 = new CloakAction(1, "area1");
+    assertEquals(null, v.isValid(a4, map));
+
   }
 }
