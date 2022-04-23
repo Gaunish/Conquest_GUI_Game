@@ -391,7 +391,7 @@
                                                       <Label text="Source Node" />
                                                       <ChoiceBox fx:id="spy_dst" prefWidth="107.0" GridPane.rowIndex="3" />
                                                       <Label text="Destination Node" GridPane.rowIndex="2" />
-                                                      <Button fx:id="spy_submit" mnemonicParsing="false" onAction="#onAttack" onMouseExited="#resetLog" prefHeight="25.0" prefWidth="95.0" text="Submit" GridPane.rowIndex="6" />
+                                                      <Button fx:id="spy_submit" mnemonicParsing="false" onAction="#onSpy" onMouseExited="#resetLog" prefHeight="25.0" prefWidth="95.0" text="Submit" GridPane.rowIndex="6" />
                                                       <Label fx:id="spy_log" prefHeight="17.0" prefWidth="97.0" GridPane.rowIndex="5" />
                                                    </children>
                                                    <padding>
@@ -416,7 +416,7 @@
                                                    <children>
                                                       <ChoiceBox fx:id="cloak_src" prefWidth="107.0" GridPane.rowIndex="1" />
                                                       <Label text="Source Node" />
-                                                      <Button fx:id="cloak_submit" mnemonicParsing="false" onAction="#onAttack" onMouseExited="#resetLog" prefHeight="25.0" prefWidth="95.0" text="Submit" GridPane.rowIndex="4" />
+                                                      <Button fx:id="cloak_submit" mnemonicParsing="false" onAction="#onCloak" onMouseExited="#resetLog" prefHeight="25.0" prefWidth="95.0" text="Submit" GridPane.rowIndex="4" />
                                                       <Label fx:id="cloak_log" prefHeight="17.0" prefWidth="97.0" GridPane.rowIndex="3" />
                                                    </children>
                                                    <padding>

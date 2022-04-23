@@ -108,6 +108,15 @@ public class AllActionController extends UIController implements Initializable {
     public Button att_submit;
     public Label att_log;
 
+    public ChoiceBox<String> spy_src;
+    public ChoiceBox<String> spy_dst;
+    public Button spy_submit;
+    public Label spy_log;
+
+    public ChoiceBox<String> cloak_src;
+    public Button cloak_submit;
+    public Label cloak_log;
+
     public Button done;
 
     public TabPane tabs;
@@ -124,6 +133,8 @@ public class AllActionController extends UIController implements Initializable {
         updateUpgradeTab();
         updateMoveTab();
         updateAttackTab();
+        updateSpyTab();
+        updateCloakTab();
     }
 
     @FXML
@@ -141,7 +152,7 @@ public class AllActionController extends UIController implements Initializable {
         }
         String[] msg = map_str.split("\n\n\n");
         String map_info = msg[0];
-        // System.out.println("map info:\n"+map_info);
+        // System.out.println("map info:\n" + map_info);
         String player_info = msg[1];
         // System.out.println("player info:\n"+player_info);
         String[] components = map_info.split("\n\narea");
@@ -151,7 +162,13 @@ public class AllActionController extends UIController implements Initializable {
             String area_info = sub_msg[0];
             String display_info = sub_msg[1];
             String[] lines = area_info.split("\n");
-            String area_name = "area" + lines[0];
+            String area_name = null;
+            if (lines[0].equals("area0")) {
+                area_name = "area0";
+            } else {
+                area_name = "area" + lines[0];
+            }
+
             int player_id = Character.getNumericValue(lines[1].charAt(lines[1].length() - 1));
             for (Node node : map.getChildren()) {
                 if (node instanceof Label) {
@@ -281,6 +298,20 @@ public class AllActionController extends UIController implements Initializable {
     }
 
     @FXML
+    public void updateSpyTab() {
+        spy_src.setItems(
+                FXCollections.observableArrayList(areaList));
+        spy_dst.setItems(
+                FXCollections.observableArrayList(areaList));
+    }
+
+    @FXML
+    public void updateCloakTab() {
+        cloak_src.setItems(
+                FXCollections.observableArrayList(ownArrayList));
+    }
+
+    @FXML
     public void onUpgrade(ActionEvent ae) throws IOException {
         client.getRiscServer().writeUTF("Upgrade");
         UpgradeAction upgrade = new UpgradeAction(
@@ -305,6 +336,16 @@ public class AllActionController extends UIController implements Initializable {
             up_log.setText("Error");
         }
         log.setText(alert_string);
+    }
+
+    @FXML
+    public void onSpy(ActionEvent ae) throws IOException {
+        // TODO
+    }
+
+    @FXML
+    public void onCloak(ActionEvent ae) throws IOException {
+        // TODO
     }
 
     @FXML

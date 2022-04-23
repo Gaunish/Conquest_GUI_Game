@@ -5,13 +5,13 @@
     -fx-tab-max-height: 60px;
 }
 
-.tab-pane .tab {
-    /* -fx-background-color: white; */
+/* .tab-pane .tab {
+    -fx-background-color: white;
 
-}
+} */
 
 .tab *.tab-label {
-    -fx-alignment: TOP;
+    /* -fx-alignment: TOP; */
     -fx-text-fill: black;
     -fx-font-size: 12px;
     -fx-font-weight: bold;
@@ -22,7 +22,7 @@
     -fx-background-color: #3c3c3c;
 }
 
-.tab:selected *.tab-label {
+.tab:selected .tab-label {
     /* -fx-alignment: LEFT; */
     -fx-text-fill: white;
 }
