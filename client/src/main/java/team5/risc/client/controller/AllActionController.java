@@ -35,7 +35,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -66,14 +66,14 @@ public class AllActionController extends UIController implements Initializable {
             levelList.add(i);
         }
         this.areaList = new ArrayList<String>();
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 12; i++) {
             areaList.add("area" + i);
         }
         this.ownArrayList = new ArrayList<String>();
         this.enemyArrayList = new ArrayList<String>();
     }
 
-    public GridPane map;
+    public Pane map;
     public Label user_id;
     public Label status;
     public Label food;
@@ -107,6 +107,7 @@ public class AllActionController extends UIController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        System.out.print("start initialize\n");
         updateMapInfo();
         try {
             updatePlayerInfo();
@@ -127,10 +128,19 @@ public class AllActionController extends UIController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String[] components = map_str.split("\n\n");
+        String[] msg = map_str.split("\n\n\n");
+        String map_info = msg[0];
+        System.out.println("map info:\n"+map_info);
+        String player_info = msg[1];
+        System.out.println("player info:\n"+player_info);
+        String[] components = map_info.split("\n\narea");
+       
         for (int i = 0; i < components.length; i++) {
-            String[] lines = components[i].split("\n");
-            String area_name = lines[0];
+            String[] sub_msg =components[i].split("\n\n"); 
+            String area_info = sub_msg[0];
+            String display_info = sub_msg[1];
+            String[] lines = area_info.split("\n");
+            String area_name = "area"+lines[0];
             int player_id = Character.getNumericValue(lines[1].charAt(lines[1].length() - 1));
             for (Node node : map.getChildren()) {
                 if (node instanceof Label) {
@@ -141,11 +151,11 @@ public class AllActionController extends UIController implements Initializable {
                         }
                         // System.out.println(node_id);
                         // System.out.println(player_id);
-                        String show_on_map = lines[0] + "\nplayer" + player_id;
+                        String show_on_map = area_name + "\nplayer" + player_id;
                         ((Label) node).setText(show_on_map);
                         if (((Control) node).getTooltip() == null)
                             ((Control) node).setTooltip(new Tooltip());
-                        ((Control) node).getTooltip().setText(components[i]);
+                        ((Control) node).getTooltip().setText(area_info);
 
                         if (player_id == 0) {
                             node.setStyle("-fx-background-color: #EE5F4F");
@@ -163,7 +173,7 @@ public class AllActionController extends UIController implements Initializable {
             }
         }
 
-        String twoline = components[6].substring(1);
+        String twoline = player_info;
 
         int food_num = Integer.parseInt(twoline.split("\n")[0].split(": ")[1]);
         int tech_num = Integer.parseInt(twoline.split("\n")[1].split(": ")[1]);
