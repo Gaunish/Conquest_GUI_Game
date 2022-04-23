@@ -185,23 +185,36 @@ public class AllActionController extends UIController implements Initializable {
 
             int player_id = Character.getNumericValue(lines[1].charAt(lines[1].length() - 1));
 
-            Integer showFlag = 0; //0 for show empty, 1 for show origin. 2 for show old
-            if (player_id == client_id) {
-                showFlag = 1;
+            Boolean showFlag = false; //0 for show empty, 1 for show scene
+
+            //spy, cloak, reachable, old
+            if (spy.equals("true")) {
+                showFlag = true;
             } else {
-                if (reachable.equals("true")) {
-                    if (cloak.equals("false")) {
-                        showFlag = 1;
-                    } else {
-                        if (spy.equals("true")) showFlag = 1;
-                    }
-                } else {
-                    if (cloak.equals("false")) {
-                        if (spy.equals("true")) showFlag = 1;
-                        else showFlag = 2;
-                    } else if (spy.equals("true")) showFlag = 1;
+                if (cloak.equals("true"))
+                    showFlag = false;
+                else {
+                    if (old.equals("true")) showFlag = true;
+                    else 
+                        showFlag = reachable;
                 }
             }
+
+    
+        
+
+            // if (reachable.equals("true")) {
+            //     if (cloak.equals("false")) {
+            //         showFlag = 1;
+            //     } else {
+            //         if (spy.equals("true")) showFlag = 1;
+            //     }
+            // } else {
+            //     if (cloak.equals("false")) {
+            //         if (spy.equals("true")) showFlag = 1;
+            //         else showFlag = 2;
+            //     } else if (spy.equals("true")) showFlag = 1;
+            // }
 
             System.out.println("showFlag:"+showFlag);
 
@@ -216,7 +229,7 @@ public class AllActionController extends UIController implements Initializable {
                         }
                         // System.out.println(node_id);
                         // System.out.println(player_id);
-                        if (showFlag == 1) {
+                        if (showFlag == true) {
                             String show_on_map = area_name + "\nplayer" + player_id;
                             ((Label) node).setText(show_on_map);
                             if (((Control) node).getTooltip() == null)
@@ -228,7 +241,7 @@ public class AllActionController extends UIController implements Initializable {
                             } else {
                                 node.setStyle("-fx-background-color: #1A3D8C");
                             }
-                        } else if (showFlag == 0 || showFlag == 2) {
+                        } else if (showFlag == false) {
                             ((Label) node).setText("Invisible");
                             node.setStyle("-fx-background-color: #FFFFFF");
                         }
