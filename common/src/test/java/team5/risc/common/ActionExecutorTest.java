@@ -140,8 +140,6 @@ public class ActionExecutorTest {
     Map map = new Map(12, 2, true);
     ActionExecutor e = new ActionExecutor();
 
-    e.dist(map.getAreaNodeByName("area0"), map.getAreaNodeByName("area11"), map, new PriorityQueue<String>(), new HashSet<String>());
-
     AreaNode area1 = map.getAreaNodeByName("area1");
     area1.setOwner(0);
     assertEquals(4, e.getDistance(map.getAreaNodeByName("area0"), map.getAreaNodeByName("area11"), map, 0));
