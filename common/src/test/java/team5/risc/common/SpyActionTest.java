@@ -10,8 +10,8 @@ public class SpyActionTest {
         a.turn = 13;
         a.distance = 4;
         assertEquals("0: area0->area1", a.toString());
-        assertEquals(false, a.hasReached(16));
-        assertEquals(true, a.hasReached(17));
+        assertEquals(false, a.hasReached(17));
+        assertEquals(true, a.hasReached(18));
     }
     
 }

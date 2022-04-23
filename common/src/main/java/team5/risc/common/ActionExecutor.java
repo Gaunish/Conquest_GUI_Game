@@ -82,7 +82,7 @@ public class ActionExecutor {
     //System.out.println("Distance : " + a.distance);
   }
 
-  private int getDistance(AreaNode src, AreaNode dest, Map map, int id){
+  public int getDistance(AreaNode src, AreaNode dest, Map map, int id){
     Queue<String> queue = new PriorityQueue<>();
     HashSet<String> visited = new HashSet<>();
     ArrayList<String> areas = dist(src, dest, map, queue, visited);

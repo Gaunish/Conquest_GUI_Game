@@ -132,4 +132,45 @@ public class ActionExecutorTest {
     assertEquals(true, map.getRegionById(0).subTech(130));
   }
 
+  @Test
+  public void test_spy(){
+    Map map = new Map(12, 2, true);
+    ActionExecutor e = new ActionExecutor();
+
+    assertEquals(5, e.getDistance(map.getAreaNodeByName("area0"), map.getAreaNodeByName("area11"), map, 0));
+    AreaNode area0 = map.getAreaNodeByName("area0");
+    area0.increaseDefender(3);
+
+    SpyAction a = new SpyAction(0, "area0", "area11");
+    e.setAction(a, map, 15);
+    assertEquals(true, a.hasReached(21));
+    assertEquals(false, a.hasReached(20));
+    assertEquals(2, area0.getDefenderUnit());
+
+    AreaNode area11 =  map.getAreaNodeByName("area11");
+    area0.setOwner(0);
+    area11.setOwner(1);
+    e.execute(a, map);
+    Region r1 = map.getRegionById(0);
+    assertEquals(true, r1.checkTechEnough(60));
+    assertEquals(true, area11.getSpy());
+  }
+
+  @Test
+  public void test_cloak(){
+    Map map = new Map(12, 2, true);
+    ActionExecutor e = new ActionExecutor();
+
+    AreaNode area0 = map.getAreaNodeByName("area0");
+    area0.setOwner(0);
+
+    CloakAction a = new CloakAction(0, "area0");
+    e.execute(a, map, 13);
+    Region r1 = map.getRegionById(0);
+    assertEquals(true, r1.checkTechEnough(70));
+    assertEquals(true, area0.getCloaking());
+
+    e.removeCloak(a, map);
+    assertEquals(false, area0.getCloaking());
+  }
 }
