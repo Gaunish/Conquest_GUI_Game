@@ -17,12 +17,17 @@ public class AreaView  implements Serializable {
     }
 
     public void setBuffer(AreaNode a){
-        if(oldCopy == null && a.getOwnerId() != id){
+        if(a.getOwnerId() != id){
             oldCopy = a;
         }
         else{
             oldCopy = null;
         }
+    }
+
+    //Method for testing
+    public AreaNode getOldArea(){
+        return oldCopy;
     }
 
     public AreaNode getArea(){
