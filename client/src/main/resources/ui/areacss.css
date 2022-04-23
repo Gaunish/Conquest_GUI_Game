@@ -1,7 +1,9 @@
 .area {
     -fx-border-color: black;
     -fx-border-width: 2;
+    -fx-opacity: 0.75;
 }
+
 
 .area:pressed:hover {
     -fx-scale-y: 0.9;
@@ -17,11 +19,11 @@
 }
 
 .player0 {
-    -fx-background-color: #EE5F4F;
+    -fx-background-color: #8C251A;
 }
 
 .player1 {
-    -fx-background-color: #4291D5;
+    -fx-background-color: #1A3D8C;
 }
 
 .area0 {
@@ -70,4 +72,22 @@
 
 .area11 {
     -fx-shape: "M 150 200 C 200 250 300 250 400 150 C 450 100 450 100 500 100 C 550 300 575 225 500 450 C 400 450 450 550 350 500 C 225 425 350 400 200 350 C 200 300 150 250 150 200 "
+}
+
+.tooltip {
+    -fx-show-delay: 100ms;
+}
+
+
+.split-pane-divider {
+    -fx-padding: 0;
+    -fx-border-width: 0;
+}
+
+
+.outline_label .text {
+    -fx-fill: #8483bd;
+    -fx-stroke: white;
+    -fx-stroke-width: 2px;
+    -fx-font-size: 20px;
 }

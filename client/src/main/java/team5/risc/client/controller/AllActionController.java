@@ -27,10 +27,13 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -40,6 +43,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import java.io.File;
 
@@ -75,9 +79,12 @@ public class AllActionController extends UIController implements Initializable {
 
     public Pane map;
     public Label user_id;
+    public ImageView avatar_image;
     public Label status;
     public Label food;
+    public ProgressBar food_bar;
     public Label tech;
+    public ProgressBar tech_bar;
     public Label log;
 
     public ChoiceBox<String> up_src;
@@ -101,6 +108,15 @@ public class AllActionController extends UIController implements Initializable {
     public Button att_submit;
     public Label att_log;
 
+    public ChoiceBox<String> spy_src;
+    public ChoiceBox<String> spy_dst;
+    public Button spy_submit;
+    public Label spy_log;
+
+    public ChoiceBox<String> cloak_src;
+    public Button cloak_submit;
+    public Label cloak_log;
+
     public Button done;
 
     public TabPane tabs;
@@ -117,11 +133,17 @@ public class AllActionController extends UIController implements Initializable {
         updateUpgradeTab();
         updateMoveTab();
         updateAttackTab();
+        updateSpyTab();
+        updateCloakTab();
     }
 
     @FXML
     public void updateMapInfo() {
         this.client_id = client.getID();
+        Image image = new Image("image/korok" + this.client_id + ".png");
+        final Circle clip = new Circle(75, 75, 75);
+        avatar_image.setClip(clip);
+        avatar_image.setImage(image);
         String map_str = null;
         try {
             map_str = client.getRiscServer().readUTF();
@@ -130,17 +152,23 @@ public class AllActionController extends UIController implements Initializable {
         }
         String[] msg = map_str.split("\n\n\n");
         String map_info = msg[0];
-        // System.out.println("map info:\n"+map_info);
+        // System.out.println("map info:\n" + map_info);
         String player_info = msg[1];
         // System.out.println("player info:\n"+player_info);
         String[] components = map_info.split("\n\narea");
-       
+
         for (int i = 0; i < components.length; i++) {
-            String[] sub_msg =components[i].split("\n\n"); 
+            String[] sub_msg = components[i].split("\n\n");
             String area_info = sub_msg[0];
             String display_info = sub_msg[1];
             String[] lines = area_info.split("\n");
-            String area_name = "area"+lines[0];
+            String area_name = null;
+            if (lines[0].equals("area0")) {
+                area_name = "area0";
+            } else {
+                area_name = "area" + lines[0];
+            }
+
             int player_id = Character.getNumericValue(lines[1].charAt(lines[1].length() - 1));
             for (Node node : map.getChildren()) {
                 if (node instanceof Label) {
@@ -158,9 +186,9 @@ public class AllActionController extends UIController implements Initializable {
                         ((Control) node).getTooltip().setText(area_info);
 
                         if (player_id == 0) {
-                            node.setStyle("-fx-background-color: #EE5F4F");
+                            node.setStyle("-fx-background-color: #8C251A");
                         } else {
-                            node.setStyle("-fx-background-color: #4291D5");
+                            node.setStyle("-fx-background-color: #1A3D8C");
                         }
                     }
                 }
@@ -181,7 +209,9 @@ public class AllActionController extends UIController implements Initializable {
         // System.out.println("index::" + food_num);
         // System.out.println("index::" + tech_num);
         food.setText(" " + food_num);
+        food_bar.setProgress((double) food_num / 2000.0);
         tech.setText(" " + tech_num);
+        tech_bar.setProgress((double) tech_num / 2000.0);
         log.setText("Welcome");
     }
 
@@ -191,7 +221,7 @@ public class AllActionController extends UIController implements Initializable {
         String game_status = client.getRiscServer().readUTF();
         System.out.println(game_status);
 
-        user_id.setText(" " + client.getID());
+        user_id.setText("Player " + client.getID());
 
         // doesn't has winner
         if (game_status.equals("No winner")) {
@@ -268,6 +298,20 @@ public class AllActionController extends UIController implements Initializable {
     }
 
     @FXML
+    public void updateSpyTab() {
+        spy_src.setItems(
+                FXCollections.observableArrayList(areaList));
+        spy_dst.setItems(
+                FXCollections.observableArrayList(areaList));
+    }
+
+    @FXML
+    public void updateCloakTab() {
+        cloak_src.setItems(
+                FXCollections.observableArrayList(ownArrayList));
+    }
+
+    @FXML
     public void onUpgrade(ActionEvent ae) throws IOException {
         client.getRiscServer().writeUTF("Upgrade");
         UpgradeAction upgrade = new UpgradeAction(
@@ -292,6 +336,16 @@ public class AllActionController extends UIController implements Initializable {
             up_log.setText("Error");
         }
         log.setText(alert_string);
+    }
+
+    @FXML
+    public void onSpy(ActionEvent ae) throws IOException {
+        // TODO
+    }
+
+    @FXML
+    public void onCloak(ActionEvent ae) throws IOException {
+        // TODO
     }
 
     @FXML
@@ -323,7 +377,8 @@ public class AllActionController extends UIController implements Initializable {
     public void onAttack(ActionEvent ae) throws IOException {
         client.getRiscServer().writeUTF("Attack");
 
-        // AudioClip currentMusic = new AudioClip(Paths.get("/sound/ring.wav").toUri().toString());
+        // AudioClip currentMusic = new
+        // AudioClip(Paths.get("/sound/ring.wav").toUri().toString());
         // currentMusic.play();
 
         AttackAction attack = new AttackAction(

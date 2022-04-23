@@ -21,9 +21,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import team5.risc.client.Client;
@@ -33,6 +36,7 @@ public class PlacementController extends UIController implements Initializable {
 
     String unit_num = null;
     String area_name = null;
+    int client_id;
 
     Client client;
     int region_index;
@@ -54,8 +58,19 @@ public class PlacementController extends UIController implements Initializable {
     @FXML
     private AnchorPane ap;
 
+    public Label user_id;
+    public ImageView avatar_image;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        this.client_id = client.getID();
+        Image image = new Image("image/korok" + this.client_id + ".png");
+        final Circle clip = new Circle(75, 75, 75);
+        avatar_image.setClip(clip);
+        avatar_image.setImage(image);
+
+        user_id.setText("Player " + this.client_id);
+
         String area = "null";
         try {
             area = client.getRiscServer().readUTF();
