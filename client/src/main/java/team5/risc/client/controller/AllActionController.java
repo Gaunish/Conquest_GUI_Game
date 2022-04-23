@@ -52,6 +52,8 @@ import team5.risc.client.DisplayUtil;
 import team5.risc.common.AttackAction;
 import team5.risc.common.MoveAction;
 import team5.risc.common.UpgradeAction;
+import team5.risc.common.CloakAction;
+import team5.risc.common.SpyAction;
 
 public class AllActionController extends UIController implements Initializable {
 
@@ -161,6 +163,18 @@ public class AllActionController extends UIController implements Initializable {
             String[] sub_msg = components[i].split("\n\n");
             String area_info = sub_msg[0];
             String display_info = sub_msg[1];
+        
+            String[] display_map = display_info.split("\n");
+            String reachable = display_map[0].split(": ")[1];
+            String spy = display_map[1].split(": ")[1];
+            String cloak = display_map[2].split(": ")[1];
+            String old = display_map[3].split(": ")[1];
+
+            System.out.println(reachable);
+            System.out.println(spy);
+            System.out.println(cloak);
+            System.out.println(old);
+
             String[] lines = area_info.split("\n");
             String area_name = null;
             if (lines[0].equals("area0")) {
@@ -170,6 +184,29 @@ public class AllActionController extends UIController implements Initializable {
             }
 
             int player_id = Character.getNumericValue(lines[1].charAt(lines[1].length() - 1));
+
+            Integer showFlag = 0; //0 for show empty, 1 for show origin. 2 for show old
+            if (player_id == client_id) {
+                showFlag = 1;
+            } else {
+                if (reachable.equals("true")) {
+                    if (cloak.equals("false")) {
+                        showFlag = 1;
+                    } else {
+                        if (spy.equals("true")) showFlag = 1;
+                    }
+                } else {
+                    if (cloak.equals("false")) {
+                        if (spy.equals("true")) showFlag = 1;
+                        else showFlag = 2;
+                    } else if (spy.equals("true")) showFlag = 1;
+                }
+            }
+
+            System.out.println("showFlag:"+showFlag);
+
+
+
             for (Node node : map.getChildren()) {
                 if (node instanceof Label) {
                     String node_id = node.getId();
@@ -179,16 +216,21 @@ public class AllActionController extends UIController implements Initializable {
                         }
                         // System.out.println(node_id);
                         // System.out.println(player_id);
-                        String show_on_map = area_name + "\nplayer" + player_id;
-                        ((Label) node).setText(show_on_map);
-                        if (((Control) node).getTooltip() == null)
-                            ((Control) node).setTooltip(new Tooltip());
-                        ((Control) node).getTooltip().setText(area_info);
+                        if (showFlag == 1) {
+                            String show_on_map = area_name + "\nplayer" + player_id;
+                            ((Label) node).setText(show_on_map);
+                            if (((Control) node).getTooltip() == null)
+                                ((Control) node).setTooltip(new Tooltip());
+                            ((Control) node).getTooltip().setText(area_info);
 
-                        if (player_id == 0) {
-                            node.setStyle("-fx-background-color: #8C251A");
-                        } else {
-                            node.setStyle("-fx-background-color: #1A3D8C");
+                            if (player_id == 0) {
+                                node.setStyle("-fx-background-color: #8C251A");
+                            } else {
+                                node.setStyle("-fx-background-color: #1A3D8C");
+                            }
+                        } else if (showFlag == 0 || showFlag == 2) {
+                            ((Label) node).setText("Invisible");
+                            node.setStyle("-fx-background-color: #FFFFFF");
                         }
                     }
                 }
@@ -341,11 +383,52 @@ public class AllActionController extends UIController implements Initializable {
     @FXML
     public void onSpy(ActionEvent ae) throws IOException {
         // TODO
+        client.getRiscServer().writeUTF("Spy");
+        SpyAction spy = new SpyAction(
+                client.getID(),
+                spy_src.getValue().toString(),
+                spy_dst.getValue().toString()
+        );
+
+        client.getRiscServer().writeObject(spy);
+        String response = client.getRiscServer().readUTF();
+        String alert_string;
+        if (response.equals("correct")) {
+            DisplayUtil.playSound("/sound/ring.wav");
+            alert_string = "Action executed successfully!\n";
+            move_log.setText("Success");
+        } else {
+            DisplayUtil.playSound("/sound/alert.wav");
+            alert_string = "Error: " + response + "\n";
+            move_log.setText("Error");
+        }
+        log.setText(alert_string);
+
     }
 
     @FXML
     public void onCloak(ActionEvent ae) throws IOException {
         // TODO
+
+        client.getRiscServer().writeUTF("Cloak");
+        CloakAction cloak = new CloakAction(
+                client.getID(),
+                cloak_src.getValue().toString()
+        );
+
+        client.getRiscServer().writeObject(cloak);
+        String response = client.getRiscServer().readUTF();
+        String alert_string;
+        if (response.equals("correct")) {
+            DisplayUtil.playSound("/sound/ring.wav");
+            alert_string = "Action executed successfully!\n";
+            move_log.setText("Success");
+        } else {
+            DisplayUtil.playSound("/sound/alert.wav");
+            alert_string = "Error: " + response + "\n";
+            move_log.setText("Error");
+        }
+        log.setText(alert_string);
     }
 
     @FXML
