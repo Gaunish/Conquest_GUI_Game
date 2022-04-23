@@ -22,6 +22,6 @@ public class SpyAction implements Action, Serializable {
     
     @Override
     public String toString(){
-        return player_id + ": " + src + "->" + "dest";
+        return player_id + ": " + src + "->" + dest;
     }
 }
