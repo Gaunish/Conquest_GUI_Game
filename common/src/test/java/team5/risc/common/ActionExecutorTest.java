@@ -35,8 +35,8 @@ public class ActionExecutorTest {
     Map map = new Map(true);
     AttackAction m = new AttackAction(0, "area0", "area1", 10);
     AttackAction m2 = new AttackAction(1, "area1", "area0", 1);
-    View view1 = new View();
-    View view2 = new View();
+    View view1 = new View(map.getRegionById(0), map.getRegionById(1), 0, map, 6);
+    View view2 = new View(map.getRegionById(1), map.getRegionById(0), 1, map, 6);
 
     ActionExecutor e = new ActionExecutor();
     e.execute(m, map);
@@ -89,8 +89,8 @@ public class ActionExecutorTest {
 
     AttackAction a_invalid = new AttackAction(0, "area0", "area1", 5, 4);
     e.execute(a_invalid, map);
-    View view1 = new View();
-    View view2 = new View();
+    View view1 = new View(map.getRegionById(0), map.getRegionById(1), 0, map, 6);
+    View view2 = new View(map.getRegionById(1), map.getRegionById(0), 1, map, 6);
   
 
     e.execute(a, map);

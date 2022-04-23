@@ -67,8 +67,8 @@ public class MapTest {
     e.execute(a2, map);
     e.execute(a3, map);
 
-    View view1 = new View();
-    View view2 = new View();
+    View view1 = new View(map.getRegionById(0), map.getRegionById(1), 0, map, 6);
+    View view2 = new View(map.getRegionById(1), map.getRegionById(0), 1, map, 6);
     e.resolveAllCombat(map, new DiceCombat(6, 1), view1, view2);
 
     assertEquals(true, map.is_loser(1));
