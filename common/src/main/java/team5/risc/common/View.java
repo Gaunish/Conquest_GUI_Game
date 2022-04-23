@@ -24,15 +24,22 @@ public class View implements Serializable {
         initAreas(no_areas);
     }
 
+    //Method for testing
     public int getId(AreaNode buffer){
         String name = buffer.getName();
         int id = Integer.parseInt(name.substring(4, name.length()));
         return id;
     }
 
-    public void setBuffer(AreaNode buffer){
+    //Method for testing
+    public AreaView getAreaView(AreaNode buffer){
         int id = getId(buffer);
         AreaView view = areas.get(id);
+        return view;
+    }
+
+    public void setBuffer(AreaNode buffer){
+        AreaView view = getAreaView(buffer);
         view.setBuffer(buffer);
     }
 
@@ -45,8 +52,7 @@ public class View implements Serializable {
     //for Testing
     public boolean isOld(String areaName){
         AreaNode area = map.getAreaNodeByName(areaName);
-        int id = getId(area);
-        AreaView view = areas.get(id);
+        AreaView view = getAreaView(area);
         return view.isOld();
     }
 

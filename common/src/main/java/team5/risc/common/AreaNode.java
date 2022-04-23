@@ -30,6 +30,8 @@ public class AreaNode implements Serializable {
     this.tech_produce = 3;
     this.size = 1;
     this.no_level = 1;
+    this.spy = false;
+    this.cloaking = false;
     cost = Arrays.asList(0);
   }
 
@@ -43,6 +45,8 @@ public class AreaNode implements Serializable {
     this.tech_produce = 3;
     this.size = 1;
     this.no_level = 1;
+    this.spy = false;
+    this.cloaking = false;
     cost =  Arrays.asList(0);
   }
 
@@ -55,6 +59,8 @@ public class AreaNode implements Serializable {
     this.tech_produce = tech;
     this.size = size;
     this.no_level = 7;
+    this.spy = false;
+    this.cloaking = false;
     cost =  Arrays.asList(0, 3, 11, 30, 55, 90, 140);
 
     initLevelDefender(-1);
