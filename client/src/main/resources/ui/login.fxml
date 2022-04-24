@@ -53,13 +53,16 @@
       </ImageView>
               <Label alignment="CENTER" contentDisplay="CENTER" layoutX="106.0" layoutY="22.0" prefHeight="99.0" prefWidth="139.0" style="&#10;" text="Log In" textAlignment="CENTER" textFill="WHITE" wrapText="false" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="100.0">
                 <font>
-                  <Font size="49.0" />
+                  <Font name="System Bold" size="49.0" />
                 </font>
               </Label>
                   <Button fx:id="Button" layoutX="274.0" layoutY="296.0" mnemonicParsing="false" onAction="#onSubmit" prefHeight="33.0" prefWidth="300.0" text="Submit" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="300.0" />
                   <TextField fx:id="currentUsername" layoutX="96.0" layoutY="135.0" promptText="Type the username" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="200.0" />
                   <TextField fx:id="currentPassword" layoutX="96.0" layoutY="195.0" promptText="Type the password" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="250.0" />
-      <Label fx:id="login_log" alignment="CENTER" contentDisplay="CENTER" layoutX="286.0" layoutY="403.0" prefHeight="33.0" prefWidth="400.0" text="Just press Submit to join game" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="350.0" />
+      <Label fx:id="login_log" alignment="CENTER" contentDisplay="CENTER" layoutX="286.0" layoutY="403.0" prefHeight="33.0" prefWidth="400.0" text="Just press Submit to join game" textFill="WHITE" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="350.0">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Label>
             <!-- </children>
           </AnchorPane> -->
         </children>

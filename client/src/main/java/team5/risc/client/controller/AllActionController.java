@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 import org.checkerframework.checker.units.qual.C;
 import org.checkerframework.common.subtyping.qual.Bottom;
 
+import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -45,6 +46,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+
 import java.io.File;
 
 import team5.risc.client.Client;
@@ -120,7 +123,8 @@ public class AllActionController extends UIController implements Initializable {
     public Label cloak_log;
 
     public Button done;
-
+    public AnchorPane sliding_pane;
+    public Button menu;
     public TabPane tabs;
 
     @Override
@@ -137,6 +141,7 @@ public class AllActionController extends UIController implements Initializable {
         updateAttackTab();
         updateSpyTab();
         updateCloakTab();
+        prepareSlideMenuAnimation();
     }
 
     @FXML
@@ -364,6 +369,21 @@ public class AllActionController extends UIController implements Initializable {
     public void updateCloakTab() {
         cloak_src.setItems(
                 FXCollections.observableArrayList(ownArrayList));
+    }
+
+    @FXML
+    private void prepareSlideMenuAnimation() {
+        TranslateTransition openNav = new TranslateTransition(new Duration(350), sliding_pane);
+        openNav.setToX(-140);
+        TranslateTransition closeNav = new TranslateTransition(new Duration(350), sliding_pane);
+        menu.setOnAction((ActionEvent evt) -> {
+            if (sliding_pane.getTranslateX() == 0) {
+                openNav.play();
+            } else {
+                closeNav.setToX(0); // (-(navList.getWidth()));
+                closeNav.play();
+            }
+        });
     }
 
     @FXML

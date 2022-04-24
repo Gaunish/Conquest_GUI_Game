@@ -270,194 +270,211 @@
                   </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" stylesheets="@actioncss.css">
                      <children>
-                        <SplitPane dividerPositions="0.92" orientation="VERTICAL" prefHeight="378.0" prefWidth="228.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                          <items>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-                                 <children>
-                                    <TabPane fx:id="tabs" prefHeight="298.0" prefWidth="226.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                      <tabs>
-                                        <Tab fx:id="upgrade_tab" closable="false" text="Upgrade">
-                                             <content>
-                                                <GridPane prefHeight="394.0" prefWidth="107.0">
-                                                   <columnConstraints>
-                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                   </columnConstraints>
-                                                   <rowConstraints>
-                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                   </rowConstraints>
-                                                   <children>
-                                                      <ChoiceBox fx:id="up_src" prefWidth="150.0" GridPane.rowIndex="1" />
-                                                      <Label contentDisplay="CENTER" text="Source Node" textAlignment="CENTER" />
-                                                      <ChoiceBox fx:id="up_st_level" prefWidth="150.0" GridPane.rowIndex="3" />
-                                                      <ChoiceBox fx:id="up_ed_level" prefWidth="150.0" GridPane.rowIndex="5" />
-                                                      <Label text="Starting Level" GridPane.rowIndex="2" />
-                                                      <Label text="Ending Level" GridPane.rowIndex="4" />
-                                                      <Label text="Number of Unit" GridPane.rowIndex="6" />
-                                                      <Button fx:id="up_submit" mnemonicParsing="false" onAction="#onUpgrade" onMouseExited="#resetLog" prefHeight="25.0" prefWidth="114.0" text="Submit" GridPane.rowIndex="9" />
-                                                      <Spinner fx:id="up_num" GridPane.rowIndex="7" />
-                                                      <Label fx:id="up_log" prefHeight="17.0" prefWidth="95.0" GridPane.rowIndex="8" />
-                                                   </children>
-                                                   <padding>
-                                                      <Insets left="5.0" right="5.0" />
-                                                   </padding>
-                                                </GridPane>
-                                             </content>
-                                          </Tab>
-                                        <Tab fx:id="move_tab" closable="false" text="Move">
-                                             <content>
-                                                <GridPane>
-                                                   <columnConstraints>
-                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                   </columnConstraints>
-                                                   <rowConstraints>
-                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                   </rowConstraints>
-                                                   <children>
-                                                      <ChoiceBox fx:id="move_src" prefWidth="150.0" GridPane.rowIndex="1" />
-                                                      <Label text="Source Node" />
-                                                      <ChoiceBox fx:id="move_dst" prefWidth="150.0" GridPane.rowIndex="3" />
-                                                      <ChoiceBox fx:id="move_level" prefWidth="150.0" GridPane.rowIndex="5" />
-                                                      <Label text="Destination Node" GridPane.rowIndex="2" />
-                                                      <Label text="Level of Unit" GridPane.rowIndex="4" />
-                                                      <Label text="Number of Unit" GridPane.rowIndex="6" />
-                                                      <Button fx:id="move_submit" mnemonicParsing="false" onAction="#onMove" onMouseExited="#resetLog" prefHeight="25.0" prefWidth="95.0" text="Submit" GridPane.rowIndex="9" />
-                                                      <Spinner fx:id="move_num" GridPane.rowIndex="7" />
-                                                      <Label fx:id="move_log" prefHeight="17.0" prefWidth="95.0" GridPane.rowIndex="8" />
-                                                   </children>
-                                                   <padding>
-                                                      <Insets left="5.0" right="5.0" />
-                                                   </padding>
-                                                   <opaqueInsets>
-                                                      <Insets />
-                                                   </opaqueInsets>
-                                                </GridPane>
-                                             </content>
-                                          </Tab>
-                                          <Tab fx:id="attack_tab" closable="false" text="Attack">
-                                             <content>
-                                                <GridPane>
-                                                  <columnConstraints>
-                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                  </columnConstraints>
-                                                  <rowConstraints>
-                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                  </rowConstraints>
-                                                   <children>
-                                                      <ChoiceBox fx:id="att_src" prefWidth="150.0" GridPane.rowIndex="1" />
-                                                      <Label text="Source Node" />
-                                                      <ChoiceBox fx:id="att_dst" prefWidth="150.0" GridPane.rowIndex="3" />
-                                                      <ChoiceBox fx:id="att_level" prefWidth="150.0" GridPane.rowIndex="5" />
-                                                      <Label text="Destination Node" GridPane.rowIndex="2" />
-                                                      <Label text="Level of Unit" GridPane.rowIndex="4" />
-                                                      <Label text="Number of Unit" GridPane.rowIndex="6" />
-                                                      <Button fx:id="att_submit" mnemonicParsing="false" onAction="#onAttack" onMouseExited="#resetLog" prefHeight="25.0" prefWidth="95.0" text="Submit" GridPane.rowIndex="9" />
-                                                      <Spinner fx:id="att_num" GridPane.rowIndex="7" />
-                                                      <Label fx:id="att_log" prefHeight="17.0" prefWidth="97.0" GridPane.rowIndex="8" />
-                                                   </children>
-                                                   <padding>
-                                                      <Insets left="5.0" right="5.0" />
-                                                   </padding>
-                                                </GridPane>
-                                             </content>
-                                          </Tab>
-                                          <Tab fx:id="spy_tab" closable="false" text="Spy">
-                                             <content>
-                                                <GridPane prefHeight="394.0" prefWidth="132.0">
-                                                   <columnConstraints>
-                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                   </columnConstraints>
-                                                   <rowConstraints>
-                                                      <RowConstraints maxHeight="52.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                                                      <RowConstraints maxHeight="74.0" minHeight="10.0" prefHeight="16.0" vgrow="SOMETIMES" />
-                                                      <RowConstraints maxHeight="112.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
-                                                      <RowConstraints maxHeight="131.0" minHeight="10.0" prefHeight="19.0" vgrow="SOMETIMES" />
-                                                      <RowConstraints maxHeight="155.0" minHeight="10.0" prefHeight="155.0" vgrow="SOMETIMES" />
-                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                   </rowConstraints>
-                                                   <children>
-                                                      <ChoiceBox fx:id="spy_src" prefWidth="107.0" GridPane.rowIndex="1" />
-                                                      <Label text="Source Node" />
-                                                      <ChoiceBox fx:id="spy_dst" prefWidth="107.0" GridPane.rowIndex="3" />
-                                                      <Label text="Destination Node" GridPane.rowIndex="2" />
-                                                      <Button fx:id="spy_submit" mnemonicParsing="false" onAction="#onSpy" onMouseExited="#resetLog" prefHeight="25.0" prefWidth="95.0" text="Submit" GridPane.rowIndex="6" />
-                                                      <Label fx:id="spy_log" prefHeight="17.0" prefWidth="97.0" GridPane.rowIndex="5" />
-                                                   </children>
-                                                   <padding>
-                                                      <Insets left="5.0" right="5.0" />
-                                                   </padding>
-                                                </GridPane>
-                                             </content>
-                                          </Tab>
-                                          <Tab fx:id="cloak_tab" closable="false" text="Cloak">
-                                             <content>
-                                                <GridPane>
-                                                   <columnConstraints>
-                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                   </columnConstraints>
-                                                   <rowConstraints>
-                                                      <RowConstraints maxHeight="74.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
-                                                      <RowConstraints maxHeight="110.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
-                                                      <RowConstraints maxHeight="245.0" minHeight="10.0" prefHeight="236.0" vgrow="SOMETIMES" />
-                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                   </rowConstraints>
-                                                   <children>
-                                                      <ChoiceBox fx:id="cloak_src" prefWidth="107.0" GridPane.rowIndex="1" />
-                                                      <Label text="Source Node" />
-                                                      <Button fx:id="cloak_submit" mnemonicParsing="false" onAction="#onCloak" onMouseExited="#resetLog" prefHeight="25.0" prefWidth="95.0" text="Submit" GridPane.rowIndex="4" />
-                                                      <Label fx:id="cloak_log" prefHeight="17.0" prefWidth="97.0" GridPane.rowIndex="3" />
-                                                   </children>
-                                                   <padding>
-                                                      <Insets left="5.0" right="5.0" />
-                                                   </padding>
-                                                </GridPane>
-                                             </content>
-                                          </Tab>
-                                      </tabs>
-                                       <opaqueInsets>
-                                          <Insets left="8.0" />
-                                       </opaqueInsets>
-                                       <padding>
-                                          <Insets left="-11.0" />
-                                       </padding>
-                                    </TabPane>
-                                 </children>
-                              </AnchorPane>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="73.0" prefWidth="178.0">
-                                 <children>
-                                    <Button fx:id="done" layoutX="49.0" layoutY="8.0" mnemonicParsing="false" onAction="#onDone" prefHeight="41.0" prefWidth="178.0" text="Done" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                 </children>
-                              </AnchorPane>
-                          </items>
-                        </SplitPane>
+                        <ImageView fitHeight="688.0" fitWidth="568.0" layoutX="-28.0" pickOnBounds="true" preserveRatio="true" smooth="false">
+                           <image>
+                              <Image url="@../image/mapbackground.png.jpg" />
+                           </image>
+                        </ImageView>
+                        <AnchorPane fx:id="sliding_pane" layoutX="140.0" prefHeight="498.0" prefWidth="187.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <Button fx:id="menu" graphicTextGap="0.0" layoutY="7.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="47.0" style="-fx-background-color: #3d1c0c;" text="Menu" textFill="WHITE" wrapText="true">
+                                 <font>
+                                    <Font name="System Bold" size="16.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets left="-1.0" />
+                                 </padding>
+                              </Button>
+                              <SplitPane dividerPositions="0.92" layoutX="46.0" orientation="VERTICAL" prefHeight="498.0" prefWidth="141.0">
+                                <items>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                       <children>
+                                          <TabPane fx:id="tabs" prefHeight="298.0" prefWidth="226.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                            <tabs>
+                                              <Tab fx:id="upgrade_tab" closable="false" text="Upgrade">
+                                                   <content>
+                                                      <GridPane prefHeight="394.0" prefWidth="107.0">
+                                                         <columnConstraints>
+                                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                         </columnConstraints>
+                                                         <rowConstraints>
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                         </rowConstraints>
+                                                         <children>
+                                                            <ChoiceBox fx:id="up_src" prefWidth="150.0" GridPane.rowIndex="1" />
+                                                            <Label contentDisplay="CENTER" text="Source" textAlignment="CENTER" />
+                                                            <ChoiceBox fx:id="up_st_level" prefWidth="150.0" GridPane.rowIndex="3" />
+                                                            <ChoiceBox fx:id="up_ed_level" prefWidth="150.0" GridPane.rowIndex="5" />
+                                                            <Label text="Starting Level" GridPane.rowIndex="2" />
+                                                            <Label text="Ending Level" GridPane.rowIndex="4" />
+                                                            <Label text="Unit Number" GridPane.rowIndex="6" />
+                                                            <Button fx:id="up_submit" mnemonicParsing="false" onAction="#onUpgrade" onMouseExited="#resetLog" prefHeight="25.0" prefWidth="114.0" text="Submit" GridPane.rowIndex="9" />
+                                                            <Spinner fx:id="up_num" GridPane.rowIndex="7" />
+                                                            <Label fx:id="up_log" prefHeight="17.0" prefWidth="95.0" GridPane.rowIndex="8" />
+                                                         </children>
+                                                         <padding>
+                                                            <Insets left="5.0" right="5.0" />
+                                                         </padding>
+                                                      </GridPane>
+                                                   </content>
+                                                </Tab>
+                                              <Tab fx:id="move_tab" closable="false" text="Move">
+                                                   <content>
+                                                      <GridPane>
+                                                         <columnConstraints>
+                                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                         </columnConstraints>
+                                                         <rowConstraints>
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                         </rowConstraints>
+                                                         <children>
+                                                            <ChoiceBox fx:id="move_src" prefWidth="150.0" GridPane.rowIndex="1" />
+                                                            <Label text="Source" />
+                                                            <ChoiceBox fx:id="move_dst" prefWidth="150.0" GridPane.rowIndex="3" />
+                                                            <ChoiceBox fx:id="move_level" prefWidth="150.0" GridPane.rowIndex="5" />
+                                                            <Label text="Destination" GridPane.rowIndex="2" />
+                                                            <Label text="Level of Unit" GridPane.rowIndex="4" />
+                                                            <Label text="Unit Number" GridPane.rowIndex="6" />
+                                                            <Button fx:id="move_submit" mnemonicParsing="false" onAction="#onMove" onMouseExited="#resetLog" prefHeight="25.0" prefWidth="95.0" text="Submit" GridPane.rowIndex="9" />
+                                                            <Spinner fx:id="move_num" GridPane.rowIndex="7" />
+                                                            <Label fx:id="move_log" prefHeight="17.0" prefWidth="95.0" GridPane.rowIndex="8" />
+                                                         </children>
+                                                         <padding>
+                                                            <Insets left="5.0" right="5.0" />
+                                                         </padding>
+                                                         <opaqueInsets>
+                                                            <Insets />
+                                                         </opaqueInsets>
+                                                      </GridPane>
+                                                   </content>
+                                                </Tab>
+                                                <Tab fx:id="attack_tab" closable="false" text="Attack">
+                                                   <content>
+                                                      <GridPane>
+                                                        <columnConstraints>
+                                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                        </columnConstraints>
+                                                        <rowConstraints>
+                                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                        </rowConstraints>
+                                                         <children>
+                                                            <ChoiceBox fx:id="att_src" prefWidth="150.0" GridPane.rowIndex="1" />
+                                                            <Label text="Source" />
+                                                            <ChoiceBox fx:id="att_dst" prefWidth="150.0" GridPane.rowIndex="3" />
+                                                            <ChoiceBox fx:id="att_level" prefWidth="150.0" GridPane.rowIndex="5" />
+                                                            <Label text="Destination" GridPane.rowIndex="2" />
+                                                            <Label text="Level of Unit" GridPane.rowIndex="4" />
+                                                            <Label text="Unit Number" GridPane.rowIndex="6" />
+                                                            <Button fx:id="att_submit" mnemonicParsing="false" onAction="#onAttack" onMouseExited="#resetLog" prefHeight="25.0" prefWidth="95.0" text="Submit" GridPane.rowIndex="9" />
+                                                            <Spinner fx:id="att_num" GridPane.rowIndex="7" />
+                                                            <Label fx:id="att_log" prefHeight="17.0" prefWidth="97.0" GridPane.rowIndex="8" />
+                                                         </children>
+                                                         <padding>
+                                                            <Insets left="5.0" right="5.0" />
+                                                         </padding>
+                                                      </GridPane>
+                                                   </content>
+                                                </Tab>
+                                                <Tab fx:id="spy_tab" closable="false" text="Spy">
+                                                   <content>
+                                                      <GridPane prefHeight="394.0" prefWidth="132.0">
+                                                         <columnConstraints>
+                                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                         </columnConstraints>
+                                                         <rowConstraints>
+                                                            <RowConstraints maxHeight="52.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints maxHeight="74.0" minHeight="10.0" prefHeight="16.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints maxHeight="112.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints maxHeight="131.0" minHeight="10.0" prefHeight="19.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints maxHeight="155.0" minHeight="10.0" prefHeight="155.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                         </rowConstraints>
+                                                         <children>
+                                                            <ChoiceBox fx:id="spy_src" prefWidth="107.0" GridPane.rowIndex="1" />
+                                                            <Label text="Source" />
+                                                            <ChoiceBox fx:id="spy_dst" prefWidth="107.0" GridPane.rowIndex="3" />
+                                                            <Label text="Destination" GridPane.rowIndex="2" />
+                                                            <Button fx:id="spy_submit" mnemonicParsing="false" onAction="#onSpy" onMouseExited="#resetLog" prefHeight="25.0" prefWidth="95.0" text="Submit" GridPane.rowIndex="6" />
+                                                            <Label fx:id="spy_log" prefHeight="17.0" prefWidth="97.0" GridPane.rowIndex="5" />
+                                                         </children>
+                                                         <padding>
+                                                            <Insets left="5.0" right="5.0" />
+                                                         </padding>
+                                                      </GridPane>
+                                                   </content>
+                                                </Tab>
+                                                <Tab fx:id="cloak_tab" closable="false" text="Cloak">
+                                                   <content>
+                                                      <GridPane>
+                                                         <columnConstraints>
+                                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                         </columnConstraints>
+                                                         <rowConstraints>
+                                                            <RowConstraints maxHeight="74.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints maxHeight="110.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints maxHeight="245.0" minHeight="10.0" prefHeight="236.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                         </rowConstraints>
+                                                         <children>
+                                                            <ChoiceBox fx:id="cloak_src" prefWidth="107.0" GridPane.rowIndex="1" />
+                                                            <Label text="Source" />
+                                                            <Button fx:id="cloak_submit" mnemonicParsing="false" onAction="#onCloak" onMouseExited="#resetLog" prefHeight="25.0" prefWidth="95.0" text="Submit" GridPane.rowIndex="4" />
+                                                            <Label fx:id="cloak_log" prefHeight="17.0" prefWidth="97.0" GridPane.rowIndex="3" />
+                                                         </children>
+                                                         <padding>
+                                                            <Insets left="5.0" right="5.0" />
+                                                         </padding>
+                                                      </GridPane>
+                                                   </content>
+                                                </Tab>
+                                            </tabs>
+                                             <opaqueInsets>
+                                                <Insets left="8.0" />
+                                             </opaqueInsets>
+                                             <padding>
+                                                <Insets left="-11.0" />
+                                             </padding>
+                                          </TabPane>
+                                       </children>
+                                    </AnchorPane>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="73.0" prefWidth="178.0">
+                                       <children>
+                                          <Button fx:id="done" layoutX="49.0" layoutY="8.0" mnemonicParsing="false" onAction="#onDone" prefHeight="41.0" prefWidth="178.0" text="Done" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                       </children>
+                                    </AnchorPane>
+                                </items>
+                              </SplitPane>
+                           </children>
+                        </AnchorPane>
                      </children>
                   </AnchorPane>
               </items>
