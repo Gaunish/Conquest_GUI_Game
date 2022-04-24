@@ -3,6 +3,9 @@ package team5.risc.common;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
+import java.util.Queue;
+import java.util.HashSet;
+import java.util.PriorityQueue;
 
 public class ActionExecutorTest {
  @Test
@@ -35,8 +38,8 @@ public class ActionExecutorTest {
     Map map = new Map(true);
     AttackAction m = new AttackAction(0, "area0", "area1", 10);
     AttackAction m2 = new AttackAction(1, "area1", "area0", 1);
-    View view1 = new View();
-    View view2 = new View();
+    View view1 = new View(map.getRegionById(0), map.getRegionById(1), 0, map, 6);
+    View view2 = new View(map.getRegionById(1), map.getRegionById(0), 1, map, 6);
 
     ActionExecutor e = new ActionExecutor();
     e.execute(m, map);
@@ -52,11 +55,18 @@ public class ActionExecutorTest {
     e.addUnitToAllArea(1, map);
     assertEquals(22, map.getAreaNodeByName("area0").getDefenderUnit());
 
+    assertEquals(false, view1.isOld("area0"));
+    assertEquals(false, view1.isOld("area1"));
+    assertEquals(false, view2.isOld("area0"));
+    assertEquals(true, view2.isOld("area1"));
+
     Map map2 = new Map(true);
     AreaNode a1 = map2.getAreaNodeByName("area1");
     a1.setDefender(new LevelArmy(1, 5, 5), 5);
     AttackAction e1 = new AttackAction(0, "area0", "area1", 10);
     e.execute(e1, map2);
+    view1 = new View(map.getRegionById(0), map.getRegionById(1), 0, map, 6);
+    view2 = new View(map.getRegionById(1), map.getRegionById(0), 1, map, 6);
 
     e.resolveAllCombat(map2, new CompareCombat(), view1, view2);
     assertEquals("0: [area0, area2, area4]", map2.getRegions().get(0).toString());
@@ -64,6 +74,11 @@ public class ActionExecutorTest {
     assertEquals(0, a1.getDefenderUnit());
     assertEquals(5, a1.getDefenderUnit(5));
     assertEquals(1, a1.getOwnerId());
+
+    assertEquals(false, view1.isOld("area0"));
+    assertEquals(false, view1.isOld("area1"));
+    assertEquals(false, view2.isOld("area0"));
+    assertEquals(false, view2.isOld("area1"));
   }
 
   @Test
@@ -89,8 +104,8 @@ public class ActionExecutorTest {
 
     AttackAction a_invalid = new AttackAction(0, "area0", "area1", 5, 4);
     e.execute(a_invalid, map);
-    View view1 = new View();
-    View view2 = new View();
+    View view1 = new View(map.getRegionById(0), map.getRegionById(1), 0, map, 6);
+    View view2 = new View(map.getRegionById(1), map.getRegionById(0), 1, map, 6);
   
 
     e.execute(a, map);
@@ -120,4 +135,47 @@ public class ActionExecutorTest {
     assertEquals(true, map.getRegionById(0).subTech(130));
   }
 
+  @Test
+  public void test_spy(){
+    Map map = new Map(12, 2, true);
+    ActionExecutor e = new ActionExecutor();
+
+    AreaNode area1 = map.getAreaNodeByName("area1");
+    area1.setOwner(0);
+    assertEquals(4, e.getDistance(map.getAreaNodeByName("area0"), map.getAreaNodeByName("area11"), map, 0));
+    AreaNode area0 = map.getAreaNodeByName("area0");
+    area0.increaseDefender(3);
+
+    SpyAction a = new SpyAction(0, "area0", "area11");
+    e.setAction(a, map, 15);
+    assertEquals(true, a.hasReached(20));
+    assertEquals(false, a.hasReached(19));
+    assertEquals(2, area0.getDefenderUnit());
+
+    AreaNode area11 =  map.getAreaNodeByName("area11");
+    area0.setOwner(0);
+    area11.setOwner(1);
+    e.execute(a, map);
+    Region r1 = map.getRegionById(0);
+    assertEquals(true, r1.checkTechEnough(60));
+    assertEquals(true, area11.getSpy());
+  }
+
+  @Test
+  public void test_cloak(){
+    Map map = new Map(12, 2, true);
+    ActionExecutor e = new ActionExecutor();
+
+    AreaNode area0 = map.getAreaNodeByName("area0");
+    area0.setOwner(0);
+
+    CloakAction a = new CloakAction(0, "area0");
+    e.execute(a, map, 13);
+    Region r1 = map.getRegionById(0);
+    assertEquals(true, r1.checkTechEnough(70));
+    assertEquals(true, area0.getCloaking());
+
+    e.removeCloak(a, map);
+    assertEquals(false, area0.getCloaking());
+  }
 }

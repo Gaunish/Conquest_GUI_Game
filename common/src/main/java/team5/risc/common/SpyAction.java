@@ -17,11 +17,11 @@ public class SpyAction implements Action, Serializable {
     }
 
     public boolean hasReached(int curr_turn){
-        return (curr_turn - turn) >= distance;
+        return (curr_turn - turn) > distance;
     }
     
     @Override
     public String toString(){
-        return player_id + ": " + src + "->" + "dest";
+        return player_id + ": " + src + "->" + dest;
     }
 }

@@ -141,7 +141,7 @@ public class ActionValidator {
       return "invalid destination name";
     }
 
-    if(src.getDefenderUnit() != 1){
+    if(src.getDefenderUnit() < 1){
       return "not enough units";
     }
 

@@ -82,7 +82,7 @@ public class ActionExecutor {
     //System.out.println("Distance : " + a.distance);
   }
 
-  private int getDistance(AreaNode src, AreaNode dest, Map map, int id){
+  public int getDistance(AreaNode src, AreaNode dest, Map map, int id){
     Queue<String> queue = new PriorityQueue<>();
     HashSet<String> visited = new HashSet<>();
     ArrayList<String> areas = dist(src, dest, map, queue, visited);
@@ -97,13 +97,13 @@ public class ActionExecutor {
     return distance;
   }
 
-  private ArrayList<String> dist(AreaNode src, AreaNode dest, Map map, Queue<String> queue, HashSet<String> visited){
+  public ArrayList<String> dist(AreaNode src, AreaNode dest, Map map, Queue<String> queue, HashSet<String> visited){
     queue.add(src.getName());
     visited.add(src.getName());
     ArrayList<String> out = new ArrayList<>();
     HashMap<String, String> mapping = new HashMap<>();
 
-    while(!queue.isEmpty()){
+    while(true){
         String name = queue.remove();
         AreaNode a = map.getAreaNodeByName(name);
         if(a == dest){

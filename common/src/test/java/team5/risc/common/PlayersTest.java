@@ -10,8 +10,8 @@ public class PlayersTest {
     Map map = new Map(true);
     Players p = new Players(2);
     assertEquals(-1, p.get_winner(map, 2));
-    View view1 = new View();
-    View view2 = new View();
+    View view1 = new View(map.getRegionById(0), map.getRegionById(1), 0, map, 6);
+    View view2 = new View(map.getRegionById(1), map.getRegionById(0), 1, map, 6);
 
     ActionExecutor e = new ActionExecutor();
     MoveAction m1 = new MoveAction(0, "area0", "area2", 10);
