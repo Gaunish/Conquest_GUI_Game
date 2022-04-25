@@ -72,15 +72,15 @@ public class AllActionTest extends ApplicationTest {
         release(new MouseButton[] {});
     }
 
-    @Test
-    public void TestAllAction() throws IOException {
-        testMove();
-        testAttack();
-        testUpgrade();
+    // @Test
+    // public void TestAllAction() throws IOException {
+    //     testMove();
+    //     testAttack();
+    //     testUpgrade();
 
-        Platform.exit();
-        System.exit(0);
-    }
+    //     Platform.exit();
+    //     System.exit(0);
+    // }
 
     public void testMove() throws IOException {
         clickOn("#move_tab");
