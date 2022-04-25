@@ -200,8 +200,10 @@ public class AllActionController extends UIController implements Initializable {
                     showFlag = false;
                 else {
                     if (old.equals("true")) showFlag = true;
-                    else 
-                        showFlag = reachable;
+                    else {
+                        showFlag = reachable.equals("true") ? true: false;
+                    }
+                        
                 }
             }
 
