@@ -37,12 +37,12 @@ public class AllActionTest extends ApplicationTest {
         Mockito.lenient().when(client.getID()).thenReturn(0);
 
         // For Map Info
-        String area0 = "area0\nOwner: Player0\nDefender:\nLevel 0: 20 units\nLevel 1: 0 units\nLevel 2: 0 units\nLevel 3: 0 units\nLevel 4: 0 units\nLevel 5: 0 units\nLevel 6: 0 units\nFood production: 2\nTech production: 3\nSize: 1\n\n";
-        String  area1 = "area1\nOwner: Player1\nDefender:\nLevel 0: 15 units\nLevel 1: 0 units\nLevel 2: 0 units\nLevel 3: 0 units\nLevel 4: 0 units\nLevel 5: 0 units\nLevel 6: 0 units\nFood production: 2\nTech production: 3\nSize: 1\n\n";
-        String area2 = "area2\nOwner: Player0\nDefender:\nLevel 0: 15 units\nLevel 1: 0 units\nLevel 2: 0 units\nLevel 3: 0 units\nLevel 4: 0 units\nLevel 5: 0 units\nLevel 6: 0 units\nFood production: 2\nTech production: 3\nSize: 1\n\n";
-        String area3 = "area3\nOwner: Player1\nDefender:\nLevel 0: 15 units\nLevel 1: 0 units\nLevel 2: 0 units\nLevel 3: 0 units\nLevel 4: 0 units\nLevel 5: 0 units\nLevel 6: 0 units\nFood production: 2\nTech production: 3\nSize: 1\n\n";
-        String area4 = "area4\nOwner: Player0\nDefender:\nLevel 0: 15 units\nLevel 1: 0 units\nLevel 2: 0 units\nLevel 3: 0 units\nLevel 4: 0 units\nLevel 5: 0 units\nLevel 6: 0 units\nFood production: 2\nTech production: 3\nSize: 1\n\n";
-        String area5 = "area5\nOwner: Player1\nDefender:\nLevel 0: 15 units\nLevel 1: 0 units\nLevel 2: 0 units\nLevel 3: 0 units\nLevel 4: 0 units\nLevel 5: 0 units\nLevel 6: 0 units\nFood production: 2\nTech production: 3\nSize: 1\n\n";
+        String area0 = "area0\nOwner: Player0\nDefender:\nLevel 0: 20 units\nLevel 1: 0 units\nLevel 2: 0 units\nLevel 3: 0 units\nLevel 4: 0 units\nLevel 5: 0 units\nLevel 6: 0 units\nFood production: 2\nTech production: 3\nSize: 1\n\nReachable: true\nSpy: false\nCloak: false\nOld: false\n\n";
+        String area1 = "area1\nOwner: Player1\nDefender:\nLevel 0: 15 units\nLevel 1: 0 units\nLevel 2: 0 units\nLevel 3: 0 units\nLevel 4: 0 units\nLevel 5: 0 units\nLevel 6: 0 units\nFood production: 2\nTech production: 3\nSize: 1\n\nReachable: true\nSpy: false\nCloak: false\nOld: false\n\n";
+        String area2 = "area2\nOwner: Player0\nDefender:\nLevel 0: 15 units\nLevel 1: 0 units\nLevel 2: 0 units\nLevel 3: 0 units\nLevel 4: 0 units\nLevel 5: 0 units\nLevel 6: 0 units\nFood production: 2\nTech production: 3\nSize: 1\n\nReachable: true\nSpy: false\nCloak: false\nOld: false\n\n";
+        String area3 = "area3\nOwner: Player1\nDefender:\nLevel 0: 15 units\nLevel 1: 0 units\nLevel 2: 0 units\nLevel 3: 0 units\nLevel 4: 0 units\nLevel 5: 0 units\nLevel 6: 0 units\nFood production: 2\nTech production: 3\nSize: 1\n\nReachable: true\nSpy: false\nCloak: false\nOld: false\n\n";
+        String area4 = "area4\nOwner: Player0\nDefender:\nLevel 0: 15 units\nLevel 1: 0 units\nLevel 2: 0 units\nLevel 3: 0 units\nLevel 4: 0 units\nLevel 5: 0 units\nLevel 6: 0 units\nFood production: 2\nTech production: 3\nSize: 1\n\nReachable: true\nSpy: false\nCloak: false\nOld: false\n\n";
+        String area5 = "area5\nOwner: Player1\nDefender:\nLevel 0: 15 units\nLevel 1: 0 units\nLevel 2: 0 units\nLevel 3: 0 units\nLevel 4: 0 units\nLevel 5: 0 units\nLevel 6: 0 units\nFood production: 2\nTech production: 3\nSize: 1\n\nReachable: true\nSpy: false\nCloak: false\nOld: false\n\n\n";
         String food_tech_info = "Food: 100\nTech: 100\n\n";
         String map_info = area0 + area2 + area4 + area1 + area3 + area5 + food_tech_info;
         
@@ -55,7 +55,7 @@ public class AllActionTest extends ApplicationTest {
         FXMLLoader loader = new FXMLLoader(xmlResource);
         loader.setController(allActionController);
         AnchorPane gp = loader.load();
-        Scene scene = new Scene(gp, 600, 500);
+        Scene scene = new Scene(gp, 800, 500);
         stage.setScene(scene);
         stage.show();
 
@@ -72,27 +72,34 @@ public class AllActionTest extends ApplicationTest {
         release(new MouseButton[] {});
     }
 
-    // @Test
-    // public void TestAllAction() throws IOException {
-    //     testMove();
-    //     testAttack();
-    //     testUpgrade();
+    @Test
+    public void TestAllAction() throws IOException {
+        testMove();
+        testAttack();
+        testUpgrade();
 
-    //     Platform.exit();
-    //     System.exit(0);
-    // }
+        Platform.exit();
+        System.exit(0);
+    }
 
     public void testMove() throws IOException {
+        clickOn("#menu");
+        // try {
+        //     Thread.sleep(3000);
+        // } catch(Exception e) {
+
+        // }
+        
         clickOn("#move_tab");
         clickOn("#move_src");
         type(KeyCode.DOWN);
         type(KeyCode.ENTER);
-        clickOn("#move_tab");
+        // clickOn("#move_tab");
         clickOn("#move_dst");
         type(KeyCode.DOWN);
         type(KeyCode.ENTER);
     
-        clickOn("#move_tab");
+        // clickOn("#move_tab");
         clickOn("#move_level"); 
         type(KeyCode.DOWN);
         type(KeyCode.ENTER);
