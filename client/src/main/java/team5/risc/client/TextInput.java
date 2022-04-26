@@ -48,7 +48,7 @@ public class TextInput implements Input{
 
   //Get move
   public String getAction(String name){
-    String prompt = "You are the "+ name +" , what would you like to do?\n(M)ove\n(A)ttack\n(U)pgrade\n(D)one\n(S)py\n(C)loak\n";
+    String prompt = "You are the "+ name +" , what would you like to do?\n(M)ove\n(A)ttack\n(U)pgrade\n(D)one\n(S)py\n(SM)SpyMove\n(C)loak\n";
  
     String user_in = "";
 
@@ -61,7 +61,7 @@ public class TextInput implements Input{
         //Get input
         user_in = in.nextLine();
         //out.print("input is:"+user_in);
-        if(!user_in.equals("M") && !user_in.equals("A") && !user_in.equals("D") && !user_in.equals("U") && !user_in.equals("S") && !user_in.equals("C")){
+        if(!user_in.equals("M") && !user_in.equals("A") && !user_in.equals("D") && !user_in.equals("U") && !user_in.equals("S")  && !user_in.equals("SM") && !user_in.equals("C")){
           error_msg("Invalid Input");
           continue;
         }
@@ -112,6 +112,13 @@ public class TextInput implements Input{
   }
 
   public SpyAction getSpy(int id){
+    String[] values = getSpyValues();
+
+    SpyAction a = new SpyAction(id, values[0], values[1]);
+    return a;
+  }
+
+  public String[] getSpyValues(){
     String prompt = "Enter the source, destination\n";
     String[] values;
     while (true) {
@@ -135,7 +142,14 @@ public class TextInput implements Input{
         continue;
       }
     }
-    SpyAction a = new SpyAction(id, values[0], values[1]);
+
+    return values;
+  }
+
+  public SpyMoveAction getSpyMove(int id){
+    String[] values = getSpyValues();
+
+    SpyMoveAction a = new SpyMoveAction(id, values[0], values[1]);
     return a;
   }
 
@@ -167,7 +181,7 @@ public class TextInput implements Input{
     return a;
   }
 
-  private String[] getUpgradeValues(String prompt){
+  public String[] getUpgradeValues(String prompt){
     String[] values;
      // Be in while loop till valid input
      while (true) {

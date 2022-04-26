@@ -185,6 +185,14 @@ public class Client {
           print_action(response);
         }
 
+        else if(action.equals("SM")){
+          riscServer.writeUTF("SpyMove");
+          SpyMoveAction c = user_in.getSpyMove(id);
+          riscServer.writeObject(c);
+          String response = riscServer.readUTF();
+          print_action(response);
+        }
+
         // Check if input (D)one
         else if (action.equals("D")) {
           // write "Done"

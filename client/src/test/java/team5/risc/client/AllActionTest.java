@@ -29,6 +29,7 @@ import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit5.ApplicationTest;
 
 public class AllActionTest extends ApplicationTest {
+    
     @Override
     public void start(Stage stage) throws Exception {
         RISCServer mockServer = mock(RISCServer.class);
@@ -55,7 +56,7 @@ public class AllActionTest extends ApplicationTest {
         FXMLLoader loader = new FXMLLoader(xmlResource);
         loader.setController(allActionController);
         AnchorPane gp = loader.load();
-        Scene scene = new Scene(gp, 800, 500);
+        Scene scene = new Scene(gp, 1000, 500);
         stage.setScene(scene);
         stage.show();
 

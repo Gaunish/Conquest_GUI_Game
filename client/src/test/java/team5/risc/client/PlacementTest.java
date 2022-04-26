@@ -28,6 +28,7 @@ import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit5.ApplicationTest;
 
 public class PlacementTest extends ApplicationTest {
+    
     @Override
     public void start(Stage stage) throws Exception {
         RISCServer mockServer = mock(RISCServer.class);

@@ -50,6 +50,14 @@ public class ActionExecutor {
     region.upgradeArmy(a.index_army, a.new_lvl, a.no_units, area);
   }
 
+  public void execute(SpyMoveAction a, Map map) {
+    AreaNode src = map.getAreaNodeByName(a.src);
+    AreaNode dest = map.getAreaNodeByName(a.dest);
+
+    src.setSpy(false);
+    dest.setSpy(true);
+  }
+
   public void resolveAllCombat(Map map, Combat c, View view1, View view2) {
     ArrayList<Army> winners = new ArrayList<Army>();
     
@@ -85,6 +93,7 @@ public class ActionExecutor {
   public int getDistance(AreaNode src, AreaNode dest, Map map, int id){
     Queue<String> queue = new PriorityQueue<>();
     HashSet<String> visited = new HashSet<>();
+    queue.add(src.getName());
     ArrayList<String> areas = dist(src, dest, map, queue, visited);
     int distance = 0;
     for(String area : areas){
@@ -98,7 +107,6 @@ public class ActionExecutor {
   }
 
   public ArrayList<String> dist(AreaNode src, AreaNode dest, Map map, Queue<String> queue, HashSet<String> visited){
-    queue.add(src.getName());
     visited.add(src.getName());
     ArrayList<String> out = new ArrayList<>();
     HashMap<String, String> mapping = new HashMap<>();

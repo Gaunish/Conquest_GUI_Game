@@ -22,4 +22,6 @@ public interface Input {
   public CloakAction getCloak(int id);
 
   public UpgradeAction getUpgrade(int id, String area);
+
+  public SpyMoveAction getSpyMove(int id);
 }
