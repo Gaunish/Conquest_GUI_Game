@@ -103,16 +103,16 @@
                   </Button>
                </children>
             </AnchorPane>
-            <SplitPane dividerPositions="0.7" prefHeight="160.0" prefWidth="200.0">
+            <SplitPane dividerPositions="0.7">
               <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" stylesheets="@areacss.css">
+                <AnchorPane maxHeight="663.0" maxWidth="597.0" minHeight="0.0" minWidth="0.0" prefHeight="120.0" prefWidth="120.0" stylesheets="@areacss.css">
                      <children>
                         <ImageView fitHeight="663.0" fitWidth="597.0" layoutX="-80.0" layoutY="-85.0" pickOnBounds="true" preserveRatio="true" rotate="-13.0">
                            <image>
                               <Image url="@../image/mapbackground.png.jpg" />
                            </image>
                         </ImageView>
-                        <Pane fx:id="map" maxHeight="120.0" maxWidth="120.0" minHeight="120.0" minWidth="120.0" prefHeight="120.0" prefWidth="120.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <Pane fx:id="map" minHeight="120.0" minWidth="120.0" prefHeight="120.0" prefWidth="120.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <Label fx:id="area0" alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="39.0" prefHeight="120.0" prefWidth="120.0" text="area0" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                                  <styleClass>
@@ -268,7 +268,7 @@
                         </Pane>
                      </children>
                   </AnchorPane>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" stylesheets="@actioncss.css">
+                <AnchorPane maxHeight="500.0" maxWidth="500.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" stylesheets="@actioncss.css">
                      <children>
                         <ImageView fitHeight="688.0" fitWidth="568.0" layoutX="-28.0" pickOnBounds="true" preserveRatio="true" smooth="false">
                            <image>
@@ -431,7 +431,7 @@
                                                       </GridPane>
                                                    </content>
                                                 </Tab>
-                                                <Tab fx:id="spy_move_tab" closable="false" text="SpyMove">
+                                                <Tab fx:id="spy_move_tab" closable="false" text="  Spy&#10;Move&#10;">
                                                    <content>
                                                       <GridPane prefHeight="394.0" prefWidth="132.0">
                                                          <columnConstraints>

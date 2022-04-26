@@ -183,10 +183,10 @@ public class AllActionController extends UIController implements Initializable {
             String cloak = display_map[2].split(": ")[1];
             String old = display_map[3].split(": ")[1];
 
-            System.out.println(reachable);
-            System.out.println(spy);
-            System.out.println(cloak);
-            System.out.println(old);
+            // System.out.println(reachable);
+            // System.out.println(spy);
+            // System.out.println(cloak);
+            // System.out.println(old);
 
             String[] lines = area_info.split("\n");
             String area_name = null;
@@ -461,8 +461,7 @@ public class AllActionController extends UIController implements Initializable {
         SpyMoveAction spy = new SpyMoveAction(
                 client.getID(),
                 spy_move_src.getValue().toString(),
-                spy_move_dst.getValue().toString()
-        );
+                spy_move_dst.getValue().toString());
 
         client.getRiscServer().writeObject(spy);
         String response = client.getRiscServer().readUTF();
