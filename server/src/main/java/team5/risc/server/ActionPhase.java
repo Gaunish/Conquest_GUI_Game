@@ -168,6 +168,20 @@ public class ActionPhase {
       }
     }
 
+    private void play_spyMove() throws ClassNotFoundException, IOException{
+      SpyMoveAction action = (SpyMoveAction) objIstream.readObject();
+      String res = actionValidator.isValid(action, map);
+
+      if (res != null) {
+        //spy is invalid
+        dataOtream.writeUTF(res);
+      } else {
+        //spy is valid, set it
+        dataOtream.writeUTF("correct");
+        actionExecutor.execute(action, map);
+      }
+    }
+
     private void play_cloak() throws ClassNotFoundException, IOException{
       CloakAction action = (CloakAction) objIstream.readObject();
       String res = actionValidator.isValid(action, map);
@@ -213,6 +227,11 @@ public class ActionPhase {
           else if (action.equals("Cloak")){
             play_cloak();
           }
+
+          else if(action.equals("SpyMove")){
+            play_spyMove();
+          }
+
           //DONE ACTION
           else if(action.equals("Done")){
             break;

@@ -161,6 +161,41 @@ public class ActionValidator {
     return null;
   }
 
+  public String isValid(SpyMoveAction a, Map map){
+    AreaNode src = map.getAreaNodeByName(a.src);
+    AreaNode dest = map.getAreaNodeByName(a.dest);
+
+    if(src == null){
+      return "invalid source name";
+    }
+
+    if(dest == null){
+      return "invalid destination name";
+    }
+
+    if(a.player_id == src.getOwnerId()){
+      return "source area belongs to you";
+    }
+
+    if(a.player_id == dest.getOwnerId()){
+      return "destnation area belongs to you";
+    }
+
+    if(src.getSpy() == false){
+      return "src area doesn't have spy";
+    }
+
+    if(dest.getSpy() == true){
+      return "dest already has spy";
+    }
+
+    if(src.isNeighbor(dest) == false){
+      return "dest is not neighbour";
+    }
+
+    return null;
+  }
+
   public String isValid(CloakAction a, Map map){
     AreaNode area = map.getAreaNodeByName(a.area);
 

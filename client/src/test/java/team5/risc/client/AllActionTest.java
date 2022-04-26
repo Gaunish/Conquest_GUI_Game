@@ -29,6 +29,7 @@ import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit5.ApplicationTest;
 
 public class AllActionTest extends ApplicationTest {
+    
     @Override
     public void start(Stage stage) throws Exception {
         RISCServer mockServer = mock(RISCServer.class);

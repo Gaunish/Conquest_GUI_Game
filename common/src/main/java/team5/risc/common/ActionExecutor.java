@@ -50,6 +50,14 @@ public class ActionExecutor {
     region.upgradeArmy(a.index_army, a.new_lvl, a.no_units, area);
   }
 
+  public void execute(SpyMoveAction a, Map map) {
+    AreaNode src = map.getAreaNodeByName(a.src);
+    AreaNode dest = map.getAreaNodeByName(a.dest);
+
+    src.setSpy(false);
+    dest.setSpy(true);
+  }
+
   public void resolveAllCombat(Map map, Combat c, View view1, View view2) {
     ArrayList<Army> winners = new ArrayList<Army>();
     
