@@ -138,7 +138,7 @@ public class Map implements Serializable {
      addPath(2, 4);
      addPath(2, 3);
      addPath(5, 4);
-     addPath(4, 2);
+     addPath(3, 5);
      addPath(3, 1);
    }
 

@@ -2,6 +2,7 @@ package team5.risc.common;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.checkerframework.checker.units.qual.Area;
 import org.junit.jupiter.api.Test;
 import java.util.Queue;
 import java.util.HashSet;
@@ -177,5 +178,26 @@ public class ActionExecutorTest {
 
     e.removeCloak(a, map);
     assertEquals(false, area0.getCloaking());
+  }
+
+  @Test
+  public void test_spyMove(){
+    Map map = new Map(true);
+    ActionExecutor e = new ActionExecutor();
+    SpyAction a6 = new SpyAction(0, "area0", "area1");
+    e.execute(a6, map);
+
+    SpyMoveAction a9 = new SpyMoveAction(0, "area1", "area3");
+
+    AreaNode area1 = map.getAreaNodeByName(a9.src);
+    AreaNode area2 = map.getAreaNodeByName(a9.dest);
+
+    assertEquals(false, area2.getSpy());
+    assertEquals(true, area1.getSpy());
+
+    e.execute(a9, map);
+
+    assertEquals(false, area1.getSpy());
+    assertEquals(true, area2.getSpy());
   }
 }

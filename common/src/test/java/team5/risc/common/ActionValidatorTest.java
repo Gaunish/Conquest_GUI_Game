@@ -155,4 +155,45 @@ public class ActionValidatorTest {
     assertEquals(null, v.isValid(a4, map));
 
   }
+
+  @Test
+  public void test_spyMove(){
+    Map map = new Map(true);
+    ActionValidator v = new ActionValidator();
+    ActionExecutor e = new ActionExecutor();
+
+    SpyMoveAction a1 = new SpyMoveAction (0, "area6", "area1");
+    assertEquals("invalid source name", v.isValid(a1, map));
+
+    SpyMoveAction a2 = new SpyMoveAction (0, "area1", "area6");
+    assertEquals("invalid destination name", v.isValid(a2, map));
+
+    SpyMoveAction  a4 = new SpyMoveAction (0, "area0", "area5");
+    assertEquals("source area belongs to you", v.isValid(a4, map));
+
+    SpyMoveAction a5 = new SpyMoveAction(0, "area1", "area4");
+    assertEquals("destnation area belongs to you", v.isValid(a5, map));
+
+    SpyAction a6 = new SpyAction(0, "area0", "area1");
+    assertEquals(null, v.isValid(a6, map));
+    e.execute(a6, map);
+
+    
+    SpyMoveAction a7 = new SpyMoveAction(0, "area3", "area5");
+    assertEquals("src area doesn't have spy", v.isValid(a7, map));
+
+    SpyAction a8 = new SpyAction(0, "area0", "area3");
+    assertEquals(null, v.isValid(a8, map));
+    e.execute(a8, map);
+
+    SpyMoveAction a9 = new SpyMoveAction(0, "area1", "area3");
+    assertEquals("dest already has spy", v.isValid(a9, map));
+
+    
+    SpyMoveAction a10 = new SpyMoveAction(0, "area1", "area5");
+    assertEquals("dest is not neighbour", v.isValid(a10, map));
+
+    SpyMoveAction a11 = new SpyMoveAction(0, "area3", "area5");
+    assertEquals(null, v.isValid(a11, map));
+  }
 }

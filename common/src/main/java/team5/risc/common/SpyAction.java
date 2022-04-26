@@ -13,7 +13,7 @@ public class SpyAction implements Action, Serializable {
         this.dest = dest;
         turn = -1;
         distance = -1;
-        cost = 40;
+        cost = 5;
     }
 
     public boolean hasReached(int curr_turn){
