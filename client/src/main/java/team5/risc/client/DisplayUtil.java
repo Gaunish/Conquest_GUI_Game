@@ -19,9 +19,9 @@ public class DisplayUtil {
     }
 
     public static void playSound(String path) {
-        Media sound = new Media(Media.class.getResource(path).toExternalForm());
-        MediaPlayer mediaPlayer = new MediaPlayer(sound);
-        mediaPlayer.play();
+        // Media sound = new Media(Media.class.getResource(path).toExternalForm());
+        // MediaPlayer mediaPlayer = new MediaPlayer(sound);
+        // mediaPlayer.play();
     }
     
 }

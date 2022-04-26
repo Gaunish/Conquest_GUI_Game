@@ -154,6 +154,7 @@ public class AllActionController extends UIController implements Initializable {
         String map_str = null;
         try {
             map_str = client.getRiscServer().readUTF();
+            System.out.println(map_str);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -241,14 +242,16 @@ public class AllActionController extends UIController implements Initializable {
                             ((Label) node).setText(show_on_map);
                             if (((Control) node).getTooltip() == null)
                                 ((Control) node).setTooltip(new Tooltip());
-                            ((Control) node).getTooltip().setText(area_info);
+                            ((Control) node).getTooltip().setText(old.equals("true") ? "old": "" + area_info);
 
                             if (player_id == 0) {
                                 node.setStyle("-fx-background-color: #8C251A");
                             } else {
+
                                 node.setStyle("-fx-background-color: #1A3D8C");
                             }
                         } else if (showFlag == false) {
+                            
                             ((Label) node).setText("Invisible");
                             node.setStyle("-fx-background-color: #FFFFFF");
                         }
