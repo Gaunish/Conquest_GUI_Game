@@ -169,7 +169,7 @@ public class AllActionController extends UIController implements Initializable {
             String[] sub_msg = components[i].split("\n\n");
             String area_info = sub_msg[0];
             String display_info = sub_msg[1];
-        
+
             String[] display_map = display_info.split("\n");
             String reachable = display_map[0].split(": ")[1];
             String spy = display_map[1].split(": ")[1];
@@ -191,42 +191,38 @@ public class AllActionController extends UIController implements Initializable {
 
             int player_id = Character.getNumericValue(lines[1].charAt(lines[1].length() - 1));
 
-            Boolean showFlag = false; //0 for show empty, 1 for show scene
+            Boolean showFlag = false; // 0 for show empty, 1 for show scene
 
-            //spy, cloak, reachable, old
+            // spy, cloak, reachable, old
             if (spy.equals("true")) {
                 showFlag = true;
             } else {
                 if (cloak.equals("true"))
                     showFlag = false;
                 else {
-                    if (old.equals("true")) showFlag = true;
+                    if (old.equals("true"))
+                        showFlag = true;
                     else {
-                        showFlag = reachable.equals("true") ? true: false;
+                        showFlag = reachable.equals("true") ? true : false;
                     }
-                        
+
                 }
             }
 
-    
-        
-
             // if (reachable.equals("true")) {
-            //     if (cloak.equals("false")) {
-            //         showFlag = 1;
-            //     } else {
-            //         if (spy.equals("true")) showFlag = 1;
-            //     }
+            // if (cloak.equals("false")) {
+            // showFlag = 1;
             // } else {
-            //     if (cloak.equals("false")) {
-            //         if (spy.equals("true")) showFlag = 1;
-            //         else showFlag = 2;
-            //     } else if (spy.equals("true")) showFlag = 1;
+            // if (spy.equals("true")) showFlag = 1;
+            // }
+            // } else {
+            // if (cloak.equals("false")) {
+            // if (spy.equals("true")) showFlag = 1;
+            // else showFlag = 2;
+            // } else if (spy.equals("true")) showFlag = 1;
             // }
 
-            System.out.println("showFlag:"+showFlag);
-
-
+            System.out.println("showFlag:" + showFlag);
 
             for (Node node : map.getChildren()) {
                 if (node instanceof Label) {
@@ -242,7 +238,7 @@ public class AllActionController extends UIController implements Initializable {
                             ((Label) node).setText(show_on_map);
                             if (((Control) node).getTooltip() == null)
                                 ((Control) node).setTooltip(new Tooltip());
-                            ((Control) node).getTooltip().setText(old.equals("true") ? "old": "" + area_info);
+                            ((Control) node).getTooltip().setText(old.equals("true") ? "old" : "" + area_info);
 
                             if (player_id == 0) {
                                 node.setStyle("-fx-background-color: #8C251A");
@@ -251,7 +247,7 @@ public class AllActionController extends UIController implements Initializable {
                                 node.setStyle("-fx-background-color: #1A3D8C");
                             }
                         } else if (showFlag == false) {
-                            
+
                             ((Label) node).setText("Invisible");
                             node.setStyle("-fx-background-color: #FFFFFF");
                         }
@@ -332,7 +328,7 @@ public class AllActionController extends UIController implements Initializable {
                 FXCollections.observableArrayList(ownArrayList));
         up_st_level.setItems(FXCollections.observableArrayList(levelList));
         up_ed_level.setItems(FXCollections.observableArrayList(levelList));
-        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 50);
+        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100);
         valueFactory.setValue(0);
         up_num.setValueFactory(valueFactory);
     }
@@ -344,7 +340,7 @@ public class AllActionController extends UIController implements Initializable {
         move_dst.setItems(
                 FXCollections.observableArrayList(ownArrayList));
         move_level.setItems(FXCollections.observableArrayList(levelList));
-        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 50);
+        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100);
         valueFactory.setValue(0);
         move_num.setValueFactory(valueFactory);
     }
@@ -357,7 +353,7 @@ public class AllActionController extends UIController implements Initializable {
                 FXCollections.observableArrayList(enemyArrayList));
         att_level.setItems(
                 FXCollections.observableArrayList(levelList));
-        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 50);
+        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100);
         valueFactory.setValue(0);
         att_num.setValueFactory(valueFactory);
     }
@@ -425,8 +421,7 @@ public class AllActionController extends UIController implements Initializable {
         SpyAction spy = new SpyAction(
                 client.getID(),
                 spy_src.getValue().toString(),
-                spy_dst.getValue().toString()
-        );
+                spy_dst.getValue().toString());
 
         client.getRiscServer().writeObject(spy);
         String response = client.getRiscServer().readUTF();
@@ -451,8 +446,7 @@ public class AllActionController extends UIController implements Initializable {
         client.getRiscServer().writeUTF("Cloak");
         CloakAction cloak = new CloakAction(
                 client.getID(),
-                cloak_src.getValue().toString()
-        );
+                cloak_src.getValue().toString());
 
         client.getRiscServer().writeObject(cloak);
         String response = client.getRiscServer().readUTF();
