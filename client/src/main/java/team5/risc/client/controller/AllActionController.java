@@ -57,6 +57,7 @@ import team5.risc.common.MoveAction;
 import team5.risc.common.UpgradeAction;
 import team5.risc.common.CloakAction;
 import team5.risc.common.SpyAction;
+import team5.risc.common.SpyMoveAction;
 
 public class AllActionController extends UIController implements Initializable {
 
@@ -118,6 +119,11 @@ public class AllActionController extends UIController implements Initializable {
     public Button spy_submit;
     public Label spy_log;
 
+    public ChoiceBox<String> spy_move_src;
+    public ChoiceBox<String> spy_move_dst;
+    public Button spy_move_submit;
+    public Label spy_move_log;
+
     public ChoiceBox<String> cloak_src;
     public Button cloak_submit;
     public Label cloak_log;
@@ -140,6 +146,7 @@ public class AllActionController extends UIController implements Initializable {
         updateMoveTab();
         updateAttackTab();
         updateSpyTab();
+        updateSpyMoveTab();
         updateCloakTab();
         prepareSlideMenuAnimation();
     }
@@ -251,7 +258,7 @@ public class AllActionController extends UIController implements Initializable {
                                 node.setStyle("-fx-background-color: #1A3D8C");
                             }
                         } else if (showFlag == false) {
-                            
+
                             ((Label) node).setText("Invisible");
                             node.setStyle("-fx-background-color: #FFFFFF");
                         }
@@ -371,6 +378,14 @@ public class AllActionController extends UIController implements Initializable {
     }
 
     @FXML
+    public void updateSpyMoveTab() {
+        spy_move_src.setItems(
+                FXCollections.observableArrayList(areaList));
+        spy_move_dst.setItems(
+                FXCollections.observableArrayList(areaList));
+    }
+
+    @FXML
     public void updateCloakTab() {
         cloak_src.setItems(
                 FXCollections.observableArrayList(ownArrayList));
@@ -426,6 +441,32 @@ public class AllActionController extends UIController implements Initializable {
                 client.getID(),
                 spy_src.getValue().toString(),
                 spy_dst.getValue().toString()
+        );
+
+        client.getRiscServer().writeObject(spy);
+        String response = client.getRiscServer().readUTF();
+        String alert_string;
+        if (response.equals("correct")) {
+            DisplayUtil.playSound("/sound/ring.wav");
+            alert_string = "Action executed successfully!\n";
+            move_log.setText("Success");
+        } else {
+            DisplayUtil.playSound("/sound/alert.wav");
+            alert_string = "Error: " + response + "\n";
+            move_log.setText("Error");
+        }
+        log.setText(alert_string);
+
+    }
+
+    @FXML
+    public void onSpyMove(ActionEvent ae) throws IOException {
+        // TODO
+        client.getRiscServer().writeUTF("SpyMove");
+        SpyMoveAction spy = new SpyMoveAction(
+                client.getID(),
+                spy_move_src.getValue().toString(),
+                spy_move_dst.getValue().toString()
         );
 
         client.getRiscServer().writeObject(spy);
