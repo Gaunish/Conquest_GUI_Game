@@ -10,8 +10,7 @@
 
 } */
 
-.tab *.tab-label {
-    /* -fx-alignment: TOP; */
+.tab .tab-label {
     -fx-text-fill: black;
     -fx-font-size: 12px;
     -fx-font-weight: bold;
