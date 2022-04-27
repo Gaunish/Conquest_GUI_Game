@@ -335,7 +335,7 @@ public class AllActionController extends UIController implements Initializable {
                 FXCollections.observableArrayList(ownArrayList));
         up_st_level.setItems(FXCollections.observableArrayList(levelList));
         up_ed_level.setItems(FXCollections.observableArrayList(levelList));
-        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100);
+        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 500);
         valueFactory.setValue(0);
         up_num.setValueFactory(valueFactory);
     }
@@ -347,7 +347,7 @@ public class AllActionController extends UIController implements Initializable {
         move_dst.setItems(
                 FXCollections.observableArrayList(ownArrayList));
         move_level.setItems(FXCollections.observableArrayList(levelList));
-        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100);
+        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 500);
         valueFactory.setValue(0);
         move_num.setValueFactory(valueFactory);
     }
@@ -360,7 +360,7 @@ public class AllActionController extends UIController implements Initializable {
                 FXCollections.observableArrayList(enemyArrayList));
         att_level.setItems(
                 FXCollections.observableArrayList(levelList));
-        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100);
+        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 500);
         valueFactory.setValue(0);
         att_num.setValueFactory(valueFactory);
     }
